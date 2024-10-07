@@ -5,6 +5,7 @@ import Sample from "../components/Sample.svelte";
 import Navbar from "../components/Navbar.astro";
 import Banner from "../components/Banner.astro";
 import Service from "../components/Service.astro";
+import Footer from "../components/Footer.astro";
 
 ---
 
@@ -13,6 +14,7 @@ import Service from "../components/Service.astro";
     <Navbar/>
     <Banner/>
     <Service/>
+    <Footer/>
   </main>
 </Layout>
 
@@ -21,39 +23,13 @@ import Service from "../components/Service.astro";
   main {
     margin: auto;
     padding: 1rem;
-    width: 800px;
+    width: 1000px;
     max-width: calc(100% - 2rem);
-    color: white;
     font-size: 20px;
     line-height: 1.6;
   }
 
-  .astro-a {
-    position: absolute;
-    top: -32px;
-    left: 50%;
-    transform: translatex(-50%);
-    width: 220px;
-    height: auto;
-    z-index: -1;
-  }
 
-  h1 {
-    font-size: 4rem;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    margin-bottom: 1em;
-  }
-
-  .text-gradient {
-    background-image: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 400%;
-    background-position: 0%;
-  }
-  
   .instructions code {
     font-size: 0.8em;
     font-weight: bold;

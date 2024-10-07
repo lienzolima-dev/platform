@@ -1,5 +1,98 @@
----
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
----
+<h1 class="title-service">Nuestros Servicios</h1>
+
+<h1 class="title-description">Déjate consentir por nuestros expertos y luce unas uñas impecables.</h1>    
+
+<div class="card">
+    <div class="service-1">
+        <img src="public/foto1.png" class="nail-image"></img>
+        <h2>Gel</h2>
+        <p>Esmaltado en uñas naturales con gel, secado en lámpara UV. Puede ser decorado con diseños a mano alzada o efectos.<br>
+            Duración Aproximada: 40 min - 1h</p>
+    </div>
+    <div class="service-2">
+        <img src="public/foto1.png" class="nail-image"></img>
+        <h2>Rubber</h2>
+        <p>Esmaltado en uñas naturales con gel, secado en lámpara UV. Puede ser decorado con diseños a mano alzada o efectos. <br>
+            Duración Aproximada: 40 min - 1h</p>
+    </div>
+    <div class="service-3">
+        <img src="public/foto1.png" class="nail-image"></img>
+        <h2>Softgel</h2>
+        <p>Esmaltado en uñas naturales con gel, secado en lámpara UV. Puede ser decorado con diseños a mano alzada o efectos. <br>
+            Duración Aproximada: 40 min - 1h</p>
+    </div>
+</div>
 
 
+
+<style>
+    .service-1, .service-2, .service-3{
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.1rem; /* Reduce el espacio entre elementos dentro de cada card */
+        padding: 1.2rem; /* Reduce el espacio interno en cada card */
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efecto suave para hover */
+    }
+    .service-1{
+        background-color: #D13582;
+    }
+    .service-2{
+        background-color: #FE924A;
+    }
+    .service-3{
+        background-color: #F6B408;
+    }
+    h2{
+        font-family: "Corinthia", cursive;
+        color: black;
+        text-align: center;
+    }
+
+    .card{
+        display: flex;
+        justify-content: center;
+        gap: 1rem; /* Reduce el espacio entre cada card */
+    }
+    .title-service{
+        font-family: "Corinthia", cursive;
+        color: #D13582;
+        text-align: center;
+    }
+
+    .title-description{
+        font-family: "Cormorant Garamond";
+        color: black;
+        text-align: center;
+        font-size: 30px;
+    }
+    .nail-image{
+        width: 150px;
+        height: 150px;
+        border-radius: 10px;
+    }
+    
+    /* Efecto de hover para resaltar las cards con el estilo original */
+    .service-1:hover, .service-2:hover, .service-3:hover {
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+        transform: scale(1.05); /* Aumenta ligeramente el tamaño de la card */
+    }
+
+    /* Responsivo */
+    @media (max-width: 768px) {
+        .card {
+            flex-direction: column; /* Cambia la dirección de los elementos a columna */
+            gap: 2rem; /* Aumenta el espacio entre cada card */
+        }
+        .service-1, .service-2, .service-3 {
+            width: 100%; /* Ocupa todo el ancho del contenedor */
+        }
+    }
+
+</style>
