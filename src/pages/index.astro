@@ -1,59 +1,14 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import AstroSample from "../components/AstroSample.astro";
-import Sample from "../components/Sample.svelte";
-import Navbar from "../components/Navbar.astro";
-import Banner from "../components/Banner.astro";
-import Service from "../components/Service.astro";
-import Diferencia from "../components/Diferencia.astro";
-import Section1 from "../components/Section1.astro";
-import Section2 from "../components/Section2.astro";
-import Footer from "../components/Footer.astro";
-
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<Layout title="Lienzo Lima">
-  <main>
-    <Navbar/>
-    <Banner/>
-    <Service/>
-    <Diferencia/>
-
-    <Section1/>
-    <Section2/>
-    <Footer/>
+<BaseLayout title="Lienzo Lima">
+  <main class="wrapper">
+    <h1>Test</h1>
+    <p>
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis a,
+      maxime enim harum laudantium unde, aliquid odit in quae ea sit, asperiores
+      veritatis illum? Dolore quae cumque sapiente quaerat sint.
+    </p>
   </main>
-</Layout>
-
-
-<style>
-  main {
-    margin: auto;
-    padding: 0;
-    width: 1000px;
-    max-width: calc(100% - 2rem);
-    font-size: 20px;
-    line-height: 1.6;
-  }
-
-
-  .instructions code {
-    font-size: 0.8em;
-    font-weight: bold;
-    background: rgba(var(--accent-light), 12%);
-    color: rgb(var(--accent-light));
-    border-radius: 4px;
-    padding: 0.3em 0.4em;
-  }
-
-  .instructions strong {
-    color: rgb(var(--accent-light));
-  }
-
-  .link-card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-    gap: 2rem;
-    padding: 0;
-  }
-</style>
+</BaseLayout>

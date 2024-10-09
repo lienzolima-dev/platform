@@ -1,0 +1,255 @@
+@import url("@fontsource/poppins/100.css");
+@import url("@fontsource/poppins/200.css");
+@import url("@fontsource/poppins/300.css");
+@import url("@fontsource/poppins/400.css");
+@import url("@fontsource/poppins/500.css");
+@import url("@fontsource/poppins/600.css");
+@import url("@fontsource/poppins/700.css");
+@import url("@fontsource/poppins/800.css");
+@import url("@fontsource/poppins/900.css");
+@import url("@fontsource-variable/playfair-display");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --background: hsl(35, 43%, 95%);
+
+  --font-color-400: hsl(232, 94%, 13%);
+  --font-color-500: hsl(215, 58%, 7%);
+
+  --primary-400: hsl(330, 64%, 52%);
+  --primary-500: hsl(330, 64%, 40%);
+
+  --secondary-400: hsl(41, 100%, 67%);
+
+  --tertiary-400: hsl(24, 99%, 64%);
+
+  --neutral-400: hsl(48, 9%, 89%);
+
+  --body: 1rem;
+  --large: 1.25rem;
+  --small: 0.75rem;
+
+  --bold-body: 1rem;
+  --bold-large: 1.25rem;
+  --bold-small: 0.75rem;
+
+  --semi-bold-body: 1rem;
+  --semi-bold-large: 1.25rem;
+  --semi-bold-small: 0.75rem;
+
+  --header-h1: 3rem;
+  --header-h2: 2.25rem;
+  --header-h3: 1.75rem;
+
+  --button-text: 0.75rem;
+  --link-text: 1rem;
+
+  --font-heading: "Playfair Display Variable", sans-serif;
+  --font-body: "Poppins", sans-serif;
+  --section-spacing: 3rem;
+
+  --scroll-border: 0.1px solid rgb(128 128 128 / 20%);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 400;
+  font-size: var(--body);
+  line-height: 140%;
+}
+
+body > * {
+  flex: 0 1 auto; /* Auto height for all elements */
+}
+
+main {
+  flex: 1 1 auto; /* Fill remaining height */
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 600;
+}
+
+img {
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.wrapper {
+  max-width: 1120px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.btn-secondary {
+  background-color: var(--primary-700);
+}
+
+.btn-unstyled {
+  background-color: transparent;
+  font-weight: 400;
+  letter-spacing: unset;
+}
+
+a,
+input,
+textarea,
+p,
+span,
+select,
+li {
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+h1 {
+  font-size: var(--header-h1);
+}
+
+h2 {
+  font-size: var(--header-h2);
+}
+
+h3 {
+  font-size: var(--header-h3);
+}
+
+h4,
+h5,
+h6 {
+  font-size: var(--header-h4);
+}
+
+.btn,
+button {
+  background-color: #ffd64f;
+  font-weight: normal;
+  font-size: 0.875rem;
+  outline: none;
+  border: none;
+  padding: 0.5rem 16px;
+  cursor: pointer;
+  line-height: 19px;
+  letter-spacing: 0.04rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 450px;
+  width: 100%;
+}
+
+input {
+  padding-inline: 12px;
+  height: 42px;
+  outline: 1px solid #dddedf;
+  border: 1px solid #dddedf;
+}
+
+input:focus {
+  outline: 1px dotted black;
+  border: 1px dotted black;
+}
+
+.text-small {
+  font-size: var(--small);
+}
+
+.text-bold {
+  font-weight: 700;
+  font-size: var(--bold-body);
+}
+
+@media (max-width: 1140px) {
+  .wrapper {
+    max-width: 100%;
+    padding: 0 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 320px) {
+  .wrapper {
+    padding: 0 15px;
+  }
+}
+
+@container wrapper (max-width: 1140px) {
+  .wrapper {
+    max-width: 100%;
+    padding: 0 40px;
+  }
+}
+
+@container wrapper (max-width: 768px) {
+  .wrapper {
+    padding: 0 20px;
+  }
+}
+
+@container wrapper (max-width: 320px) {
+  .wrapper {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 425px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 375px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+}
+
+/* others */
+.top-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: var(--primary-500);
+  color: #fff;
+  width: 100%;
+  min-height: 240px;
+  padding-bottom: 3rem;
+}
