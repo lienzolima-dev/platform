@@ -17,6 +17,12 @@ importers:
       '@astrojs/svelte':
         specifier: 5.7.1
         version: 5.7.1(astro@4.15.9(rollup@4.22.4)(typescript@5.6.2))(svelte@5.0.0-next.257)(typescript@5.6.2)(vite@5.4.8)
+      '@fontsource-variable/playfair-display':
+        specifier: ^5.1.0
+        version: 5.1.0
+      '@fontsource/poppins':
+        specifier: ^5.1.0
+        version: 5.1.0
       astro:
         specifier: 4.15.9
         version: 4.15.9(rollup@4.22.4)(typescript@5.6.2)
@@ -402,6 +408,12 @@ packages:
     engines: {node: '>=12'}
     cpu: [x64]
     os: [win32]
+
+  '@fontsource-variable/playfair-display@5.1.0':
+    resolution: {integrity: sha512-51UJAHznXiGkchEOT5AYFuIy9N9m1JE7YxcdOtY0H4SKgzK9YYGKpeCXv3dz2e1gAd+BP2TyR0QXNnVjgeCbgw==}
+
+  '@fontsource/poppins@5.1.0':
+    resolution: {integrity: sha512-tpLXlnNi2fwQjiipvuj4uNFHCdoLA8izRsKdoexZuEzjx0r/g1aKLf4ta6lFgF7L+/+AFdmaXFlUwwvmDzYH+g==}
 
   '@img/sharp-darwin-arm64@0.33.5':
     resolution: {integrity: sha512-UT4p+iz/2H4twwAoLCqfA9UH5pI6DggwKEGuaPy7nCVQ8ZsiY5PIcrRvD1DzuY3qYL07NtIQcWnBSY/heikIFQ==}
@@ -2506,6 +2518,10 @@ snapshots:
 
   '@esbuild/win32-x64@0.21.5':
     optional: true
+
+  '@fontsource-variable/playfair-display@5.1.0': {}
+
+  '@fontsource/poppins@5.1.0': {}
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:
