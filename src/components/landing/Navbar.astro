@@ -1,0 +1,198 @@
+---
+import LogoWhite from "../svgs/LogoWhite.astro";
+
+const navList = [
+  { name: "Sobre nosotros", link: "#" },
+  { name: "Servicios", link: "#" },
+  { name: "Galería", link: "#" },
+  { name: "Precios", link: "#" },
+  { name: "Reserva", link: "#" },
+];
+
+const url = Astro.request.url;
+
+function isActive(link: string) {
+  return url.includes(link);
+}
+---
+
+<div class="spacer"></div>
+<header id="header">
+  <div class="wrapper">
+    <a class="logo-img" href="/"><LogoWhite /></a>
+    <input type="checkbox" id="menu-toggle" hidden />
+    <nav>
+      <ul>
+        {
+          navList.map((navItem) => (
+            <li class:list={[{ active: isActive(navItem.link) }]}>
+              <a href={navItem.link}>{navItem.name}</a>
+            </li>
+          ))
+        }
+        <li class="dropdown-menu-item">
+          <a href="/admin">Admin Dashboard</a>
+        </li>
+        <li class="dropdown-menu-item">
+          <a href="/logout">Logout</a>
+        </li>
+      </ul>
+    </nav>
+    <label for="menu-toggle" class="hamburger">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </label>
+    <button>Loguéate</button>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById("header");
+  document.addEventListener("scroll", () => {
+    const header = document.querySelector("header");
+    if (window.scrollY > 0) {
+      header?.classList.add("scrolled");
+    } else {
+      header?.classList.remove("scrolled");
+    }
+  });
+</script>
+
+<style>
+  .spacer {
+    min-height: 90px;
+  }
+
+  header {
+    position: fixed;
+    padding-block: 30px;
+    background-color: var(--primary-400);
+    width: 100%;
+    top: 0;
+    z-index: 1;
+    transition: all 0.1s;
+  }
+
+  header.scrolled {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .logo-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+  }
+
+  ul {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+  }
+
+  li a {
+    font-weight: 400;
+    color: white;
+  }
+
+  li a:hover {
+    color: var(--secondary-400);
+  }
+
+  .hamburger {
+    display: none;
+    width: 30px;
+    height: 24px;
+    cursor: pointer;
+    padding: 0;
+    background-color: transparent;
+  }
+
+  .bar {
+    width: 100%;
+    height: 4px;
+    background-color: var(--background);
+    border-radius: 4px;
+    transition: all 0.3s;
+    transform-origin: center;
+  }
+
+  button {
+    font-weight: 700;
+  }
+
+  .active {
+    color: var(--primary-500);
+    text-decoration: underline;
+  }
+
+  #menu-toggle:checked ~ .hamburger .bar:nth-child(1) {
+    transform: translateY(10px) rotate(45deg);
+  }
+
+  #menu-toggle:checked ~ .hamburger .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  #menu-toggle:checked ~ .hamburger .bar:nth-child(3) {
+    transform: translateY(-10px) rotate(-45deg);
+  }
+
+  .dropdown-menu-item {
+    display: none;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin-left: auto;
+    }
+
+    nav {
+      transform: translateX(-100%);
+      position: absolute;
+      background-color: var(--primary-400);
+      border-top: 1px solid #cbcbcb;
+      width: 100%;
+      left: 0;
+      top: 92px;
+      transition: all 0.3s ease;
+    }
+
+    nav ul {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    nav li a {
+      width: 100%;
+      display: inline-block;
+      padding: 20px 15px;
+      border-bottom: 1px solid #cbcbcb;
+    }
+
+    #menu-toggle:checked + nav {
+      transform: translateX(0);
+    }
+
+    .dropdown-menu-item {
+      display: block;
+    }
+  }
+</style>

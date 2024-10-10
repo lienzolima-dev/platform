@@ -1,0 +1,39 @@
+---
+import { ulid } from "ulid";
+
+type Props = {
+  imgSrc: string;
+};
+
+const { imgSrc } = Astro.props;
+
+const uniqueIndentifier = ulid();
+const clipPathId = `blob-${uniqueIndentifier}`;
+---
+
+<svg
+  width="348"
+  height="543"
+  viewBox="0 0 348 543"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <clipPath id={clipPathId}>
+    <path
+      d="M7.99973 111.745C10.9997 92.6154 14.3997 82.6654 17.6697 73.6354C38.3197 16.6954 82.7197 -7.49456 144.14 2.01544C191.69 9.39544 237.45 21.0154 276.92 49.8754C323.59 83.9654 338.26 134.395 341.92 188.205C345.74 245.055 348 302.205 346.92 359.145C344.8 475.145 266.14 547.405 149.92 542.245C126.63 541.245 103.41 537.585 80.2797 534.245C46.0797 529.345 25.8997 508.045 15.5197 476.295C5.35973 445.315 -3.23027 405.185 1.18973 309.015C2.53973 279.635 3.08973 286.745 3.84973 265.195C6.26973 196.525 -0.880268 166.835 7.99973 111.745Z"
+      fill="#E6E5E1"></path>
+  </clipPath>
+
+  <image
+    href={imgSrc}
+    clip-path={`url(#${clipPathId})`}
+    preserveAspectRatio="xMidYMid slice"
+  />
+</svg>
+
+<style>
+  image {
+    width: 100%;
+    height: 100%;
+  }
+</style>
