@@ -58,6 +58,10 @@
   --scroll-border: 0.1px solid rgb(128 128 128 / 20%);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   height: 100%;
