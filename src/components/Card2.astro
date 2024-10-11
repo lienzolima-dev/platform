@@ -1,0 +1,148 @@
+---
+// src/pages/index.astro
+import Decoracion1 from "./svgs/Decoracion1.astro";
+import Decoracion2 from "./svgs/Decoracion2.astro";
+import Arrow from "./svgs/Arrow.astro";
+---
+
+<div class="decorated-text">
+  <Decoracion2 />
+  <h2>LIENZO LIMA</h2>
+  <Decoracion1 />
+</div>
+
+<div class="grid-container">
+  <div class="card card1">
+    <div class="content">
+      <h3>Lorem ipsum</h3>
+      <Arrow />
+    </div>
+    <div class="line"></div>
+  </div>
+
+  <div class="card card2">
+    <div class="content">
+      <h3>Lorem ipsum</h3>
+      <Arrow />
+    </div>
+    <div class="line"></div>
+  </div>
+
+  <div class="card card3">
+    <div class="content">
+      <h3>Lorem ipsum</h3>
+      <Arrow />
+    </div>
+    <div class="line"></div>
+  </div>
+
+  <div class="card card4">
+    <div class="content">
+      <h3>Lorem ipsum</h3>
+      <Arrow />
+    </div>
+    <div class="line"></div>
+  </div>
+</div>
+
+<style>
+  .decorated-text {
+    padding-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem; /* Espacio entre el texto y las decoraciones */
+    font-size: 1.5rem;
+    color: #2a2a72; /* Color del texto */
+  }
+
+  h2 {
+    font-weight: bold;
+    font-family: "Arial", sans-serif;
+  }
+
+  /* Estructura del grid */
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "card1 card2"
+      "card3 card4";
+    gap: 1.5rem;
+    margin-top: 40px;
+    width: 100%;
+  }
+
+  /* Ajustes para cada tarjeta */
+  .card1 {
+    grid-area: card1;
+  }
+
+  .card2 {
+    grid-area: card2;
+    margin-top: 2rem; 
+  }
+
+  .card3 {
+    grid-area: card3;
+    margin-top: -2rem;
+  }
+
+  .card4 {
+    grid-area: card4;
+  }
+
+  .card {
+    background-color: #f0f0f0;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Mueve el contenido al fondo de la tarjeta */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    height: 250px;
+  }
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px; /
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #2a2a72;
+  }
+
+  .line {
+    height: 2px;
+    background-color: #ff8c00;
+    width: 100%;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s;
+  }
+
+  /* Responsividad */
+  @media (max-width: 768px) {
+    .grid-container {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "card1"
+        "card2"
+        "card3"
+        "card4";
+    }
+
+    .card2,
+    .card3 {
+      margin-top: 0;
+    }
+  }
+</style>

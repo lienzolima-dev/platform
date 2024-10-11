@@ -1,5 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Card1 from "../components/Card1.astro";
+import Card2 from "../components/Card2.astro";
 ---
 
 <BaseLayout title="Lienzo Lima">
@@ -10,5 +12,98 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       maxime enim harum laudantium unde, aliquid odit in quae ea sit, asperiores
       veritatis illum? Dolore quae cumque sapiente quaerat sint.
     </p>
+    <!-- Encabezado con título y botón alineado -->
+    <div class="header">
+      <h1>Lorem ips</h1>
+      <button>Lorem Ipsum</button>
+    </div>
+    <div class="container">
+      <Card1
+        title="Lorem"
+        hasArrow={true}
+        backgroundColor="#f0f0f0"
+        textColor="#000"
+      />
+      <Card1
+        title="Lorem"
+        hasArrow={true}
+        backgroundColor="#f0f0f0"
+        textColor="#000"
+      />
+      <Card1
+        title="Lorem"
+        hasArrow={true}
+        backgroundColor="#f0f0f0"
+        textColor="#000"
+      />
+    </div>
+
+    <div class="container">
+      <!-- Tarjetas grandes en otra fila -->
+      <Card1
+        title="Lorem Ipsum"
+        hasArrow={false}
+        backgroundColor="#EAA91C"
+        textColor="#fff"
+      />
+      <Card1
+        title="Lorem Ipsum"
+        hasArrow={false}
+        backgroundColor="#EAA91C"
+        textColor="#fff"
+      />
+    </div>
+
+    <Card2/>
   </main>
 </BaseLayout>
+
+<style>
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .header h1 {
+    font-size: 2.5rem;
+    color: #2a2a72; /* Color del texto del título */
+    font-weight: bold;
+  }
+
+  .header button {
+    background-color: #ff8c00;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  /* Responsividad */
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+    }
+
+    .header button {
+      font-size: 1rem;
+    }
+  }
+</style>

@@ -26,6 +26,9 @@ importers:
       astro:
         specifier: 4.15.9
         version: 4.15.9(rollup@4.22.4)(typescript@5.6.2)
+      leaflet:
+        specifier: ^1.9.4
+        version: 1.9.4
       svelte:
         specifier: 5.0.0-next.257
         version: 5.0.0-next.257
@@ -1290,6 +1293,9 @@ packages:
   kleur@4.1.5:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
+
+  leaflet@1.9.4:
+    resolution: {integrity: sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA==}
 
   load-yaml-file@0.2.0:
     resolution: {integrity: sha512-OfCBkGEw4nN6JLtgRidPX6QxjBQGQf72q3si2uvqyFEMbycSFFHwAZeXx6cJgFM9wmLrf9zBwCP3Ivqa+LLZPw==}
@@ -3435,6 +3441,8 @@ snapshots:
   kleur@3.0.3: {}
 
   kleur@4.1.5: {}
+
+  leaflet@1.9.4: {}
 
   load-yaml-file@0.2.0:
     dependencies:
