@@ -1,45 +1,45 @@
 ---
 // src/pages/index.astro
-import Decoracion1 from "./svgs/Decoracion1.astro";
-import Decoracion2 from "./svgs/Decoracion2.astro";
+import Decoration1 from "./svgs/Decoration1.astro";
+import Decoration2 from "./svgs/Decoration2.astro";
 import Arrow from "./svgs/Arrow.astro";
 ---
 
 <div class="decorated-text">
-  <Decoracion2 />
+  <Decoration2 />
   <h2>LIENZO LIMA</h2>
-  <Decoracion1 />
+  <Decoration1 />
 </div>
 
 <div class="grid-container">
   <div class="card card1">
     <div class="content">
-      <h3>Lorem ipsum</h3>
-      <Arrow />
+      <!--<Arrow /> -->
+      <img class="img" src="uñas1.png" alt="" />
     </div>
     <div class="line"></div>
   </div>
 
   <div class="card card2">
     <div class="content">
-      <h3>Lorem ipsum</h3>
-      <Arrow />
+      <!--<Arrow /> -->
+      <img class="img" src="uñas2.png" alt="" />
     </div>
     <div class="line"></div>
   </div>
 
   <div class="card card3">
     <div class="content">
-      <h3>Lorem ipsum</h3>
-      <Arrow />
+      <!--<Arrow /> -->
+      <img class="img" src="uñas3.png" alt="" />
     </div>
     <div class="line"></div>
   </div>
 
   <div class="card card4">
     <div class="content">
-      <h3>Lorem ipsum</h3>
-      <Arrow />
+      <img class="img" src="uñas4.png" alt="" />
+      <!--<Arrow /> -->
     </div>
     <div class="line"></div>
   </div>
@@ -53,7 +53,6 @@ import Arrow from "./svgs/Arrow.astro";
     justify-content: center;
     gap: 1rem; /* Espacio entre el texto y las decoraciones */
     font-size: 1.5rem;
-    color: #2a2a72; /* Color del texto */
   }
 
   h2 {
@@ -61,66 +60,63 @@ import Arrow from "./svgs/Arrow.astro";
     font-family: "Arial", sans-serif;
   }
 
-  /* Estructura del grid */
+  /* Estructura del grid con posiciones desordenadas */
   .grid-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    grid-template-areas:
-      "card1 card2"
-      "card3 card4";
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas de igual ancho */
+    grid-gap: 1.5rem; /* Espacio entre tarjetas */
     margin-top: 40px;
     width: 100%;
   }
 
-  /* Ajustes para cada tarjeta */
+  /* Tarjetas con diferentes posiciones y alturas */
   .card1 {
-    grid-area: card1;
+    grid-column: 1 / 2; /* Se coloca en la primera columna */
+    grid-row: 1 / span 2; /* Ocupa dos filas */
+    height: 400px; /* Ajusta la altura */
   }
 
   .card2 {
-    grid-area: card2;
-    margin-top: 2rem; 
+    grid-column: 2 / 3; /* Se coloca en la segunda columna */
+    grid-row: 1 / 2; /* Ocupa una fila */
+    height: 300px; /* Ajusta la altura */
   }
 
   .card3 {
-    grid-area: card3;
-    margin-top: -2rem;
+    grid-column: 1 / 2; /* Se coloca en la primera columna */
+    grid-row: 3 / 4; /* Ocupa una fila */
+    height: 250px; /* Ajusta la altura */
   }
 
   .card4 {
-    grid-area: card4;
+    grid-column: 2 / 3; /* Se coloca en la segunda columna */
+    grid-row: 2 / span 2; /* Ocupa dos filas */
+    height: 450px; /* Ajusta la altura */
   }
 
+  /* Estilos generales de las tarjetas */
   .card {
-    background-color: #f0f0f0;
+    background-color: var(--background);
     border-radius: 15px;
     padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; /* Mueve el contenido al fondo de la tarjeta */
+    justify-content: space-between; /* Espacio distribuido entre contenido y la línea */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     position: relative;
-    height: 250px;
   }
 
   .content {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    margin-bottom: 10px; /
-  }
-
-  h3 {
-    margin: 0;
-    font-size: 1.2rem;
-    color: #2a2a72;
+    margin-bottom: 10px;
+    height: 100%; /* Asegura que el contenido llene la tarjeta */
   }
 
   .line {
     height: 2px;
-    background-color: #ff8c00;
+    background-color: var(--tertiary-400);
     width: 100%;
   }
 
@@ -129,20 +125,23 @@ import Arrow from "./svgs/Arrow.astro";
     transition: transform 0.3s;
   }
 
+  /* Imagen dentro de la tarjeta */
+  .img {
+    width: 100%; /* La imagen ocupa el 100% del ancho de la tarjeta */
+    height: auto; /* Mantiene la proporción de la imagen */
+    max-height: 100%; /* Asegura que la imagen no sobrepase el alto de la tarjeta */
+    border-radius: 10px; /* Bordes redondeados para la imagen */
+    object-fit: cover; /* La imagen se ajusta sin distorsión */
+  }
+
   /* Responsividad */
   @media (max-width: 768px) {
     .grid-container {
-      grid-template-columns: 1fr;
-      grid-template-areas:
-        "card1"
-        "card2"
-        "card3"
-        "card4";
+      grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
     }
 
-    .card2,
-    .card3 {
-      margin-top: 0;
+    .card {
+      height: auto; /* Ajusta la altura automáticamente en pantallas pequeñas */
     }
   }
 </style>

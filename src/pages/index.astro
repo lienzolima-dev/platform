@@ -14,32 +14,36 @@ import Card2 from "../components/Card2.astro";
     </p>
     <!-- Encabezado con título y botón alineado -->
     <div class="header">
-      <h1>Lorem ips</h1>
-      <button>Lorem Ipsum</button>
+      <h1>Nuestros Servicios</h1>
+      <!-- <button>Lorem Ipsum</button> -->
     </div>
     <div class="container">
       <Card1
-        title="Lorem"
-        hasArrow={true}
-        backgroundColor="#f0f0f0"
-        textColor="#000"
+        img = "public/gel.png"
+        description="Esmaltado en la uña natural, secado en lampara. Tiempo del procedimiento 1 hora (dependiendo del diseño)." 
+        title="GEL"
+        hasArrow={false}
+        backgroundColor="var(--background)"
       />
       <Card1
-        title="Lorem"
-        hasArrow={true}
-        backgroundColor="#f0f0f0"
-        textColor="#000"
+        img = "public/rubber.png"
+        description = "Gel de alta densidad que aporta dureza a la uña, evita que se rompa y se quiebre. Ideal para uñas mordidas y débiles. Tiempo del procedimiento 1 hora 40 min (dependiendo del diseño)."
+        title="RUBBER"
+        hasArrow={false}
+        backgroundColor="var(--background)"
       />
       <Card1
-        title="Lorem"
-        hasArrow={true}
-        backgroundColor="#f0f0f0"
-        textColor="#000"
+        img = "public/softgel.png"
+        description = "Proporcionan largo a la uña, a base de tips adheridos con pressgel. Aspecto natural. Tiempo del procedimiento 2 hora 20 min (dependiendo del diseño)."
+        title="SOFTGEL"
+        hasArrow={false}
+        backgroundColor="var(--background)"
       />
     </div>
 
+    <!-- DESCOMENTAR LUEGO
     <div class="container">
-      <!-- Tarjetas grandes en otra fila -->
+      Tarjetas grandes en otra fila
       <Card1
         title="Lorem Ipsum"
         hasArrow={false}
@@ -52,8 +56,7 @@ import Card2 from "../components/Card2.astro";
         backgroundColor="#EAA91C"
         textColor="#fff"
       />
-    </div>
-
+    </div> -->
     <Card2/>
   </main>
 </BaseLayout>
@@ -70,13 +73,11 @@ import Card2 from "../components/Card2.astro";
 
   .header h1 {
     font-size: 2.5rem;
-    color: #2a2a72; /* Color del texto del título */
     font-weight: bold;
   }
 
   .header button {
-    background-color: #ff8c00;
-    color: white;
+    background-color: var(--tertiary-400);
     border: none;
     padding: 0.75rem 1.5rem;
     border-radius: 30px;
