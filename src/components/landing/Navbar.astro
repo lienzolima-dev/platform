@@ -2,11 +2,11 @@
 import LogoWhite from "../svgs/LogoWhite.astro";
 
 const navList = [
-  { name: "Sobre nosotros", link: "#" },
-  { name: "Servicios", link: "#" },
-  { name: "Galería", link: "#" },
-  { name: "Precios", link: "#" },
-  { name: "Reserva", link: "#" },
+  { name: "Sobre nosotros", link: "/in-progress" },
+  { name: "Servicios", link: "/in-progress" },
+  { name: "Galería", link: "/in-progress" },
+  { name: "Precios", link: "/in-progress" },
+  { name: "Reserva", link: "/in-progress" },
 ];
 
 const url = Astro.request.url;
@@ -48,7 +48,6 @@ function isActive(link: string) {
 </header>
 
 <script>
-  const header = document.getElementById("header");
   document.addEventListener("scroll", () => {
     const header = document.querySelector("header");
     if (window.scrollY > 0) {
