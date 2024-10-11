@@ -1,0 +1,32 @@
+---
+import HeroContent from "./HeroContent.astro";
+import HeroBackground from "../../svgs/HeroBackground.astro";
+---
+
+<div class="top-container">
+  <div class="svg-background">
+    <HeroBackground />
+  </div>
+  <HeroContent />
+</div>
+
+<style>
+  .top-container {
+    position: relative;
+  }
+
+  .svg-background {
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+  .svg-background :global(svg) {
+    width: 105%;
+    height: 100%;
+  }
+</style>

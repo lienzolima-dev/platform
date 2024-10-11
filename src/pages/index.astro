@@ -1,84 +1,22 @@
 ---
 import Navbar from "../components/landing/Navbar.astro";
-import Hero from "../components/landing/Hero.astro";
+import Hero from "../components/landing/hero/Hero.astro";
 import AboutUs from "../components/landing/AboutUs.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import HeroBackground from "../components/svgs/HeroBackground.astro";
 import WhyUs from "../components/landing/WhyUs.astro";
-import MenuBackground from "../components/svgs/MenuBackground.astro";
-import PricingMenu from "../components/landing/PricingMenu.astro";
+import PricingMenu from "../components/landing/pricingMenu/PricingMenu.astro";
+import Footer from "../components/landing/Footer.astro";
 import Ubication from "../components/landing/Ubication.astro";
 ---
 
 <BaseLayout title="Lienzo Lima">
+  <Navbar />
   <main>
-    <div class="top-container">
-      <div class="svg-background">
-        <HeroBackground />
-      </div>
-      <Navbar />
-      <Hero />
-    </div>
+    <Hero />
     <AboutUs />
     <WhyUs />
-    <div class="menu-container">
-      <div class="menu-bg">
-        <MenuBackground />
-      </div>
-      <PricingMenu />
-    </div>
+    <PricingMenu />
     <Ubication />
   </main>
+  <Footer />
 </BaseLayout>
-
-<style>
-  .top-container {
-    position: relative;
-  }
-
-  .svg-background {
-    position: absolute;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: -1;
-  }
-
-  .svg-background :global(svg) {
-    width: 105%;
-    height: 100%;
-  }
-
-  .menu-container {
-    position: relative;
-  }
-
-  .menu-bg {
-    position: absolute;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: -1;
-  }
-
-  .menu-bg :global(svg) {
-    width: 100%;
-    height: auto;
-  }
-
-  @media (max-width: 650px) {
-    .menu-bg :global(svg) {
-      width: 140%;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .menu-bg :global(svg) {
-      width: 200%;
-    }
-  }
-</style>
