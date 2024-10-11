@@ -1,0 +1,78 @@
+---
+import Blob1 from "../svgs/Blob1.astro";
+import Blob2 from "../svgs/Blob2.astro";
+import Blob3 from "../svgs/Blob3.astro";
+---
+
+<section class="wrapper">
+  <div class="info">
+    <h2>Conoce acerca de nosotros</h2>
+    <p>
+      En LIENZO Estudio, creemos que cada detalle cuenta. Somos un estudio de
+      uñas comprometido con ofrecerte no solo los mejores diseños, sino también
+      una experiencia relajante y personalizada. Nuestro equipo de profesionales
+      se dedica a cuidar de tus uñas con productos de alta calidad y las últimas
+      tendencias.
+    </p>
+  </div>
+  <div class="images">
+    <Blob1 imgSrc="/imgs/nails/nails1.webp" />
+    <Blob2 imgSrc="/imgs/nails/nails2.webp" />
+    <Blob3 imgSrc="/imgs/nails/nails3.webp" />
+  </div>
+</section>
+
+<style>
+  section {
+    padding-block: 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .info {
+    display: flex;
+    gap: 2rem;
+    color: var(--font-color-500);
+  }
+
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    flex: 4;
+  }
+
+  p {
+    flex: 5;
+  }
+
+  .images {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .images :global(svg) {
+    max-width: 300px;
+    height: min-content;
+  }
+
+  @media (max-width: 768px) {
+    .info {
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .images {
+      margin: 0 auto;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .images :global(svg) {
+      max-width: 250px;
+    }
+  }
+</style>

@@ -1,14 +1,41 @@
 ---
+import Navbar from "../components/landing/Navbar.astro";
+import Hero from "../components/landing/Hero.astro";
+import AboutUs from "../components/landing/AboutUs.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import HeroBackground from "../components/svgs/HeroBackground.astro";
 ---
 
 <BaseLayout title="Lienzo Lima">
-  <main class="wrapper">
-    <h1>Test</h1>
-    <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis a,
-      maxime enim harum laudantium unde, aliquid odit in quae ea sit, asperiores
-      veritatis illum? Dolore quae cumque sapiente quaerat sint.
-    </p>
+  <main>
+    <div class="top-container">
+      <div class="svg-background">
+        <HeroBackground />
+      </div>
+      <Navbar />
+      <Hero />
+    </div>
+    <AboutUs />
   </main>
 </BaseLayout>
+
+<style>
+  .top-container {
+    position: relative;
+  }
+
+  .svg-background {
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+  .svg-background :global(svg) {
+    width: 105%;
+    height: 100%;
+  }
+</style>

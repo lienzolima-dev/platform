@@ -13,6 +13,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: inherit;
 }
 
 :root {
@@ -49,7 +50,8 @@
   --button-text: 0.75rem;
   --link-text: 1rem;
 
-  --font-heading: "Playfair Display Variable", sans-serif;
+  /* --font-heading: "Playfair Display Variable", sans-serif; */
+  --font-heading: "Poppins", sans-serif;
   --font-body: "Poppins", sans-serif;
   --section-spacing: 3rem;
 
@@ -148,15 +150,15 @@ h6 {
 
 .btn,
 button {
-  background-color: #ffd64f;
+  background-color: var(--secondary-400);
   font-weight: normal;
-  font-size: 0.875rem;
   outline: none;
   border: none;
   padding: 0.5rem 16px;
   cursor: pointer;
-  line-height: 19px;
-  letter-spacing: 0.04rem;
+  border-radius: 100px;
+  font-weight: 700;
+  color: var(--primary-400);
 }
 
 form {
