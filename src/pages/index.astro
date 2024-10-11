@@ -1,23 +1,17 @@
 ---
 import Navbar from "../components/landing/Navbar.astro";
-import Hero from "../components/landing/Hero.astro";
+import Hero from "../components/landing/hero/Hero.astro";
 import AboutUs from "../components/landing/AboutUs.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import HeroBackground from "../components/svgs/HeroBackground.astro";
 import WhyUs from "../components/landing/WhyUs.astro";
 import MenuBackground from "../components/svgs/MenuBackground.astro";
 import PricingMenu from "../components/landing/PricingMenu.astro";
 ---
 
 <BaseLayout title="Lienzo Lima">
+  <Navbar />
   <main>
-    <div class="top-container">
-      <div class="svg-background">
-        <HeroBackground />
-      </div>
-      <Navbar />
-      <Hero />
-    </div>
+    <Hero />
     <AboutUs />
     <WhyUs />
     <div class="menu-container">
@@ -30,25 +24,6 @@ import PricingMenu from "../components/landing/PricingMenu.astro";
 </BaseLayout>
 
 <style>
-  .top-container {
-    position: relative;
-  }
-
-  .svg-background {
-    position: absolute;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: -1;
-  }
-
-  .svg-background :global(svg) {
-    width: 105%;
-    height: 100%;
-  }
-
   .menu-container {
     position: relative;
   }
