@@ -1,0 +1,271 @@
+---
+import Blob2 from "../svgs/Blob2.astro";
+import Blob3 from "../svgs/Blob3.astro";
+---
+
+<section class="menu wrapper">
+  <h1>Menú de precios</h1>
+  <div class="menu-content">
+    <div class="container">
+      <div class="image-container">
+        <Blob3 imgSrc="/imgs/nails/nails4.jpeg" />
+      </div>
+      <div class="content-container">
+        <h2>Sistemas y Uña natural</h2>
+        <ul class="pricing-list">
+          <li class="pricing-item">
+            <span>Sistema acrílico con tips</span>
+            <span class="price">s/75.90</span>
+          </li>
+          <li class="pricing-item">
+            <span>Sistema softgel</span>
+            <span class="price">s/69.90</span>
+          </li>
+          <li class="pricing-item">
+            <span>Esmaltado gel</span>
+            <span class="price">s/44.90</span>
+          </li>
+          <li class="pricing-item">
+            <span>Esmaltado Rubber</span>
+            <span class="price">s/64.90</span>
+          </li>
+        </ul>
+        <button class="cta-button">Reserva ahora</button>
+      </div>
+    </div>
+  </div>
+  <div class="menu-content">
+    <div class="container reverse">
+      <div class="image-container rev">
+        <Blob2 imgSrc="/imgs/nails/nails5.jpeg" />
+      </div>
+      <div class="content-container">
+        <h2>Retiros y Retoques</h2>
+        <ul class="pricing-list">
+          <li class="pricing-item">
+            <span>Retiro de sistema acrílico o softgel</span>
+            <span class="price">s/39.90</span>
+          </li>
+          <li class="pricing-item">
+            <span>Retiro de esmaltado gel</span>
+            <span class="price">s/19.90</span>
+          </li>
+          <li class="pricing-item">
+            <span>Retiro de esmaltado Rubber</span>
+            <span class="price">s/25.90</span>
+          </li>
+          <li class="pricing-item">
+            <span>Retoque de sistema acrílico o softgel</span>
+            <span class="price">s/64.90</span>
+          </li>
+          <li class="pricing-item">
+            <span>Retoque de esmaltado Rubber</span>
+            <span class="price">s/59.90</span>
+          </li>
+        </ul>
+        <button class="cta-button">Reserva ahora</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .menu {
+    padding-block: 3rem;
+  }
+
+  .menu h1{
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    color: var(--font-color-400);
+    margin-bottom: 2rem;
+  }
+
+  .menu-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .container {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .reverse {
+    flex-direction: row-reverse;
+  }
+
+  .image-container {
+    flex: 1;
+    width: 50%;
+    padding: 0 2rem;
+  }
+
+  .rev {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .content-container {
+    flex: 1;
+    max-width: 50%;
+    padding: 2rem;
+    color: var(--font-color-400);
+    position: relative;
+  }
+
+  .content-container h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  .pricing-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .pricing-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    position: relative;
+    text-align: left;
+  }
+
+  .pricing-item::after {
+    content: "";
+    height: 1px;
+    background-color: black;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -5px;
+    opacity: 0.5;
+  }
+
+  .price {
+    font-size: 1.2rem;
+    color: var(--font-color-400);
+  }
+
+  .cta-button {
+    background-color: var(--primary-400);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    margin-top: 2rem;
+    cursor: pointer;
+    border-radius: 25px;
+    transition: ease 0.3s;
+  }
+
+  .cta-button:hover {
+    background-color: var(--primary-500);
+  }
+
+  @media (max-width: 1024px) {
+    .content-container h1 {
+      font-size: 2rem;
+    }
+
+    .pricing-item {
+      font-size: 1rem;
+    }
+
+    .cta-button {
+      font-size: 1rem;
+      padding: 0.8rem 1.5rem;
+    }
+  }
+
+  @media (max-width: 830px) {
+    .image-container {
+      display: none;
+    }
+
+    .content-container {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+
+    .image-container,
+    .content-container {
+      max-width: 100%;
+      padding: 1.5rem;
+    }
+
+    .content-container h1 {
+      font-size: 1.8rem;
+    }
+
+    .description {
+      font-size: 0.9rem;
+    }
+
+    .pricing-item {
+      font-size: 1rem;
+    }
+
+    .pricing-item::after {
+      bottom: -2px;
+    }
+
+    .cta-button {
+      font-size: 0.9rem;
+      padding: 0.6rem 1.2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .pricing-section {
+      padding: 2rem;
+    }
+
+    .container {
+      flex-direction: column;
+      padding: 1rem;
+    }
+
+    .image-container {
+      padding: 0;
+    }
+
+    .content-container {
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .content-container h1 {
+      font-size: 1.5rem;
+    }
+
+    .description {
+      font-size: 0.8rem;
+    }
+
+    .pricing-item {
+      font-size: 0.9rem;
+    }
+
+    .cta-button {
+      font-size: 0.8rem;
+      padding: 0.5rem 1rem;
+    }
+  }
+</style>

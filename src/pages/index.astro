@@ -6,7 +6,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import HeroBackground from "../components/svgs/HeroBackground.astro";
 import WhyUs from "../components/landing/WhyUs.astro";
 import MenuBackground from "../components/svgs/MenuBackground.astro";
-import Menu from "../components/landing/Menu.astro";
+import PricingMenu from "../components/landing/PricingMenu.astro";
 ---
 
 <BaseLayout title="Lienzo Lima">
@@ -19,6 +19,13 @@ import Menu from "../components/landing/Menu.astro";
       <Hero />
     </div>
     <AboutUs />
+    <WhyUs />
+    <div class="menu-container">
+      <div class="menu-bg">
+        <MenuBackground />
+      </div>
+      <PricingMenu />
+    </div>
   </main>
 </BaseLayout>
 
@@ -41,9 +48,7 @@ import Menu from "../components/landing/Menu.astro";
     width: 105%;
     height: 100%;
   }
-</style>
-
-<style>
+  
   .menu-container {
     position: relative;
   }
@@ -59,8 +64,20 @@ import Menu from "../components/landing/Menu.astro";
   }
 
   .menu-bg :global(svg) {
-    width: 100vw;
+    width: 100%;
     height: auto;
+  }
+
+  @media (max-width: 650px) {
+    .menu-bg :global(svg) {
+      width: 140%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .menu-bg :global(svg) {
+      width: 200%;
+    }
   }
 
 </style>
