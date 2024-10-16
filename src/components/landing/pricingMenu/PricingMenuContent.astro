@@ -3,12 +3,12 @@ import Blob2 from "../../svgs/Blob2.astro";
 import Blob3 from "../../svgs/Blob3.astro";
 ---
 
-<section class="menu wrapper">
+<section class="menu wrapper" id="precios">
   <h1>Menú de precios</h1>
   <div class="menu-content">
     <div class="container">
       <div class="image-container">
-        <Blob3 imgSrc="/imgs/nails/nails4.jpeg" />
+        <Blob3 imgSrc="/imgs/nails/nails4.webp" />
       </div>
       <div class="content-container">
         <h2>Sistemas y Uña natural</h2>
@@ -30,14 +30,19 @@ import Blob3 from "../../svgs/Blob3.astro";
             <span class="price">s/64.90</span>
           </li>
         </ul>
-        <button class="cta-button">Reserva ahora</button>
+        <a
+          class="cta-button btn"
+          href="https://www.instagram.com/direct/t/17847974024874194"
+        >
+          Reserva ahora
+        </a>
       </div>
     </div>
   </div>
   <div class="menu-content">
     <div class="container reverse">
       <div class="image-container rev">
-        <Blob2 imgSrc="/imgs/nails/nails5.jpeg" />
+        <Blob2 imgSrc="/imgs/nails/nails5.webp" />
       </div>
       <div class="content-container">
         <h2>Retiros y Retoques</h2>
@@ -63,7 +68,12 @@ import Blob3 from "../../svgs/Blob3.astro";
             <span class="price">s/59.90</span>
           </li>
         </ul>
-        <button class="cta-button">Reserva ahora</button>
+        <a
+          class="btn cta-button"
+          href="https://www.instagram.com/direct/t/17847974024874194"
+        >
+          Reserva ahora
+        </a>
       </div>
     </div>
   </div>
@@ -159,6 +169,7 @@ import Blob3 from "../../svgs/Blob3.astro";
   }
 
   .cta-button {
+    display: inline-block;
     background-color: var(--primary-400);
     color: white;
     border: none;

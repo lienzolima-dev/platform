@@ -6,7 +6,7 @@ import IconUbication from "../svgs/IconUbication.astro";
 import IconClock from "../svgs/IconClock.astro";
 ---
 
-<section class="container wrapper">
+<section class="container wrapper" id="ubicanos">
   <div class="title-section">
     <LeftSpikes />
     <h1 class="title-ubication">Ubícanos</h1>
@@ -180,6 +180,19 @@ import IconClock from "../svgs/IconClock.astro";
   @media (max-width: 480px) {
     .image-container {
       height: 300px;
+    }
+
+    .content {
+      gap: 0rem;
+    }
+
+    .box h4 {
+      margin: 0.5rem 0;
+    }
+
+    .box :global(svg) {
+      width: 15%;
+      height: auto;
     }
   }
 </style>
