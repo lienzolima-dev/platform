@@ -1,6 +1,10 @@
 ---
 import LogoWhite from "../svgs/LogoWhite.astro";
 
+// TODO: Get this from top-level Astro component
+const user = Astro.locals.user;
+const isLoggedIn = user !== undefined;
+
 const navList = [
   { name: "Sobre nosotros", link: "/#sobre-nosotros" },
   { name: "Servicios", link: "/#servicios" },
@@ -40,7 +44,17 @@ function isActive(link: string) {
       <span class="bar"></span>
       <span class="bar"></span>
     </label>
-    <!-- <button>Loguéate</button> -->
+    {
+      isLoggedIn ? (
+        <a class="btn" href="/logout">
+          Salir
+        </a>
+      ) : (
+        <a class="btn" href="/login">
+          Loguéate
+        </a>
+      )
+    }
   </div>
 </header>
 
