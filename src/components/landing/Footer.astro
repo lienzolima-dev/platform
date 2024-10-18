@@ -2,7 +2,7 @@
 import FooterWaveSeparator from "../svgs/FooterWaveSeparator.astro";
 import LogoWhite from "../svgs/LogoWhite.astro";
 import InstagramLogo from "../svgs/InstagramLogo.astro";
-import WhatsAppLogo from "../svgs/WhatsAppLogo.astro";
+import TikTokLogo from "../svgs/TikTokLogo.astro";
 ---
 
 <div class="svg-footer-separator">
@@ -16,16 +16,34 @@ import WhatsAppLogo from "../svgs/WhatsAppLogo.astro";
     <div class="links">
       <h2 class="title">Nosostros</h2>
       <ul>
-        <li><a href="#">Sobre nosotros</a></li>
-        <li><a href="#">Ubícanos</a></li>
-        <li><a href="#">Galería</a></li>
+        <li><a href="#sobre-nosotros">Sobre nosotros</a></li>
+        <li>
+          <a href="https://maps.app.goo.gl/Lx66coYMtVxavnRz7" target="_blank">
+            Ubícanos
+          </a>
+        </li>
+        <!-- <li><a href="#">Galería</a></li> -->
       </ul>
     </div>
-    <div class="links">
+    <div class="links wraper">
       <h2 class="title">Servicios</h2>
       <ul>
-        <li><a href="#">Promociones</a></li>
-        <li><a href="#">Reservas</a></li>
+        <li>
+          <a href="https://www.instagram.com/direct/t/17847974024874194">
+            Promociones
+          </a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/direct/t/17847974024874194">
+            Reservas
+          </a>
+        </li>
+        <li>
+          <a href="politica-de-privavidad">Política de privacidad</a>
+        </li>
+        <li>
+          <a href="#">Libro de raclamos</a>
+        </li>
       </ul>
     </div>
     <div class="links">
@@ -41,16 +59,31 @@ import WhatsAppLogo from "../svgs/WhatsAppLogo.astro";
         <li><span>Sábados: 10:00 - 20:00</span></li>
       </ul>
       <div class="social">
-        <InstagramLogo />
-        <WhatsAppLogo />
+        <a
+          href="https://www.instagram.com/lienzo.lima/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <InstagramLogo />
+        </a>
+        <a
+          href="https://www.tiktok.com/@lienzo.miraflores?lang=es"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <TikTokLogo />
+        </a>
       </div>
     </div>
+  </div>
+  <div class="bottom">
+    <span>© 2021 Lienzo Lima. Todos los derechos reservados.</span>
   </div>
 </footer>
 
 <style>
   .svg-footer-separator {
-    margin-top: 2rem;
+    margin-top: 1rem;
     display: flex;
   }
 
@@ -71,9 +104,7 @@ import WhatsAppLogo from "../svgs/WhatsAppLogo.astro";
     gap: 1rem;
     justify-content: space-between;
     padding-top: var(--section-spacing);
-    padding-bottom: var(--section-spacing);
     flex-wrap: wrap;
-    /* padding-bottom: 1rem; */
   }
 
   h2 {
@@ -111,6 +142,13 @@ import WhatsAppLogo from "../svgs/WhatsAppLogo.astro";
     margin-left: auto;
     display: flex;
     gap: 1rem;
+  }
+
+  .bottom {
+    background-color: var(--tertiary-500);
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
   }
 
   @media (max-width: 768px) {

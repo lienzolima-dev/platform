@@ -1,0 +1,9 @@
+---
+import "../../../css/baseMarkdown.css";
+import { marked } from "marked";
+
+const content = await Astro.glob("./content.md");
+const htmlContent = marked.parse(content[0].rawContent());
+---
+
+<article class="markdown" set:html={htmlContent} />
