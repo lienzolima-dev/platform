@@ -30,14 +30,6 @@ export async function GET(context: APIContext): Promise<Response> {
   }
 
   try {
-    // TODO: move this to a utility function to the get the client ID and secret
-    const GOOGLE_CLIENT_ID = import.meta.env.GOOGLE_CLIENT_ID;
-    const GOOGLE_CLIENT_SECRET = import.meta.env.GOOGLE_CLIENT_SECRET;
-
-    if (!GOOGLE_CLIENT_ID) throw new Error("GOOGLE_CLIENT_ID is not set");
-    if (!GOOGLE_CLIENT_SECRET)
-      throw new Error("GOOGLE_CLIENT_SECRET is not set");
-
     const tokens = await google.validateAuthorizationCode(code, codeVerifier);
     const response = await fetch(
       "https://openidconnect.googleapis.com/v1/userinfo",
