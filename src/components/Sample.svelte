@@ -12,6 +12,6 @@
   }
 </script>
 
-<h1>Svelte Sample</h1>
+<h1>Svelte Sample, test</h1>
 <h2>{counter}</h2>
 <button onclick={handleClick}>Click</button>
