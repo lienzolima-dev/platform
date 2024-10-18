@@ -46,4 +46,4 @@ jobs:
           rm -rf .gitignore
           git add dist/
           git commit -m "Deploy build from main"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/your-org/your-repo.git deploy-dist --force
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/lienzolima-dev/platform.git deploy-dist --force
