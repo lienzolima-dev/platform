@@ -1,0 +1,8 @@
+---
+import { db } from "../db/db";
+import { users } from "../db/schemas/users";
+
+const user = await db.select().from(users).all();
+---
+
+{user.map((user) => <p>{JSON.stringify(user)}</p>)}
