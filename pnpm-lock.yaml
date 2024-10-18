@@ -18,34 +18,34 @@ importers:
         specifier: 5.7.1
         version: 5.7.1(astro@4.15.9(@types/node@22.7.5)(rollup@4.22.4)(typescript@5.6.2))(svelte@5.0.0-next.257)(typescript@5.6.2)(vite@5.4.8(@types/node@22.7.5))
       '@fontsource-variable/playfair-display':
-        specifier: ^5.1.0
+        specifier: 5.1.0
         version: 5.1.0
       '@fontsource/poppins':
-        specifier: ^5.1.0
+        specifier: 5.1.0
         version: 5.1.0
       '@libsql/client':
         specifier: ^0.14.0
         version: 0.14.0
       '@lucia-auth/adapter-drizzle':
-        specifier: ^1.1.0
+        specifier: 1.1.0
         version: 1.1.0(drizzle-orm@0.34.1(@libsql/client@0.14.0))(lucia@3.2.1)
       arctic:
-        specifier: ^1.9.2
+        specifier: 1.9.2
         version: 1.9.2
       astro:
         specifier: 4.15.9
         version: 4.15.9(@types/node@22.7.5)(rollup@4.22.4)(typescript@5.6.2)
       dotenv:
-        specifier: ^16.4.5
+        specifier: 16.4.5
         version: 16.4.5
       drizzle-orm:
-        specifier: ^0.34.1
+        specifier: 0.34.1
         version: 0.34.1(@libsql/client@0.14.0)
       lucia:
-        specifier: ^3.2.1
+        specifier: 3.2.1
         version: 3.2.1
       marked:
-        specifier: ^14.1.3
+        specifier: 14.1.3
         version: 14.1.3
       svelte:
         specifier: 5.0.0-next.257
@@ -54,14 +54,14 @@ importers:
         specifier: 5.6.2
         version: 5.6.2
       ulid:
-        specifier: ^2.3.0
+        specifier: 2.3.0
         version: 2.3.0
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.2
         version: 1.9.2
       drizzle-kit:
-        specifier: ^0.25.0
+        specifier: 0.25.0
         version: 0.25.0
       prettier:
         specifier: 3.3.3
@@ -73,7 +73,7 @@ importers:
         specifier: 3.2.7
         version: 3.2.7(prettier@3.3.3)(svelte@5.0.0-next.257)
       tsx:
-        specifier: ^4.19.1
+        specifier: 4.19.1
         version: 4.19.1
 
 packages:

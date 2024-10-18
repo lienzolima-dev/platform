@@ -1,0 +1,53 @@
+---
+import Navbar from "../components/landing/Navbar.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Footer from "../components/landing/Footer.astro";
+import GoogleButton from "../components/landing/login/GoogleButton.astro";
+---
+
+<BaseLayout title="Iniciar sesión - Lienzo Lima">
+  <Navbar />
+  <main class="wrapper login-page">
+    <section class="login-section">
+      <h1>Inicia sesión</h1>
+      <p>Accede a tu cuenta usando Google.</p>
+      <GoogleButton />
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  main {
+    padding-block: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+  }
+
+  .login-section {
+    text-align: center;
+    background-color: #f9f9f9b7;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+    max-width: 400px;
+    width: 100%;
+  }
+
+  .login-section h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .login-section p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .login-section .google-button {
+    display: inline-block;
+    margin: 0 auto;
+  }
+</style>
