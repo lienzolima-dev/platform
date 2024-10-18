@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install Dependencies
+        run: pnpm i
+
+      - name: Run Checks
+        run: pnpm check:format
+
+      - name: Build
+        run: pnpm astro build
+
+      - name: Deploy to deploy-dist branch
+        run: |
+          git config --global user.email "GitHub Actions"
+          git config --global user.name "action@github.com"
+          git checkout -b deploy-dist
+          rm -rf .gitignore
+          git add dist/
+          git commit -m "Deploy build from main"
+          git push origin deploy-dist --force
