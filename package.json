@@ -13,7 +13,8 @@
     "format": "pnpm format:biome && pnpm format:prettier",
     "check:format:prettier": "prettier --check --plugin prettier-plugin-astro --plugin prettier-plugin-svelte . \"!./.db\"",
     "check:format:biome": "pnpm biome format .",
-    "check:format": "pnpm check:format:biome && pnpm check:format:prettier"
+    "check:format": "pnpm check:format:biome && pnpm check:format:prettier",
+    "check": "pnpm check:format && astro check"
   },
   "dependencies": {
     "@astrojs/check": "0.9.3",

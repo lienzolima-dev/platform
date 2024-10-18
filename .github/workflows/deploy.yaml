@@ -1,15 +1,17 @@
-name: CI
+name: Branch Deploy
 
 on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
   push:
-    branches:
-      - main
-  pull_request:
     branches:
       - main
 
 jobs:
   branch-deploy:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -42,7 +44,12 @@ jobs:
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Actions"
-          git checkout -b deploy-dist
+          # Check out the deploy-dist branch or create it if it doesn't exist
+          git fetch origin deploy-dist || true
+          git checkout -b deploy-dist || git checkout deploy-dist
+          # Reset deploy-dist to match the main branch
+          git reset --hard origin/main
+          # Add the dist folder and commit
           rm -rf .gitignore
           git add dist/
           git commit -m "Deploy build from main"
