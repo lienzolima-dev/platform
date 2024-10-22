@@ -1,17 +1,15 @@
-name: Branch Deploy
+name: CI
 
 on:
-  workflow_run:
-    workflows: ["CI"]
-    types:
-      - completed
   push:
+    branches:
+      - main
+  pull_request:
     branches:
       - main
 
 jobs:
-  branch-deploy:
-    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+  Checks:
     runs-on: ubuntu-latest
 
     steps:
@@ -33,7 +31,39 @@ jobs:
         run: pnpm i
 
       - name: Run Checks
+        run: pnpm check
+
+  branch-deploy:
+    needs: [Checks]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install Dependencies
+        run: pnpm i
+
+      - name: Run Checks
         run: pnpm check:format
+
+      - name: Add env variables
+        run: |
+          echo "DB_FILE_NAME=${{ secrets.DB_FILE_NAME }}" >> .env
+          echo "DB_URGOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
+          echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
 
       - name: Build
         run: pnpm astro build

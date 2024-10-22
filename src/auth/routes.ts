@@ -3,6 +3,8 @@
  */
 const publicRoutePatterns = [
   /^\/$/, // Matches "/"
+  /^\/libro-de-reclamos$/, // Matches "/libro-de-reclamos"
+  /^\/politica-de-privacidad$/, // Matches "/politica-de-privacidad"
   /^\/login(\/.*)?$/, // Matches "/login" and any subroutes under it
   /^\/home(\/.*)?$/, // Matches "/home" and any subroutes under it
   /^\/imgs(\/.*)?$/, // Matches "/imgs" and any subroutes under it

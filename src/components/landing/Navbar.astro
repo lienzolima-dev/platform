@@ -5,22 +5,42 @@ import LogoWhite from "../svgs/LogoWhite.astro";
 const user = Astro.locals.user;
 const isLoggedIn = user !== undefined;
 
+function isActive(link: string) {
+  const url = Astro.request.url;
+  return url.includes(link);
+}
+
+function isHome() {
+  const url = new URL(Astro.request.url);
+  return url.pathname === "/home";
+}
+
+function genTitleHashLink(path: string, isHome: boolean): string {
+  return isHome ? `#${path}` : `/#${path}`;
+}
+
 const navList = [
-  { name: "Sobre nosotros", link: "/#sobre-nosotros" },
-  { name: "Servicios", link: "/#servicios" },
-  { name: "Precios", link: "/#precios" },
-  { name: "Ubícanos", link: "/#ubicanos" },
+  {
+    name: "Sobre nosotros",
+    link: genTitleHashLink("sobre-nosotros", isHome()),
+  },
+  {
+    name: "Servicios",
+    link: genTitleHashLink("servicios", isHome()),
+  },
+  {
+    name: "Precios",
+    link: genTitleHashLink("precios", isHome()),
+  },
+  {
+    name: "Ubícanos",
+    link: genTitleHashLink("ubicanos", isHome()),
+  },
   {
     name: "Reservas",
     link: "https://www.instagram.com/direct/t/17847974024874194",
   },
 ];
-
-const url = Astro.request.url;
-
-function isActive(link: string) {
-  return url.includes(link);
-}
 ---
 
 <div class="spacer"></div>
@@ -145,6 +165,7 @@ function isActive(link: string) {
 
   .active {
     color: var(--primary-500);
+    padding: 200rem;
     text-decoration: underline;
   }
 

@@ -159,9 +159,6 @@ import NailPolish from "../svgs/NailPolish.astro";
     justify-content: center;
     align-items: center;
     padding: 0.5rem;
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
   }
 
   .content {
@@ -185,10 +182,10 @@ import NailPolish from "../svgs/NailPolish.astro";
     display: grid;
     grid-template-rows: auto auto;
     justify-items: center;
+    row-gap: 1.5rem;
     text-align: center;
     align-items: center;
     width: 100%;
-    height: 70%;
   }
 
   .text-content h3 {
@@ -261,8 +258,8 @@ import NailPolish from "../svgs/NailPolish.astro";
   }
 
   .booking-btn {
-    background-color: var(--tertiary-400);
-    color: white;
+    background-color: var(--secondary-400);
+    color: var(--primary-400);
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
     border: none;
@@ -280,14 +277,6 @@ import NailPolish from "../svgs/NailPolish.astro";
     justify-content: center;
     align-items: center;
     grid-row: 4;
-  }
-
-  .box1:hover,
-  .box2:hover,
-  .box3:hover,
-  .box4:hover,
-  .central:hover {
-    transform: scale(1.05);
   }
 
   @media (min-width: 1300px) {
@@ -317,13 +306,12 @@ import NailPolish from "../svgs/NailPolish.astro";
     }
 
     .text-content {
-      grid-template-rows: repeat(2, 1fr);
+      display: flex;
       height: 100%;
     }
 
     .text-content h3 {
       font-size: 1.2rem;
-      margin-bottom: 0.25rem;
     }
 
     .text-content p {

@@ -82,7 +82,6 @@ export const onRequest = defineMiddleware(
     const sessionID = context.cookies.get(lucia.sessionCookieName)?.value;
 
     if (sessionID) {
-      console.log("Session ID exists:", sessionID);
       // If a session ID exists, validate it
       const { session, user: auth } = await lucia.validateSession(sessionID);
       if (session) {
@@ -115,11 +114,9 @@ export const onRequest = defineMiddleware(
       });
     }
 
-    console.log("No session ID found");
     // If no session ID exists, check if the requested route is public
     if (isPublicRoute(urlPath)) {
       // For public routes, proceed with the request
-      console.log("Public route:", urlPath);
       return next();
     }
 
