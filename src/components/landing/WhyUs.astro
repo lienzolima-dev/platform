@@ -10,7 +10,9 @@ import NailPolish from "../svgs/NailPolish.astro";
 <section class="container wrapper">
   <div class="title-section">
     <LeftSpikes />
-    <h1 class="title-diference">¿Por qué elegirnos?</h1>
+    <h1 class="title-diference" data-aos="fade-up" data-aos-duration="600">
+      ¿Por qué elegirnos?
+    </h1>
     <RightSpikes />
   </div>
 
@@ -23,7 +25,7 @@ import NailPolish from "../svgs/NailPolish.astro";
 
   <div class="wrapper-boxes">
     <div class="container-boxes">
-      <div class="box box1">
+      <div class="box box1" data-aos="fade-up" data-aos-duration="700">
         <BoxShape1 />
         <div class="content">
           <div class="number">
@@ -38,7 +40,7 @@ import NailPolish from "../svgs/NailPolish.astro";
           </div>
         </div>
       </div>
-      <div class="box box2">
+      <div class="box box2" data-aos="fade-up" data-aos-duration="800">
         <BoxShape1 />
         <div class="content">
           <div class="number">
@@ -53,7 +55,7 @@ import NailPolish from "../svgs/NailPolish.astro";
           </div>
         </div>
       </div>
-      <div class="box central">
+      <div class="box central" data-aos="fade-up" data-aos-duration="900">
         <BoxShape2 />
         <div class="content cont-central">
           <div class="booking-content">
@@ -74,7 +76,7 @@ import NailPolish from "../svgs/NailPolish.astro";
           </div>
         </div>
       </div>
-      <div class="box box3">
+      <div class="box box3" data-aos="fade-up" data-aos-duration="700">
         <BoxShape1 />
         <div class="content">
           <div class="number">
@@ -89,7 +91,7 @@ import NailPolish from "../svgs/NailPolish.astro";
           </div>
         </div>
       </div>
-      <div class="box box4">
+      <div class="box box4" data-aos="fade-up" data-aos-duration="800">
         <BoxShape1 />
         <div class="content">
           <div class="number">
@@ -172,6 +174,7 @@ import NailPolish from "../svgs/NailPolish.astro";
     height: 100%;
     padding: 2rem;
     box-sizing: border-box;
+    gap: 0.5rem;
   }
 
   .cont-central {
@@ -306,8 +309,7 @@ import NailPolish from "../svgs/NailPolish.astro";
     }
 
     .text-content {
-      display: flex;
-      height: 100%;
+      row-gap: 0.5rem;
     }
 
     .text-content h3 {
@@ -339,11 +341,6 @@ import NailPolish from "../svgs/NailPolish.astro";
     .content {
       padding: 1rem;
       box-sizing: border-box;
-    }
-
-    .text-content {
-      height: 100%;
-      overflow: hidden;
     }
 
     .text-content h3 {

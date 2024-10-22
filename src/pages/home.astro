@@ -1,4 +1,5 @@
 ---
+import "aos/dist/aos.css";
 import Navbar from "../components/landing/Navbar.astro";
 import Hero from "../components/landing/hero/Hero.astro";
 import AboutUs from "../components/landing/AboutUs.astro";
@@ -22,3 +23,12 @@ import Services from "../components/landing/Services.astro";
   </main>
   <Footer />
 </BaseLayout>
+
+<script>
+  import "aos/dist/aos.js";
+  import AOS from "aos";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    AOS.init();
+  });
+</script>
