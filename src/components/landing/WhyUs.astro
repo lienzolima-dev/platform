@@ -5,14 +5,13 @@ import BoxNumber from "../svgs/BoxNumber.astro";
 import LeftSpikes from "../svgs/LeftSpikes.astro";
 import RightSpikes from "../svgs/RightSpikes.astro";
 import NailPolish from "../svgs/NailPolish.astro";
+import { instagramDirectMessageUrl } from "../../utils/global";
 ---
 
 <section class="container wrapper">
   <div class="title-section">
     <LeftSpikes />
-    <h1 class="title-diference" data-aos="fade-up" data-aos-duration="600">
-      ¿Por qué elegirnos?
-    </h1>
+    <h1 class="title-diference">¿Por qué elegirnos?</h1>
     <RightSpikes />
   </div>
 
@@ -23,9 +22,9 @@ import NailPolish from "../svgs/NailPolish.astro";
     el cuidado de tus uñas:
   </p>
 
-  <div class="wrapper-boxes">
+  <div class="wrapper-boxes" data-aos="fade-up" data-aos-duration="700">
     <div class="container-boxes">
-      <div class="box box1" data-aos="fade-up" data-aos-duration="700">
+      <div class="box box1">
         <BoxShape1 />
         <div class="content">
           <div class="number">
@@ -40,7 +39,7 @@ import NailPolish from "../svgs/NailPolish.astro";
           </div>
         </div>
       </div>
-      <div class="box box2" data-aos="fade-up" data-aos-duration="800">
+      <div class="box box2">
         <BoxShape1 />
         <div class="content">
           <div class="number">
@@ -55,7 +54,7 @@ import NailPolish from "../svgs/NailPolish.astro";
           </div>
         </div>
       </div>
-      <div class="box central" data-aos="fade-up" data-aos-duration="900">
+      <div class="box central">
         <BoxShape2 />
         <div class="content cont-central">
           <div class="booking-content">
@@ -64,10 +63,7 @@ import NailPolish from "../svgs/NailPolish.astro";
               Reserva tu cita con LIENZO Estudio y disfruta de una experiencia
               única y estilizada.
             </p>
-            <a
-              href="https://www.instagram.com/direct/t/17847974024874194"
-              class="booking-btn btn"
-            >
+            <a href={instagramDirectMessageUrl} class="booking-btn btn">
               Reservar una cita
             </a>
             <div class="booking-image">
@@ -76,7 +72,7 @@ import NailPolish from "../svgs/NailPolish.astro";
           </div>
         </div>
       </div>
-      <div class="box box3" data-aos="fade-up" data-aos-duration="700">
+      <div class="box box3">
         <BoxShape1 />
         <div class="content">
           <div class="number">
@@ -91,7 +87,7 @@ import NailPolish from "../svgs/NailPolish.astro";
           </div>
         </div>
       </div>
-      <div class="box box4" data-aos="fade-up" data-aos-duration="800">
+      <div class="box box4">
         <BoxShape1 />
         <div class="content">
           <div class="number">

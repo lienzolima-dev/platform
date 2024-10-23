@@ -3,6 +3,7 @@ import FooterWaveSeparator from "../svgs/FooterWaveSeparator.astro";
 import LogoWhite from "../svgs/LogoWhite.astro";
 import InstagramLogo from "../svgs/InstagramLogo.astro";
 import TikTokLogo from "../svgs/TikTokLogo.astro";
+import { instagramDirectMessageUrl } from "../../utils/global";
 ---
 
 <div class="svg-footer-separator">
@@ -29,14 +30,10 @@ import TikTokLogo from "../svgs/TikTokLogo.astro";
       <h2 class="title">Servicios</h2>
       <ul>
         <li>
-          <a href="https://www.instagram.com/direct/t/17847974024874194">
-            Promociones
-          </a>
+          <a href={instagramDirectMessageUrl}> Promociones </a>
         </li>
         <li>
-          <a href="https://www.instagram.com/direct/t/17847974024874194">
-            Reservas
-          </a>
+          <a href={instagramDirectMessageUrl}> Reservas </a>
         </li>
         <li>
           <a href="/politica-de-privacidad">Política de privacidad</a>

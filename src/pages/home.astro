@@ -29,6 +29,8 @@ import Services from "../components/landing/Services.astro";
   import AOS from "aos";
 
   document.addEventListener("DOMContentLoaded", () => {
-    AOS.init();
+    AOS.init({
+      once: true,
+    });
   });
 </script>
