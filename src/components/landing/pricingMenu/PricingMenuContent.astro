@@ -1,6 +1,7 @@
 ---
 import Blob2 from "../../svgs/Blob2.astro";
 import Blob3 from "../../svgs/Blob3.astro";
+import { instagramDirectMessageUrl } from "../../../utils/global";
 ---
 
 <section class="menu wrapper" id="precios">
@@ -30,10 +31,7 @@ import Blob3 from "../../svgs/Blob3.astro";
             <span class="price">s/64.90</span>
           </li>
         </ul>
-        <a
-          class="cta-button btn"
-          href="https://www.instagram.com/direct/t/17847974024874194"
-        >
+        <a class="cta-button btn" href={instagramDirectMessageUrl}>
           Reserva ahora
         </a>
       </div>
@@ -68,10 +66,7 @@ import Blob3 from "../../svgs/Blob3.astro";
             <span class="price">s/59.90</span>
           </li>
         </ul>
-        <a
-          class="btn cta-button"
-          href="https://www.instagram.com/direct/t/17847974024874194"
-        >
+        <a class="btn cta-button" href={instagramDirectMessageUrl}>
           Reserva ahora
         </a>
       </div>
