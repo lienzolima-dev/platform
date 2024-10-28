@@ -1,0 +1,17 @@
+---
+import { ipBucket } from "../utils/rate-limit";
+
+let tooManyRequests = false;
+
+// Example check and consume usage:
+const clientIP = "192.168.1.1";
+if (ipBucket.check(clientIP, 1)) {
+  ipBucket.consume(clientIP, 1);
+} else {
+  console.log("Too many requests");
+  tooManyRequests = true;
+}
+---
+
+<h1>HOLA</h1>
+{tooManyRequests && <p>Too many requests</p>}

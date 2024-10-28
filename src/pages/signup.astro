@@ -1,0 +1,93 @@
+---
+import Navbar from "../components/landing/Navbar.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Footer from "../components/landing/Footer.astro";
+import GoogleButton from "../components/landing/login/GoogleButton.astro";
+import { actions } from "astro:actions";
+import { isInputError } from "astro:actions";
+
+const result = Astro.getActionResult(actions.auth.signup);
+
+let errorMessage = "";
+
+// Check if the result is not an error and redirect to the home page
+if (result && !result.error) {
+  return Astro.redirect("/home");
+}
+
+// Check if the result is an error
+if (result?.error && !isInputError(result?.error)) {
+  errorMessage = result.error.message;
+}
+
+// Check if the result is an input error
+if (isInputError(result?.error)) {
+  for (const issue of result.error.issues) {
+    errorMessage += `${issue.message} `;
+  }
+}
+---
+
+<BaseLayout title="Iniciar sesión - Lienzo Lima">
+  <Navbar />
+  <main class="wrapper login-page">
+    <section class="login-section">
+      <h1>Registrate</h1>
+      <form action={actions.auth.signup} method="post">
+        <label for="username">Nombre de usuario:</label>
+        <input id="username" type="text" name="username" required />
+        <label for="email">Email:</label>
+        <input id="email" type="email" name="email" required />
+        <label for="password">Contraseña:</label>
+        <input id="password" type="password" name="password" required />
+        <label for="passwordConfirm">Confirmar Contraseña:</label>
+        <input
+          id="passwordConfirm"
+          type="password"
+          name="passwordConfirm"
+          required
+        />
+        <button type="submit">Registrase</button>
+      </form>
+      <p>{errorMessage}</p>
+      <p>Continúa usando Google.</p>
+      <GoogleButton />
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  main {
+    padding-block: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+  }
+
+  .login-section {
+    text-align: center;
+    background-color: #f9f9f9b7;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+    max-width: 400px;
+    width: 100%;
+  }
+
+  .login-section h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .login-section p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .login-section .google-button {
+    display: inline-block;
+    margin: 0 auto;
+  }
+</style>

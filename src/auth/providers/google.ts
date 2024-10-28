@@ -1,10 +1,8 @@
 import { Google } from "arctic";
+import { getGoogleClientId, getGoogleClientSecret } from "../../utils/env";
 
-const GOOGLE_CLIENT_ID = import.meta.env.GOOGLE_CLIENT_ID;
-const GOOGLE_CLIENT_SECRET = import.meta.env.GOOGLE_CLIENT_SECRET;
-
-if (!GOOGLE_CLIENT_ID) throw new Error("GOOGLE_CLIENT_ID is not set");
-if (!GOOGLE_CLIENT_SECRET) throw new Error("GOOGLE_CLIENT_SECRET is not set");
+const GOOGLE_CLIENT_ID = getGoogleClientId();
+const GOOGLE_CLIENT_SECRET = getGoogleClientSecret();
 
 const PROD = import.meta.env.PROD;
 const base = PROD ? "https://lienzolima.com" : "http://localhost:4321";
