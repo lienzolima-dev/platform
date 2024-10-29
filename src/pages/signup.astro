@@ -12,7 +12,7 @@ let errorMessage = "";
 
 // Check if the result is not an error and redirect to the home page
 if (result && !result.error) {
-  return Astro.redirect("/home");
+  return Astro.redirect("/verify-your-email/");
 }
 
 // Check if the result is an error
@@ -63,10 +63,10 @@ if (isInputError(result?.error)) {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 80vh;
   }
 
   .login-section {
+    border: 1px solid red;
     text-align: center;
     background-color: #f9f9f9b7;
     padding: 2rem;

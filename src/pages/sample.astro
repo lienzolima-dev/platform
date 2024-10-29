@@ -8,7 +8,7 @@ const clientIP = "192.168.1.1";
 if (ipBucket.check(clientIP, 1)) {
   ipBucket.consume(clientIP, 1);
 } else {
-  console.log("Too many requests");
+  console.log("[LOG]: Too many requests");
   tooManyRequests = true;
 }
 ---

@@ -5,10 +5,8 @@ import { users } from "../../db/schema";
 import { eq } from "drizzle-orm";
 import { hash } from "@node-rs/argon2";
 import { ulid } from "ulid";
-import { Resend } from "resend";
-import { getResendApiKey } from "../../utils/env";
-
-const resend = new Resend(getResendApiKey());
+import { baseUrl } from "../../utils/global";
+import { resend } from "../../resend/client";
 
 export const signup = defineAction({
   accept: "form",
@@ -27,15 +25,14 @@ export const signup = defineAction({
       ),
     password: z
       .string()
-      .min(3, "Password must be at least 3 characters")
-      .max(40, "Password cannot exceed 40 characters"),
+      .min(3, "La contraseña debe tener al menos 3 caracteres")
+      .max(40, "La contraseña no puede exceder los 40 caracteres"),
     passwordConfirm: z
       .string()
-      .min(3, "Password must be at least 3 characters")
-      .max(40, "Password cannot exceed 40 characters"),
+      .min(3, "La contraseña debe tener al menos 3 caracteres")
+      .max(40, "La contraseña no puede exceder los 40 caracteres"),
   }),
   handler: async (input, _ctx) => {
-    console.log("signup", input);
     if (input.password !== input.passwordConfirm) {
       throw new ActionError({
         code: "BAD_REQUEST",
@@ -66,6 +63,10 @@ export const signup = defineAction({
         parallelism: 1,
       });
 
+      // Generate varification code
+      const verificationCode = ulid();
+      const verificationURL = `${baseUrl}/verify-email?code=${verificationCode}`;
+
       // Add user to database
       await db.insert(users).values({
         id: ulid(),
@@ -74,21 +75,20 @@ export const signup = defineAction({
         avatarURL: null,
         passwordHash,
         emailVerified: false,
+        verificationCode,
       });
 
       // Send email verification
       await resend.emails.send({
-        from: "noreplay@lienzolima.com",
-        to: ["vegasfernando2003@gmail.com"],
-        subject: "Verifica tu email",
-        html: `<p>Hola ${input.username}</p>`,
+        from: "noreply@lienzolima.com",
+        to: [input.email],
+        subject: "Lienzo Lima - Verifica tu email",
+        html: `<p>Hola ${input.username}, verifica tu email accediendo al siguiente link:</p>
+               <a href="${verificationURL}">${verificationURL}</a>`,
       });
     } catch (e) {
       console.error(e);
-
-      if (e instanceof ActionError) {
-        throw e;
-      }
+      if (e instanceof ActionError) throw e;
 
       throw new ActionError({
         code: "INTERNAL_SERVER_ERROR",

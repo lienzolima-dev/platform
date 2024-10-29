@@ -3,14 +3,27 @@ import Navbar from "../../components/landing/Navbar.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Footer from "../../components/landing/Footer.astro";
 import GoogleButton from "../../components/landing/login/GoogleButton.astro";
-import { actions } from "astro:actions";
+import { actions, isInputError } from "astro:actions";
 
 const result = Astro.getActionResult(actions.auth.login);
 
 let errorMessage = "";
 
-if (result?.error) {
+// Check if the result is not an error and redirect to the home page
+if (result && !result.error) {
+  return Astro.redirect("/verify-your-email/");
+}
+
+// Check if the result is an error
+if (result?.error && !isInputError(result?.error)) {
   errorMessage = result.error.message;
+}
+
+// Check if the result is an input error
+if (isInputError(result?.error)) {
+  for (const issue of result.error.issues) {
+    errorMessage += `${issue.message} `;
+  }
 }
 ---
 
@@ -41,7 +54,6 @@ if (result?.error) {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 80vh;
   }
 
   .login-section {
