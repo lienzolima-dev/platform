@@ -1,14 +1,24 @@
+---
+import LeftSpikes from "../svgs/LeftSpikes.astro";
+import RightSpikes from "../svgs/RightSpikes.astro";
+import Blob4 from '../svgs/Blob4.astro';
+---
+
 <section class="container wrapper" id="servicios">
-  <h1 data-aos="fade-up" data-aos-duration="500">Servicios</h1>
+  <div class="title-section" data-aos="fade-up" data-aos-duration="500">
+    <LeftSpikes />
+    <h1 class="title-services">Servicios</h1>
+    <RightSpikes />
+  </div>
   <div class="services-container">
     <div class="services-card" data-aos="fade-up" data-aos-duration="500">
-      <div class="box gel"></div>
+      <Blob4 imgSrc="/imgs/nails/gelnails.jpg" />
       <h3>Esmaltado gel</h3>
       <p>Esmaltado en la uña natural, secado en lámpara.</p>
       <p><strong>Duración aproximada:</strong> 1h</p>
     </div>
     <div class="services-card" data-aos="fade-up" data-aos-duration="700">
-      <div class="box rubber"></div>
+      <Blob4 imgSrc="/imgs/nails/rubbernails.webp" />
       <h3>Esmaltado rubber</h3>
       <p>
         Gel de alta densidad que aporta dureza a la uña, evita que se rompa.
@@ -18,10 +28,20 @@
     <div
       class="services-card softgel-card"
       data-aos="fade-up"
-      data-aos-duration="900"
+      data-aos-duration="500"
     >
-      <div class="box softgel"></div>
-      <h3>Esmaltado softgel</h3>
+      <Blob4 imgSrc="/imgs/nails/softgelnails.webp" />
+      <h3>Sistema de extensión softgel</h3>
+      <p>Proporciona largo a la uña, a base de tips adheridos con pressgel.</p>
+      <p><strong>Duración aproximada:</strong> 2h 20min</p>
+    </div>
+    <div
+      class="services-card softgel-card"
+      data-aos="fade-up"
+      data-aos-duration="700"
+    >
+      <Blob4 imgSrc="/imgs/nails/softgelnails.webp" />
+      <h3>Sistema de extensión acrílicos</h3>
       <p>Proporciona largo a la uña, a base de tips adheridos con pressgel.</p>
       <p><strong>Duración aproximada:</strong> 2h 20min</p>
     </div>
@@ -34,18 +54,35 @@
   }
 
   .container {
+    display: flex;
     padding-block: 3rem;
+    flex-direction: column;
+    align-items: center;
   }
 
   .container h1 {
     color: var(--font-color-400);
   }
 
+  .title-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .title-services {
+    font-family: var(--font-heading);
+    color: var(--font-color-400);
+    text-align: center;
+    margin: 0 1rem;
+  }
+
   .services-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 3rem;
-    width: 100%;
+    width: 90%;
     margin: 2rem 0 3rem 0;
   }
 
@@ -55,6 +92,12 @@
     gap: 1.5rem;
     width: 100%;
     padding: 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .services-card :global(svg) {
+    width: 70%;
   }
 
   .services-card h3 {
@@ -82,16 +125,6 @@
 
   .softgel {
     background-image: url("/imgs/nails/softgelnails.webp");
-  }
-
-  @media (max-width: 1024px) {
-    .services-container {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .softgel-card {
-      grid-column: span 2;
-    }
   }
 
   @media (max-width: 768px) {

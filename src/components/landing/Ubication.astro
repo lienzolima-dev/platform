@@ -25,15 +25,13 @@ import IconClock from "../svgs/IconClock.astro";
             <IconUbication />
             <h4>Ubicación</h4>
             <p>
-              Avenida Mariscal La Mar 688, Urb. Santa Cruz, Miraflores,
-              Municipalidad Metropolitana de Lima
+              Av. Ernesto Diez Canseco 490, Miraflores 15074, Lima
             </p>
           </div>
           <div class="box">
             <IconClock />
             <h4>Horarios de atención</h4>
-            <p>Lunes: 5:00 - 22:00</p>
-            <p>Martes - Viernes: 10:00 - 22:00</p>
+            <p>Lunes - Viernes: 10:00 - 21:30</p>
             <p>Sábados: 10:00 - 20:00</p>
           </div>
         </div>
@@ -200,5 +198,16 @@ import IconClock from "../svgs/IconClock.astro";
       width: 15%;
       height: auto;
     }
+  }
+
+  @media (max-width: 355px) {
+    .image-container {
+      height: 250px;
+    }
+
+    .box p {
+      font-size: 0.8rem;
+    }
+    
   }
 </style>

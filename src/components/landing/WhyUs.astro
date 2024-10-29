@@ -1,10 +1,14 @@
 ---
 import BoxShape1 from "../svgs/BoxShape1.astro";
 import BoxShape2 from "../svgs/BoxShape2.astro";
-import BoxNumber from "../svgs/BoxNumber.astro";
+import BoxReason from "../svgs/BoxReason.astro";
 import LeftSpikes from "../svgs/LeftSpikes.astro";
 import RightSpikes from "../svgs/RightSpikes.astro";
 import NailPolish from "../svgs/NailPolish.astro";
+import IconOven from "../svgs/IconOven.astro";
+import IconWarranty from "../svgs/IconWarranty.astro";
+import IconAttention from "../svgs/IconAttention.astro";
+import IconNails from "../svgs/IconNails.astro";
 import { instagramDirectMessageUrl } from "../../utils/global";
 ---
 
@@ -15,7 +19,7 @@ import { instagramDirectMessageUrl } from "../../utils/global";
     <RightSpikes />
   </div>
 
-  <p class="title-description">
+  <p class="content-description">
     En LIENZO Estudio, nos enfocamos en ofrecerte una experiencia única y de
     calidad. Nos diferenciamos por nuestra dedicación a cada detalle y el uso de
     productos de primer nivel.<br />Descubre por qué somos la mejor opción para
@@ -27,25 +31,25 @@ import { instagramDirectMessageUrl } from "../../utils/global";
       <div class="box box1">
         <BoxShape1 />
         <div class="content">
-          <div class="number">
-            <BoxNumber />
-            <div class="number-text">
-              <p>1</p>
+          <div class="reason">
+            <BoxReason />
+            <div class="icon-reason">
+              <IconOven />
             </div>
           </div>
           <div class="text-content">
             <h3>Horno esterilizador</h3>
-            <p>Esterilizamos nuestros materiales mediante horno</p>
+            <p>Esterilizamos nuestros materiales, horneándolos por 1 hora</p>
           </div>
         </div>
       </div>
       <div class="box box2">
         <BoxShape1 />
         <div class="content">
-          <div class="number">
-            <BoxNumber />
-            <div class="number-text">
-              <p>2</p>
+          <div class="reason">
+            <BoxReason />
+            <div class="icon-reason">
+              <IconWarranty />
             </div>
           </div>
           <div class="text-content">
@@ -75,10 +79,10 @@ import { instagramDirectMessageUrl } from "../../utils/global";
       <div class="box box3">
         <BoxShape1 />
         <div class="content">
-          <div class="number">
-            <BoxNumber />
-            <div class="number-text">
-              <p>3</p>
+          <div class="reason">
+            <BoxReason />
+            <div class="icon-reason">
+              <IconAttention />
             </div>
           </div>
           <div class="text-content">
@@ -90,10 +94,10 @@ import { instagramDirectMessageUrl } from "../../utils/global";
       <div class="box box4">
         <BoxShape1 />
         <div class="content">
-          <div class="number">
-            <BoxNumber />
-            <div class="number-text">
-              <p>4</p>
+          <div class="reason">
+            <BoxReason />
+            <div class="icon-reason">
+              <IconNails />
             </div>
           </div>
           <div class="text-content">
@@ -132,7 +136,7 @@ import { instagramDirectMessageUrl } from "../../utils/global";
     margin: 0 1rem;
   }
 
-  .title-description {
+  .content-description {
     font-family: var(--font-body);
     color: black;
     font-weight: 300;
@@ -197,7 +201,7 @@ import { instagramDirectMessageUrl } from "../../utils/global";
     font-size: 1rem;
   }
 
-  .number {
+  .reason {
     display: flex;
     position: relative;
     justify-content: center;
@@ -205,14 +209,15 @@ import { instagramDirectMessageUrl } from "../../utils/global";
     margin-bottom: 1.1rem;
   }
 
-  .number-text {
+  .icon-reason {
+    display: flex;
     position: absolute;
-    text-align: center;
+    justify-content: center;
   }
 
-  .number-text p {
-    font-size: 1.5rem;
-    color: var(--font-color-400);
+  .icon-reason :global(svg) {
+    width: 20%;
+    height: auto;
   }
 
   .central {
@@ -300,7 +305,7 @@ import { instagramDirectMessageUrl } from "../../utils/global";
     }
 
     .content {
-      width: 95%;
+      width: 100%;
       padding: 1rem;
     }
 
@@ -316,20 +321,25 @@ import { instagramDirectMessageUrl } from "../../utils/global";
       font-size: 0.8rem;
     }
 
-    .number {
+    .reason {
       margin-bottom: 0;
     }
 
-    .number :global(svg) {
+    .reason :global(svg) {
       width: 35%;
     }
 
-    .number-text p {
-      font-size: 1.25rem;
+    .icon-reason :global(svg) {
+      width: 20%;
+      height: auto;
     }
   }
 
   @media (min-width: 481px) and (max-width: 560px) {
+    .description {
+      width: 95%;
+    }
+
     .box {
       height: auto;
     }
@@ -343,16 +353,17 @@ import { instagramDirectMessageUrl } from "../../utils/global";
       font-size: 1rem;
     }
 
-    .number {
+    .reason {
       margin-bottom: 0.2rem;
     }
 
-    .number :global(svg) {
+    .reason :global(svg) {
       width: 22%;
     }
 
-    .number-text p {
-      font-size: 1.5rem;
+    .icon-reason :global(svg) {
+      width: 12%;
+      height: auto;
     }
   }
 
@@ -388,12 +399,58 @@ import { instagramDirectMessageUrl } from "../../utils/global";
       font-size: 1rem;
     }
 
-    .number :global(svg) {
+    .reason :global(svg) {
       width: 40%;
     }
 
-    .number-text p {
-      font-size: 2rem;
+    .icon-reason :global(svg) {
+      width: 20%;
+      height: auto;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .content {
+      width: 100%;
+      height: 100%;
+    }
+
+    .text-content h3 {
+      font-size: 1.3rem;
+    }
+
+    .text-content p {
+      font-size: 0.9rem;
+    }
+
+    .booking-image :global(svg) {
+      max-width: 150px;
+      width: 75%;
+      height: auto;
+    }
+  }
+
+  @media (max-width: 320px) {
+    .text-content h3 {
+      font-size: 1.1rem;
+    }
+
+    .text-content p {
+      font-size: 0.9rem;
+    }
+
+    .booking-content h3 {
+      font-size: 1.2rem;
+    }
+
+    .booking-content p {
+      font-size: 0.9rem;
+    }
+
+    .booking-image :global(svg) {
+      max-width: 150px;
+      width: 70%;
+      height: auto;
     }
   }
 </style>
