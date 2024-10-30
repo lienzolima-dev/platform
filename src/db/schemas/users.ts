@@ -6,8 +6,12 @@ export const users = sqliteTable("users", {
   id: text("user_id").primaryKey().$defaultFn(ulid),
   username: text("username"),
   googleID: integer("google_id").unique(),
-  password: text("password_hash"),
+  passwordHash: text("password_hash"),
   avatarURL: text("avatar_url"),
   email: text("email").unique(),
+  verificationCode: text("verification_code"),
+  emailVerified: integer("email_verified", { mode: "boolean" })
+    .notNull()
+    .default(false),
   createdAt: text("created_at").notNull().default(sql`(current_timestamp)`),
 });

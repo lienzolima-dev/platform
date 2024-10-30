@@ -1,0 +1,24 @@
+---
+import Footer from "../components/landing/Footer.astro";
+import Navbar from "../components/landing/Navbar.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Lienzo Lima">
+  <Navbar />
+  <main>
+    <section class="wrapper">
+      <h1>Verifica tu email</h1>
+      <p>Te hemos enviado un email con un enlace para verificar tu cuenta.</p>
+      <p>Si no lo encuentras, revisa tu bandeja de spam.</p>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  section {
+    padding-top: var(--section-spacing);
+    padding-bottom: var(--section-spacing);
+  }
+</style>
