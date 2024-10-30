@@ -92,7 +92,7 @@ export const signup = defineAction({
 
       throw new ActionError({
         code: "INTERNAL_SERVER_ERROR",
-        message: "Failed to add admin",
+        message: "Ups algo salió mal, intentalo más tarde",
       });
     }
   },
