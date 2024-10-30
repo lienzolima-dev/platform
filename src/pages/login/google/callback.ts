@@ -56,7 +56,7 @@ export async function GET(context: APIContext): Promise<Response> {
         sessionCookie.attributes,
       );
 
-      console.log("User already exists");
+      console.log("[LOG]: User already exists");
     } else {
       const userId = ulid();
 
@@ -76,7 +76,7 @@ export async function GET(context: APIContext): Promise<Response> {
         sessionCookie.attributes,
       );
 
-      console.log("User does not exist");
+      console.log("[LOG]: User does not exist");
     }
 
     return context.redirect("/");

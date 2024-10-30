@@ -9,7 +9,9 @@ import node from "@astrojs/node";
 export default defineConfig({
   integrations: [svelte()],
   output: "server",
-
+  security: {
+    checkOrigin: true,
+  },
   adapter: node({
     mode: "standalone",
   }),
