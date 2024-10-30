@@ -29,7 +29,8 @@ import IconClock from "../svgs/IconClock.astro";
           <div class="box">
             <IconClock />
             <h4>Horarios de atención</h4>
-            <p>Lunes - Viernes: 10:00 - 21:30</p>
+            <p>Lunes: 17:00 - 21:30</p>
+            <p>Martes - Viernes: 10:00 - 21:30</p>
             <p>Sábados: 10:00 - 20:00</p>
           </div>
         </div>
@@ -198,13 +199,23 @@ import IconClock from "../svgs/IconClock.astro";
     }
   }
 
-  @media (max-width: 355px) {
+  @media (max-width: 368px) {
     .image-container {
       height: 250px;
     }
 
+    .box h4 {
+      font-size: 0.9rem;
+    }
+
     .box p {
       font-size: 0.8rem;
+    }
+  }
+
+  @media (max-width: 340px) {
+    .box :global(svg) {
+      display: none;
     }
   }
 </style>
