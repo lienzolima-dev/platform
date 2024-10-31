@@ -1,7 +1,7 @@
 ---
-import LeftSpikes from "../svgs/LeftSpikes.astro";
-import RightSpikes from "../svgs/RightSpikes.astro";
-import Blob4 from "../svgs/Blob4.astro";
+import LeftSpikes from "../../svgs/LeftSpikes.astro";
+import RightSpikes from "../../svgs/RightSpikes.astro";
+import Blob4 from "../../svgs/Blob4.astro";
 ---
 
 <section class="container wrapper" id="servicios">
@@ -135,6 +135,12 @@ import Blob4 from "../svgs/Blob4.astro";
     .services-card {
       grid-column: auto;
       margin-bottom: 1.5rem;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .title-section :global(svg) {
+      display: none;
     }
   }
 </style>
