@@ -65,6 +65,7 @@ jobs:
           echo "DB_URGOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
           echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
           echo "RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}" >> .env
+          echo "WEBSITE_URL=https://lienzolima.com" >> .env
           echo "PROD=true" >> .env
 
       - name: Build
