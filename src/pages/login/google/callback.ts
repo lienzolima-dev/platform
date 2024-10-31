@@ -2,7 +2,7 @@ import type { APIContext } from "astro";
 import { google } from "../../../auth/providers/google";
 import { db } from "../../../db/db";
 import { users } from "../../../db/schemas/users";
-import { eq } from "drizzle-orm";
+import { eq, or } from "drizzle-orm";
 import { OAuth2RequestError } from "arctic";
 import { lucia } from "../../../auth/auth";
 import { ulid } from "ulid";
@@ -30,6 +30,7 @@ export async function GET(context: APIContext): Promise<Response> {
   }
 
   try {
+    // Exchange the code for tokens
     const tokens = await google.validateAuthorizationCode(code, codeVerifier);
     const response = await fetch(
       "https://openidconnect.googleapis.com/v1/userinfo",
@@ -40,14 +41,42 @@ export async function GET(context: APIContext): Promise<Response> {
       },
     );
 
+    // Get the user info
     const googleUser = await response.json();
 
+    // Check if the user with the google sub or email already exists
     const [existingUser] = await db
       .select()
       .from(users)
-      .where(eq(users.googleID, googleUser.sub));
+      .where(
+        or(
+          eq(users.googleID, googleUser.sub),
+          eq(users.email, googleUser.email),
+        ),
+      );
 
+    // If the user exists, update user info if necessary and create a session
     if (existingUser) {
+      // Update avatarURL if necessary
+      if (existingUser.avatarURL !== googleUser.picture) {
+        await db
+          .update(users)
+          .set({
+            avatarURL: googleUser.picture,
+          })
+          .where(eq(users.id, existingUser.id));
+      }
+
+      // Update googleID if necessary
+      if (existingUser.googleID !== googleUser.sub) {
+        await db
+          .update(users)
+          .set({
+            googleID: googleUser.sub,
+          })
+          .where(eq(users.id, existingUser.id));
+      }
+
       const session = await lucia.createSession(existingUser.id, {});
       const sessionCookie = lucia.createSessionCookie(session.id);
       context.cookies.set(
@@ -56,8 +85,11 @@ export async function GET(context: APIContext): Promise<Response> {
         sessionCookie.attributes,
       );
 
-      console.log("[LOG]: User already exists");
+      console.log(
+        `[LOG]: User with google_sub ${googleUser.sub} already exists`,
+      );
     } else {
+      // If the user does not exist, create a new user and create a session
       const userId = ulid();
 
       await db.insert(users).values({
@@ -76,7 +108,7 @@ export async function GET(context: APIContext): Promise<Response> {
         sessionCookie.attributes,
       );
 
-      console.log("[LOG]: User does not exist");
+      console.log(`[LOG]: User with google_sub ${googleUser.sub} created`);
     }
 
     return context.redirect("/");
