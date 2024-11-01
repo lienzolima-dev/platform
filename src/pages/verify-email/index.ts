@@ -29,7 +29,7 @@ export async function GET(context: APIContext): Promise<Response> {
     await resend.emails.send({
       from: "noreply@lienzolima.com",
       to: [existingUser.email || ""],
-      subject: "Lienzo Lima - Verifica tu email",
+      subject: "Lienzo Lima - Email verificado",
       html: `<p>${existingUser.username}, tu email ha sido verificado</p>`,
     });
   } catch (e) {

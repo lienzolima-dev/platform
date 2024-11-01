@@ -1,0 +1,8 @@
+---
+const user = Astro.locals.user;
+
+// If the user is not an admin, redirect to the home page
+if (!user || user.role !== "admin") return Astro.redirect("/home", 302);
+---
+
+<h1>This the admin view</h1>
