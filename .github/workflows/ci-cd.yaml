@@ -62,7 +62,7 @@ jobs:
       - name: Add env variables
         run: |
           echo "DB_FILE_NAME=${{ secrets.DB_FILE_NAME }}" >> .env
-          echo "DB_URGOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
+          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
           echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
           echo "RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}" >> .env
           echo "WEBSITE_URL=https://lienzolima.com" >> .env
