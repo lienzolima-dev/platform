@@ -1,0 +1,101 @@
+---
+// TODO: Change the icons
+import IconClock from "../svgs/IconClock.astro";
+import LogoWhite from "../svgs/LogoWhite.astro";
+
+const links = [
+  {
+    label: "Usuarios",
+    icon: IconClock,
+    href: "/admin/manage/users",
+  },
+];
+
+const url = Astro.url;
+
+const activeLink = links.find((link) => url.pathname.includes(link.href));
+---
+
+<aside>
+  <header>
+    <a href="/">
+      <LogoWhite />
+    </a>
+  </header>
+  <hr />
+  <nav>
+    <ul>
+      {
+        links.map((link) => (
+          <li class:list={[{ active: activeLink === link }]}>
+            <a class="sidebar-link" href={link.href}>
+              <span>{link.label}</span>
+              <link.icon />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</aside>
+
+<style>
+  aside {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--primary-400);
+  }
+
+  ul :global(svg) {
+    width: 30px;
+    height: 30px;
+  }
+
+  header {
+    padding: 2rem;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--primary-600);
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    color: var(--primary-100);
+    text-decoration: none;
+    color: white;
+  }
+
+  .active {
+    background-color: var(--primary-300);
+    border-radius: 0.5rem;
+  }
+</style>
