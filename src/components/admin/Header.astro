@@ -1,0 +1,55 @@
+---
+const user = Astro.locals.user;
+const userAvatar = user?.avatarURL ?? "/imgs/default-pfp.png";
+const userName = user?.username ?? "User";
+const userRole = user?.role ?? "None";
+---
+
+<header>
+  <div class="dashboard-header">
+    <img src={userAvatar} alt="Foto de perfil" class="user-photo" />
+    <div class="info-user">
+      <span class="user-name">{userName}</span>
+      <span class="user-role">{userRole}</span>
+    </div>
+    <a class="btn" href="/logout">Cerrar sesión</a>
+  </div>
+</header>
+
+<style>
+  header {
+    padding: 1rem;
+    border-bottom: var(--scroll-border);
+  }
+
+  .dashboard-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .info-user {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .user-photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+  }
+
+  .user-name {
+    font-size: 1rem;
+  }
+
+  .user-role {
+    font-size: 0.8rem;
+    color: #484848;
+  }
+
+  .btn {
+    margin-left: 1rem;
+  }
+</style>

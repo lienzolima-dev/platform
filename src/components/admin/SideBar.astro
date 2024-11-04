@@ -1,13 +1,43 @@
 ---
 // TODO: Change the icons
-import IconClock from "../svgs/IconClock.astro";
+import IconUser from "../svgs/IconUser.astro";
 import LogoWhite from "../svgs/LogoWhite.astro";
+import IconBooking from "../svgs/IconBooking.astro";
+import IconServices from "../svgs/IconServices.astro";
+import IconPromo from "../svgs/IconPromo.astro";
+import IconData from "../svgs/IconData.astro";
+import IconComplaint from "../svgs/IconComplaint.astro";
 
 const links = [
   {
     label: "Usuarios",
-    icon: IconClock,
+    icon: IconUser,
     href: "/admin/manage/users",
+  },
+  {
+    label: "Reservas",
+    icon: IconBooking,
+    href: "/admin/manage/users", //Change paths
+  },
+  {
+    label: "Servicios",
+    icon: IconServices,
+    href: "/admin/manage/users", //Change paths
+  },
+  {
+    label: "Promociones",
+    icon: IconPromo,
+    href: "/admin/manage/users", //Change paths
+  },
+  {
+    label: "Visualización de datos",
+    icon: IconData,
+    href: "/admin/manage/users", //Change paths
+  },
+  {
+    label: "Reclamos",
+    icon: IconComplaint,
+    href: "/admin/manage/users", //Change paths
   },
 ];
 
