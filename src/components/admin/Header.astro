@@ -1,16 +1,23 @@
 ---
-const user = Astro.locals.user;
-const userAvatar = user?.avatarURL ?? "/imgs/default-pfp.png";
-const userName = user?.username ?? "User";
-const userRole = user?.role ?? "None";
+type Props = {
+  avatarURL: string | null;
+  username: string;
+  role: string;
+};
+
+const { avatarURL, username, role } = Astro.props;
 ---
 
 <header>
   <div class="dashboard-header">
-    <img src={userAvatar} alt="Foto de perfil" class="user-photo" />
+    <img
+      src={avatarURL ?? "/imgs/default-pfp.png"}
+      alt="Foto de perfil"
+      class="user-photo"
+    />
     <div class="info-user">
-      <span class="user-name">{userName}</span>
-      <span class="user-role">{userRole}</span>
+      <span class="user-name">{username}</span>
+      <span class="user-role">{role}</span>
     </div>
     <a class="btn" href="/logout">Cerrar sesión</a>
   </div>

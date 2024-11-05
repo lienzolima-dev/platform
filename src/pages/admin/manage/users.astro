@@ -7,12 +7,14 @@ const user = Astro.locals.user;
 
 // If the user is not an admin, redirect to the home page
 if (!user || user.role !== "admin") return Astro.redirect("/home", 302);
+
+const { avatarURL, username, role } = user;
 ---
 
 <AdminLayout title="Admin">
   <SideBar />
   <div>
-    <Header />
+    <Header {avatarURL} {username} {role} />
     <main>
       <h1>Manage Users</h1>
       <p>Here you can manage users.</p>
