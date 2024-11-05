@@ -59,8 +59,8 @@ const activeLink = links.find((link) => url.pathname.includes(link.href));
         links.map((link) => (
           <li class:list={[{ active: activeLink === link }]}>
             <a class="sidebar-link" href={link.href}>
-              <span>{link.label}</span>
               <link.icon />
+              <span>{link.label}</span>
             </a>
           </li>
         ))
@@ -95,7 +95,6 @@ const activeLink = links.find((link) => url.pathname.includes(link.href));
     flex-direction: column;
     list-style-type: none;
     gap: 1rem;
-    align-items: center;
     justify-content: center;
     padding: 2rem 1rem;
   }
@@ -103,7 +102,6 @@ const activeLink = links.find((link) => url.pathname.includes(link.href));
   li {
     display: flex;
     align-items: center;
-    justify-content: center;
   }
 
   a {
