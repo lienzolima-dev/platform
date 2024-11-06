@@ -125,7 +125,7 @@ if (isInputError(result?.error)) {
     border-radius: 10px;
     padding: 10px 15px;
     margin: 0.5rem 0;
-    transition: .3s;
+    transition: 0.3s;
   }
 
   button:hover {
@@ -144,13 +144,13 @@ if (isInputError(result?.error)) {
 </style>
 
 <script>
-  document.querySelectorAll('.input-group input').forEach((input) => {
-    input.addEventListener('input', () => {
+  document.querySelectorAll(".input-group input").forEach((input) => {
+    input.addEventListener("input", () => {
       const inputElement = input as HTMLInputElement;
       if (inputElement.value) {
-        input.classList.add('has-content');
+        input.classList.add("has-content");
       } else {
-        input.classList.remove('has-content');
+        input.classList.remove("has-content");
       }
     });
   });
