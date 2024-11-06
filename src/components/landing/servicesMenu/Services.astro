@@ -1,0 +1,75 @@
+---
+import ServicesContent from "./ServicesContent.astro";
+import Abstract1 from "../../svgs/Abstract1.astro";
+import Abstract3 from "../../svgs/Abstract3.astro";
+import Abstract2 from "../../svgs/Abstract2.astro";
+---
+
+<div class="services-container">
+  <div class="services-svg">
+    <Abstract1 />
+    <Abstract2 />
+    <Abstract3 />
+  </div>
+  <ServicesContent />
+</div>
+
+<style>
+  .services-container {
+    display: flex;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .services-svg {
+    display: flex;
+    position: absolute;
+    width: 120%;
+    height: 100%;
+    top: 0;
+    left: -15%;
+    z-index: -1;
+  }
+
+  .services-svg :global(svg) {
+    width: 100%;
+  }
+
+  .services-svg :global(svg:nth-child(2)) {
+    display: none;
+  }
+
+  .services-svg :global(svg:nth-child(3)) {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .services-svg {
+      display: flex;
+      position: absolute;
+      width: 120%;
+      height: 100%;
+      top: 5%;
+      left: -15%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    .services-svg :global(svg:nth-child(1)) {
+      display: none;
+    }
+
+    .services-svg :global(svg:nth-child(2)) {
+      display: block;
+      right: 0;
+      transform: translateX(25%);
+    }
+
+    .services-svg :global(svg:nth-child(3)) {
+      display: block;
+      left: 0;
+      transform: translateX(-25%);
+    }
+  }
+</style>
