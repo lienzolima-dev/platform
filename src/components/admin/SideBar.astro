@@ -1,0 +1,129 @@
+---
+// TODO: Change the icons
+import IconUser from "../svgs/IconUser.astro";
+import LogoWhite from "../svgs/LogoWhite.astro";
+import IconBooking from "../svgs/IconBooking.astro";
+import IconServices from "../svgs/IconServices.astro";
+import IconPromo from "../svgs/IconPromo.astro";
+import IconData from "../svgs/IconData.astro";
+import IconComplaint from "../svgs/IconComplaint.astro";
+
+const links = [
+  {
+    label: "Usuarios",
+    icon: IconUser,
+    href: "/admin/manage/users",
+  },
+  {
+    label: "Reservas",
+    icon: IconBooking,
+    href: "/admin/manage/users", //Change paths
+  },
+  {
+    label: "Servicios",
+    icon: IconServices,
+    href: "/admin/manage/users", //Change paths
+  },
+  {
+    label: "Promociones",
+    icon: IconPromo,
+    href: "/admin/manage/users", //Change paths
+  },
+  {
+    label: "Visualización de datos",
+    icon: IconData,
+    href: "/admin/manage/users", //Change paths
+  },
+  {
+    label: "Reclamos",
+    icon: IconComplaint,
+    href: "/admin/manage/users", //Change paths
+  },
+];
+
+const url = Astro.url;
+
+const activeLink = links.find((link) => url.pathname.includes(link.href));
+---
+
+<aside>
+  <header>
+    <a href="/">
+      <LogoWhite />
+    </a>
+  </header>
+  <hr />
+  <nav>
+    <ul>
+      {
+        links.map((link) => (
+          <li class:list={[{ active: activeLink === link }]}>
+            <a class="sidebar-link" href={link.href}>
+              <link.icon />
+              <span>{link.label}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</aside>
+
+<style>
+  aside {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--primary-400);
+  }
+
+  ul :global(svg) {
+    width: 30px;
+    height: 30px;
+  }
+
+  header {
+    padding: 2rem;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--primary-600);
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    gap: 1rem;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    color: var(--primary-100);
+    text-decoration: none;
+    color: white;
+  }
+
+  .active {
+    background-color: var(--primary-300);
+    border-radius: 0.5rem;
+  }
+</style>
