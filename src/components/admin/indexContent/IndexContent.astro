@@ -1,5 +1,6 @@
 ---
-import LatestBookings from "./LatestBookings.astro";
+import NextBookings from "./NextBookings.astro";
+import TaskList from "./TaskList.astro";
 import TopSection from "./TopSection.astro";
 
 type Props = {
@@ -22,6 +23,23 @@ if (userInfo.role === "manicurist") cargo = "Manicurista";
 <section>
   <TopSection username={userInfo.username} email={userInfo.email} {cargo} />
   <div class="grid">
-    <LatestBookings />
+    <NextBookings />
+    <TaskList />
   </div>
 </section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--section-spacing);
+  }
+
+  @media (max-width: 1024px) {
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--section-spacing);
+    }
+  }
+</style>

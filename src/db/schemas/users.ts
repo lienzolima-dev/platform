@@ -4,6 +4,8 @@ import { ulid } from "ulid";
 
 export const users = sqliteTable("users", {
   id: text("user_id").primaryKey().$defaultFn(ulid).notNull(),
+  anonymous: integer("anonymous", { mode: "boolean" }).notNull().default(false),
+  cellPhone: text("cell_phone"),
   username: text("username").notNull(),
   googleID: integer("google_id").unique(),
   passwordHash: text("password_hash"),

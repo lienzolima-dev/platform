@@ -14,7 +14,7 @@ const { username, email, cargo } = Astro.props;
     <span class="user-info-email">Correo: {email}</span>
   </div>
   <div class="user-role">
-    <p>Cargo: {cargo}</p>
+    <p>{cargo}</p>
   </div>
 </div>
 
@@ -23,11 +23,12 @@ const { username, email, cargo } = Astro.props;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem;
-    border-radius: 0.5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
     background-color: var(--color-white);
     gap: 4rem;
     color: rgb(32, 32, 32);
+    border-bottom: 1px solid rgb(197, 197, 197);
   }
 
   .user-info {
@@ -57,5 +58,13 @@ const { username, email, cargo } = Astro.props;
     font-size: 2rem;
     font-weight: 500;
     color: var(--color-gray);
+  }
+
+  @media (max-width: 1024px) {
+    .container {
+      flex-direction: column;
+      align-items: start;
+      gap: 1rem;
+    }
   }
 </style>
