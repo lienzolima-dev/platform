@@ -33,14 +33,20 @@ if (isInputError(result?.error)) {
     <section class="login-section">
       <h1>Inicia sesión</h1>
       <form action={actions.auth.login} method="post">
-        <label for="email">Email:</label>
-        <input id="email" type="email" name="email" required />
-        <label for="password">Contraseña:</label>
-        <input id="password" type="password" name="password" required />
+        <div class="input-group">
+          <input id="email" type="email" name="email" required />
+          <label for="email">Email</label>
+        </div>
+        <div class="input-group">
+          <input id="password" type="password" name="password" required />
+          <label for="password">Contraseña</label>
+        </div>
         <button type="submit">Ingresar</button>
       </form>
-      <a href="/signup">Registrate</a>
-      <p>{errorMessage}</p>
+      <span>
+        ¿No tienes una cuenta? <a href="/signup">Regístrate</a>
+      </span>
+      <p class="error">{errorMessage}</p>
       <p>Accede a tu cuenta usando Google.</p>
       <GoogleButton />
     </section>
@@ -54,6 +60,10 @@ if (isInputError(result?.error)) {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  form {
+    gap: 10px;
   }
 
   .login-section {
@@ -74,7 +84,57 @@ if (isInputError(result?.error)) {
   }
 
   .login-section p {
-    font-size: 1.2rem;
+    font-size: 1rem;
+  }
+
+  .input-group {
+    position: relative;
+    margin: 0.5rem 0;
+  }
+
+  .input-group label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    padding: 0 10px;
+    pointer-events: none;
+    transition: 0.3s;
+  }
+
+  .input-group input {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 1px solid var(--secondary-400);
+    border-radius: 10px;
+    background: transparent;
+    outline: none;
+  }
+
+  .input-group input:focus ~ label,
+  .input-group input:valid ~ label,
+  .input-group input.has-content ~ label {
+    top: 0;
+    font-size: 0.8rem;
+    background: #f9f9f9b7;
+  }
+
+  button {
+    border-radius: 10px;
+    padding: 10px 15px;
+    margin: 0.5rem 0;
+    transition: .3s;
+  }
+
+  button:hover {
+    background-color: var(--primary-400);
+    color: var(--secondary-400);
+  }
+
+  .error {
+    font-weight: 600;
   }
 
   .login-section .google-button {
@@ -82,3 +142,16 @@ if (isInputError(result?.error)) {
     margin: 0 auto;
   }
 </style>
+
+<script>
+  document.querySelectorAll('.input-group input').forEach((input) => {
+    input.addEventListener('input', () => {
+      const inputElement = input as HTMLInputElement;
+      if (inputElement.value) {
+        input.classList.add('has-content');
+      } else {
+        input.classList.remove('has-content');
+      }
+    });
+  });
+</script>
