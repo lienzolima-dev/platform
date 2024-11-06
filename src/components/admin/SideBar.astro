@@ -1,11 +1,10 @@
 ---
-// TODO: Change the icons
 import IconUser from "../svgs/IconUser.astro";
 import Logo from "../svgs/Logo.astro";
 import IconBooking from "../svgs/IconBooking.astro";
-import IconServices from "../svgs/IconServices.astro";
-import IconPromo from "../svgs/IconPromo.astro";
-import IconData from "../svgs/IconData.astro";
+// import IconServices from "../svgs/IconServices.astro";
+// import IconPromo from "../svgs/IconPromo.astro";
+// import IconData from "../svgs/IconData.astro";
 import IconComplaint from "../svgs/IconComplaint.astro";
 import IconHome from "../svgs/IconHome.astro";
 
@@ -23,29 +22,35 @@ const links = [
     iconColor: "#38abb1",
   },
   {
+    label: "Colaboradores",
+    icon: IconUser,
+    href: "/admin/manage/users",
+    iconColor: "#8db15a",
+  },
+  {
     label: "Reservas",
     icon: IconBooking,
     href: "/admin/manage/users", //Change paths
-    iconColor: "#777775",
-  },
-  {
-    label: "Servicios",
-    icon: IconServices,
-    href: "/admin/manage/users", //Change paths
     iconColor: "#e35a84",
   },
-  {
-    label: "Promociones",
-    icon: IconPromo,
-    href: "/admin/manage/users", //Change paths
-    iconColor: "#ff6f2a",
-  },
-  {
-    label: "Visualización de datos",
-    icon: IconData,
-    href: "/admin/manage/users", //Change paths
-    iconColor: "#8db15a",
-  },
+  // {
+  //   label: "Servicios",
+  //   icon: IconServices,
+  //   href: "/admin/manage/users", //Change paths
+  //   iconColor: "#e35a84",
+  // },
+  // {
+  //   label: "Promociones",
+  //   icon: IconPromo,
+  //   href: "/admin/manage/users", //Change paths
+  //   iconColor: "#ff6f2a",
+  // },
+  // {
+  //   label: "Visualización de datos",
+  //   icon: IconData,
+  //   href: "/admin/manage/users", //Change paths
+  //   iconColor: "#8db15a",
+  // },
   {
     label: "Reclamos",
     icon: IconComplaint,
@@ -65,7 +70,6 @@ const activeLink = links.find((link) => url.pathname.includes(link.href));
       <Logo color="#000" />
     </a>
   </header>
-  <hr />
   <nav>
     <ul>
       {
@@ -89,7 +93,9 @@ const activeLink = links.find((link) => url.pathname.includes(link.href));
   aside {
     display: flex;
     flex-direction: column;
-    background-color: #e5e6e4;
+    background-color: #f1f1f1;
+    border-right: var(--scroll-border);
+    gap: 1.5rem;
   }
 
   ul :global(svg) {
@@ -113,6 +119,7 @@ const activeLink = links.find((link) => url.pathname.includes(link.href));
     list-style-type: none;
     justify-content: center;
     padding: 0;
+    gap: 2rem;
   }
 
   li {
@@ -137,8 +144,8 @@ const activeLink = links.find((link) => url.pathname.includes(link.href));
   }
 
   span {
-    font-size: 0.7rem;
-    font-weight: 500;
+    font-size: 0.8rem;
+    font-weight: 600;
   }
 
   .active {
