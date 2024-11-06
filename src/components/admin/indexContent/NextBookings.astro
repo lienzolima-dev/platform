@@ -1,0 +1,160 @@
+---
+import CalendarIcon from "../../svgs/admin/IndexContent/CalendarIcon.astro";
+import UserIcon from "../../svgs/admin/IndexContent/UserIcon.astro";
+
+// This should be taken from the database
+const bookings = [
+  {
+    startTime: "10:10",
+    endTime: "10:20",
+    date: "12 de noviembre",
+    username: "Olga Cardin Villameriel",
+    paymentDescription: "Adelanto",
+  },
+  {
+    startTime: "10:10",
+    endTime: "10:20",
+    date: "12 de noviembre",
+    username: "Marcos Santiago Carral",
+    paymentDescription: "Pago completo",
+  },
+  {
+    startTime: "10:10",
+    endTime: "10:20",
+    date: "12 de noviembre",
+    username: "Elvira Ochoa Pascual",
+    paymentDescription: "Adelanto",
+  },
+  {
+    startTime: "10:10",
+    endTime: "10:20",
+    date: "12 de noviembre",
+    username: "Elvira Ochoa Pascual",
+    paymentDescription: "Adelanto",
+  },
+];
+---
+
+<section>
+  <header>
+    <CalendarIcon />
+    <span>Próximas Reservas</span>
+  </header>
+  <div class="booking-list">
+    {
+      bookings.map((bookingItem) => {
+        return (
+          <div class="item">
+            <span class="item-rectangle" />
+            <div class="item-inner">
+              <div class="item-top">
+                <span>
+                  {bookingItem.startTime} - {bookingItem.endTime}
+                </span>
+                <div class="item-user">
+                  <UserIcon />
+                  <span>{bookingItem.username.toUpperCase()}</span>
+                </div>
+              </div>
+              <div class="item-bottom">
+                <span class="item-payment-label">
+                  {bookingItem.paymentDescription}
+                </span>
+                <span class="item-date-label">{bookingItem.date}</span>
+              </div>
+            </div>
+          </div>
+        );
+      })
+    }
+  </div>
+</section>
+
+<style>
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: var(--color-light-gray);
+    border-radius: 0.5rem;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #e15a85;
+  }
+
+  header :global(svg) {
+    width: 2rem;
+    height: 2rem;
+    fill: #e15a85;
+  }
+
+  header span {
+    font-size: 2rem;
+  }
+
+  .booking-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .item-rectangle {
+    width: 1rem;
+    height: 1rem;
+    background-color: #e15a85;
+    border-radius: 0.25rem;
+  }
+
+  .item {
+    display: flex;
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #aeaeae;
+  }
+
+  .item-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .item-top {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .item-user {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .item-user :global(svg) {
+    width: 1rem;
+    height: 1rem;
+    fill: #7b7b7b;
+  }
+
+  .item-bottom {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .item-payment-label,
+  .item-date-label {
+    padding: 2px 12px;
+    background-color: #f0c9a4;
+    border-radius: 100px;
+  }
+
+  .item-date-label {
+    background-color: #d0e6ad;
+  }
+</style>

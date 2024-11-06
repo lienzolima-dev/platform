@@ -1,0 +1,47 @@
+---
+import NextBookings from "./NextBookings.astro";
+import TaskList from "./TaskList.astro";
+import TopSection from "./TopSection.astro";
+
+type Props = {
+  userInfo: {
+    avatarURL: string | null;
+    email: string;
+    username: string;
+    role: string;
+  };
+};
+
+const { userInfo } = Astro.props;
+
+let cargo = "No definido";
+
+if (userInfo.role === "admin") cargo = "Administrador";
+if (userInfo.role === "manicurist") cargo = "Manicurista";
+---
+
+<section>
+  <TopSection username={userInfo.username} email={userInfo.email} {cargo} />
+  <div class="grid">
+    <NextBookings />
+    <TaskList />
+  </div>
+</section>
+
+<style>
+  .grid {
+    padding-top: var(--section-spacing);
+    padding-bottom: var(--section-spacing);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--section-spacing);
+  }
+
+  @media (max-width: 1024px) {
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--section-spacing);
+    }
+  }
+</style>
