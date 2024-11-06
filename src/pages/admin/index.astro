@@ -1,3 +1,38 @@
 ---
-return Astro.redirect("/admin/manage/users", 302);
+import SideBar from "../../components/admin/SideBar.astro";
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import Header from "../../components/admin/Header.astro";
+import IndexContent from "../../components/admin/indexContent/IndexContent.astro";
+
+const user = Astro.locals.user;
+
+// If the user is not an admin, redirect to the home page
+if (!user || user.role !== "admin") return Astro.redirect("/home", 302);
+
+const { avatarURL, username, role, email } = user;
+
+const userInfo = {
+  avatarURL,
+  email,
+  username,
+  role,
+};
 ---
+
+<AdminLayout title="Admin">
+  <SideBar />
+  <div>
+    <Header {avatarURL} {username} {role} />
+    <main>
+      <IndexContent {userInfo} />
+    </main>
+  </div>
+</AdminLayout>
+
+<style>
+  main {
+    padding-top: var(--section-spacing);
+    padding-inline: var(--section-spacing);
+    padding-bottom: var(--section-spacing);
+  }
+</style>
