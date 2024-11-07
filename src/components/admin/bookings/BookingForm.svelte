@@ -68,13 +68,23 @@
       />
     </div>
     <div class="time-input">
-      <Label>Hora</Label>
+      <Label style="text-wrap: nowrap;">Hora Inicio</Label>
       <div class="input-container">
-        <Input type="number" required />
+        <Input type="number" max="24" min="0" required />
       </div>
       <span> : </span>
       <div class="input-container">
-        <Input type="number" required />
+        <Input type="number" max="60" min="0" required />
+      </div>
+    </div>
+    <div class="time-input">
+      <Label style="text-wrap: nowrap;">Hora Final</Label>
+      <div class="input-container">
+        <Input type="number" max="24" min="0" required />
+      </div>
+      <span> : </span>
+      <div class="input-container">
+        <Input type="number" max="60" min="0" required />
       </div>
     </div>
     <div class="input-container">
