@@ -30,6 +30,7 @@
     { value: "advance", label: "Adelanto" },
     { value: "full", label: "Pago completo" },
     { value: "partial", label: "Pago Parcial" },
+    { value: "none", label: "Sin Adelanto" },
   ];
 
   let date: DateValue | undefined = $state(undefined);
@@ -57,7 +58,7 @@
   <div class="right">
     <div class="input-container">
       <Label for="price">Costo Total</Label>
-      <Input type="number" id="price" required />
+      <Input type="number" id="price" />
     </div>
     <div class="input-container">
       <Label for="manicurist">Manicurista</Label>
@@ -93,6 +94,16 @@
     <Button type="submit">Guardar</Button>
   </div>
 </form>
+
+<!-- <h1>
+  {JSON.stringify({
+    date,
+    selectedSystem,
+    selectedExtra,
+    selectedManicurist,
+    selectedPayment,
+  })}
+</h1> -->
 
 <style>
   form {

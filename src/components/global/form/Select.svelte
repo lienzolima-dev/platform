@@ -6,21 +6,18 @@
     selected: Selected<unknown> | undefined;
     selectableValues: { value: string; label: string }[];
     placeholder?: string;
+    required?: boolean;
   };
 
   let {
     selected = $bindable(),
     selectableValues,
     placeholder = "Selecciona una opción",
+    required,
   }: Props = $props();
 </script>
 
-<Select.Root
-  portal={null}
-  onSelectedChange={(value) => {
-    selected = value;
-  }}
->
+<Select.Root {required} portal={null} bind:selected>
   <Select.Trigger class="w-[100%] border divide-slate-900  border-solid">
     <Select.Value {placeholder} />
   </Select.Trigger>

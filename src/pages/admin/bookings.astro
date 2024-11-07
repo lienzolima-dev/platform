@@ -3,6 +3,7 @@ import SideBar from "../../components/admin/SideBar.astro";
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import Header from "../../components/admin/Header.astro";
 import BookingForm from "../../components/admin/bookings/BookingForm.svelte";
+import BookingsTable from "$lib/components/admin/bookings/BookingsTable.astro";
 
 const user = Astro.locals.user;
 
@@ -17,10 +18,10 @@ const { avatarURL, username, role, email } = user;
   <div>
     <Header {avatarURL} {username} {role} />
     <main>
+      <h1>Añadir reserva</h1>
+      <BookingForm client:load />
       <h1>Reservas</h1>
-      <div>
-        <BookingForm client:load />
-      </div>
+      <BookingsTable />
     </main>
   </div>
 </AdminLayout>
@@ -41,5 +42,11 @@ const { avatarURL, username, role, email } = user;
     display: flex;
     flex-direction: column;
     gap: 2rem;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
   }
 </style>
