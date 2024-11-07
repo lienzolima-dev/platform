@@ -1,0 +1,50 @@
+---
+type Props = {
+  usersAmount: number;
+};
+
+const { usersAmount } = Astro.props;
+---
+
+<div class="container">
+  <h2>Usuarios ({usersAmount})</h2>
+  <div class="search-input">
+    <input type="text" placeholder="Buscar por nombre o email" />
+    <button>Buscar</button>
+  </div>
+</div>
+
+<style>
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .search-input {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 2rem;
+    text-wrap: nowrap;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  button {
+    padding: 0.5rem 1rem;
+    background-color: #2b9398;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+</style>

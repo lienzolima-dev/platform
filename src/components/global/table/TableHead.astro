@@ -1,0 +1,29 @@
+---
+type Props = {
+  columnsNames: string[];
+};
+
+const { columnsNames } = Astro.props;
+---
+
+<thead>
+  <tr>
+    {columnsNames.map((column) => <th>{column}</th>)}
+  </tr>
+</thead>
+
+<style>
+  th {
+    padding: 0.5rem 0;
+    background-color: var(--main-color);
+    font-weight: bold;
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  tr {
+    background-color:;
+    font-weight: bold;
+    color: white;
+  }
+</style>

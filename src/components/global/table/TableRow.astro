@@ -1,0 +1,58 @@
+---
+import type { TableLabel } from "./types";
+
+type Props = {
+  rowData: (string | TableLabel)[];
+};
+
+const { rowData } = Astro.props;
+---
+
+<tr>
+  {
+    rowData.map((row) => {
+      // If the row is a TableLabel
+      if (typeof row === "object") {
+        return (
+          <td>
+            <span class="label" style={`--bg-color: ${row.color}`}>
+              {row.label}
+            </span>
+          </td>
+        );
+      }
+
+      return <td>{row || "---"}</td>;
+    })
+  }
+  <td><slot /></td>
+</tr>
+
+<style>
+  tr {
+  }
+
+  tr:nth-child(even) {
+    background-color: #e4e4e4;
+    color: var(--main-color);
+    font-weight: 600;
+  }
+
+  td {
+    padding: 0.5rem 0;
+  }
+
+  td,
+  th {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .label {
+    padding: 0.25rem 0.5rem;
+    border-radius: 100px;
+    background-color: var(--bg-color);
+    color: white;
+    font-weight: normal;
+  }
+</style>
