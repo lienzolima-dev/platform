@@ -14,16 +14,10 @@
     dateStyle: "long",
   });
 
-  // This is the svelte 5 syntax
-  // ----------------------------
-  // type Props = {
-  //   date: DateValue | undefined;
-  // };
-  // let { date = $bindable() }: Props = $props();
-  // ----------------------------
-
-  // Use svelte 4 syntax because bits-ui throws warnings with svetle 5
-  export let date: DateValue | undefined = undefined;
+  type Props = {
+    date: DateValue | undefined;
+  };
+  let { date = $bindable() }: Props = $props();
 </script>
 
 <Popover.Root>

@@ -5,9 +5,14 @@
   type Props = {
     selected: Selected<unknown> | undefined;
     selectableValues: { value: string; label: string }[];
+    placeholder?: string;
   };
 
-  let { selected = $bindable(), selectableValues }: Props = $props();
+  let {
+    selected = $bindable(),
+    selectableValues,
+    placeholder = "Selecciona una opción",
+  }: Props = $props();
 </script>
 
 <Select.Root
@@ -16,12 +21,11 @@
     selected = value;
   }}
 >
-  <Select.Trigger class="w-[180px] border divide-slate-900  border-solid">
-    <Select.Value placeholder="Select a fruit" />
+  <Select.Trigger class="w-[100%] border divide-slate-900  border-solid">
+    <Select.Value {placeholder} />
   </Select.Trigger>
   <Select.Content>
     <Select.Group>
-      <Select.Label>Fruits</Select.Label>
       {#each selectableValues as selectableValue}
         <Select.Item
           value={selectableValue.value}
