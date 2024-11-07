@@ -9,6 +9,8 @@
   import { Button } from "$lib/components/ui/button/index.js";
   import { Calendar } from "$lib/components/ui/calendar/index.js";
   import * as Popover from "$lib/components/ui/popover/index.js";
+  import Input from "$lib/components/ui/input/input.svelte";
+  import Label from "$lib/components/ui/label/label.svelte";
 
   const df = new DateFormatter("es-MX", {
     dateStyle: "long",
@@ -17,6 +19,10 @@
   let value: DateValue | undefined = undefined;
 </script>
 
+<div class="grid w-full max-w-sm items-center gap-1.5 mt-4">
+  <Label for="picture">Sample Label</Label>
+  <Input id="picture" type="text" class="mb-5" />
+</div>
 <Popover.Root>
   <Popover.Trigger asChild let:builder>
     <Button
