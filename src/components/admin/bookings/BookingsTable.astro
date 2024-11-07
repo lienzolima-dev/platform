@@ -49,40 +49,48 @@ const bookings = [
 ];
 ---
 
-<div class="container">
-  <div class="table-head">
-    {headers.map((header) => <div>{header}</div>)}
-  </div>
+<div class="table-wrapper">
+  <div class="container">
+    <div class="table-head">
+      {headers.map((header) => <div>{header}</div>)}
+    </div>
 
-  <div class="table-body">
-    {
-      bookings.map((booking) => (
-        <div class="table-row">
-          <div>
-            {booking.startTime} - {booking.endTime}
+    <div class="table-body">
+      {
+        bookings.map((booking) => (
+          <div class="table-row">
+            <div>
+              {booking.startTime} - {booking.endTime}
+            </div>
+            <div>{booking.manincurist}</div>
+            <div>{booking.paymentType}</div>
+            <div>{booking.systems.join(", ")}</div>
+            <div>{booking.extras.join(", ")}</div>
+            <div>{booking.totalPrice}</div>
+            <div class="action-buttons">
+              <button class="edit">Editar</button>
+              <button class="delete">Eliminar</button>
+            </div>
           </div>
-          <div>{booking.manincurist}</div>
-          <div>{booking.paymentType}</div>
-          <div>{booking.systems.join(", ")}</div>
-          <div>{booking.extras.join(", ")}</div>
-          <div>{booking.totalPrice}</div>
-          <div class="action-buttons">
-            <button class="edit">Editar</button>
-            <button class="delete">Eliminar</button>
-          </div>
-        </div>
-      ))
-    }
+        ))
+      }
+    </div>
   </div>
 </div>
 
 <style>
+  .table-wrapper {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+
   .container {
     display: flex;
     flex-direction: column;
     max-width: 100%;
     border: 1px solid #ddd;
     border-radius: 8px;
+    min-width: 800px;
     overflow: hidden;
   }
 
@@ -113,12 +121,6 @@ const bookings = [
 
   .table-row:hover {
     background-color: #f1f1f1;
-  }
-
-  .table-row div {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
   .action-buttons {

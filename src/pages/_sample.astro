@@ -11,7 +11,10 @@ if (ipBucket.check(clientIP, 1)) {
   console.log(`[LOG]: Too many requests from ${clientIP}`);
   tooManyRequests = true;
 }
+
+const newDate = new Date("2024-11-06 19:59:23");
 ---
 
 <h1>HOLA</h1>
+{JSON.stringify(newDate)}
 {tooManyRequests && <p>Too many requests</p>}
