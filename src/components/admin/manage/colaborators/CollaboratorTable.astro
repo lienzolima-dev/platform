@@ -1,26 +1,11 @@
 ---
 import TableHead from "../../../global/table/TableHead.astro";
 import TableRow from "../../../global/table/TableRow.astro";
-import ColabEditButton from "./ColabEditButton.astro";
-import ColabDeleteButton from "./ColabDeleteButton.astro";
+import ColabEditButton from "./CollaboratorEditButton.astro";
+import ColabDeleteButton from "./CollaboratorDeleteButton.astro";
 
-const columns = [
-  "ID",
-  "Nombre",
-  "Email",
-  "Estado",
-  "Rol",
-  "Teléfono",
-  "Acciones",
-]; // Mock data
-const rowData = [
-  "1",
-  "John Doe",
-  "doe@doe.com",
-  { label: "Verificado", color: "#47a04c" },
-  "Admin",
-  "982 345 785",
-]; // Mock data
+const columns = ["ID", "Nombre", "Email", "Rol", "Teléfono", "Acciones"]; // Mock data
+const rowData = ["1", "John Doe", "doe@doe.com", "Admin", "982 345 785"]; // Mock data
 
 const tableRows = Array.from({ length: 6 }, () => rowData);
 ---

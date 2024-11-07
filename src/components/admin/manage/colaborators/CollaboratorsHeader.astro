@@ -7,7 +7,10 @@ const { colabsAmount } = Astro.props;
 ---
 
 <div class="container">
-  <h2>Colaboradores ({colabsAmount})</h2>
+  <div class="title">
+    <h2>Colaboradores ({colabsAmount})</h2>
+    <button>Añadir</button>
+  </div>
   <div class="search-input">
     <input type="text" placeholder="Buscar por nombre o email" />
     <button>Buscar</button>
@@ -20,6 +23,12 @@ const { colabsAmount } = Astro.props;
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
+  }
+
+  .title {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
   }
 
   .search-input {

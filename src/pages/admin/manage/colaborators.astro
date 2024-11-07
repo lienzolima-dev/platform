@@ -2,8 +2,8 @@
 import SideBar from "../../../components/admin/SideBar.astro";
 import AdminLayout from "../../../layouts/AdminLayout.astro";
 import Header from "../../../components/admin/Header.astro";
-import ColabHeader from "../../../components/admin/manage/colaborators/ColabHeader.astro";
-import ColabTable from "../../../components/admin/manage/colaborators/ColabTable.astro";
+import CollaboratorsHeader from "../../../components/admin/manage/colaborators/CollaboratorsHeader.astro";
+import CollaboratorTable from "../../../components/admin/manage/colaborators/CollaboratorTable.astro";
 
 const user = Astro.locals.user;
 
@@ -21,8 +21,8 @@ const colabsAmount = 10;
   <div>
     <Header {avatarURL} {username} {role} />
     <main>
-      <ColabHeader {colabsAmount} />
-      <ColabTable />
+      <CollaboratorsHeader {colabsAmount} />
+      <CollaboratorTable />
     </main>
   </div>
 </AdminLayout>
