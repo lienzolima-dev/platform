@@ -1,17 +1,10 @@
 <script lang="ts">
-  type Props = {
-    startNumber: number;
-  };
+  import type { DateValue } from "@internationalized/date";
+  import DatePicker from "./global/form/DatePicker.svelte";
 
-  const { startNumber }: Props = $props();
-
-  let counter = $state(startNumber);
-
-  function handleClick() {
-    counter += 1;
-  }
+  let date: DateValue | undefined = $state(undefined);
 </script>
 
-<h1>Svelte Sample, test</h1>
-<h2>{counter}</h2>
-<button onclick={handleClick}>Click</button>
+<DatePicker bind:date />
+
+<h2>{date}</h2>

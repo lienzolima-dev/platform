@@ -49,6 +49,7 @@
       "public",
       "./.db",
       "**/.astro",
+      "src/components/ui",
       ".drizzle"
     ]
   }
