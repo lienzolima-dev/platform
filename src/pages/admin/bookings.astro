@@ -2,7 +2,7 @@
 import SideBar from "../../components/admin/SideBar.astro";
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import Header from "../../components/admin/Header.astro";
-import Sample from "../../components/Sample.svelte";
+import BookingForm from "../../components/admin/bookings/BookingForm.svelte";
 
 const user = Astro.locals.user;
 
@@ -17,15 +17,20 @@ const { avatarURL, username, role, email } = user;
   <div>
     <Header {avatarURL} {username} {role} />
     <main>
-      <h1>Bookings</h1>
+      <h1>Reservas</h1>
       <div>
-        <Sample client:load />
+        <BookingForm client:load />
       </div>
     </main>
   </div>
 </AdminLayout>
 
 <style>
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
   main {
     padding-top: var(--section-spacing);
     padding-inline: var(--section-spacing);
@@ -33,5 +38,8 @@ const { avatarURL, username, role, email } = user;
     margin: 0 auto;
     width: 100%;
     max-width: 1440px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
   }
 </style>
