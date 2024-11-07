@@ -2,13 +2,23 @@
 import Footer from "../components/landing/Footer.astro";
 import Navbar from "../components/landing/Navbar.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import IconEmail from "../components/svgs/IconEmail.astro";
+import Abstract4 from "../components/svgs/Abstract4.astro";
+import Abstract5 from "../components/svgs/Abstract5.astro";
+import Abstract6 from "../components/svgs/Abstract6.astro";
 ---
 
 <BaseLayout title="Lienzo Lima">
   <Navbar />
   <main>
-    <section class="wrapper">
-      <h1>Verifica tu email</h1>
+    <section class="info-wrapper wrapper">
+      <div class="icon-email">
+        <Abstract5 color="var(--secondary-400)" opacity="0.5"/>
+        <Abstract6 color="var(--tertiary-400)" opacity="0.6"/>
+        <Abstract4 color="var(--primary-400)" opacity="0.6"/>
+        <IconEmail color="#fff"/>
+      </div>
+      <h2>Verifica tu email</h2>
       <p>Te hemos enviado un email con un enlace para verificar tu cuenta.</p>
       <p>Si no lo encuentras, revisa tu bandeja de spam.</p>
     </section>
@@ -20,5 +30,47 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   section {
     padding-top: var(--section-spacing);
     padding-bottom: var(--section-spacing);
+  }
+
+  .info-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+    width: 100%;
+    height: auto;
+  }
+
+  .icon-email {
+    background-color: var(--primary-600);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .icon-email :global(svg:nth-child(1)) {
+    position: relative;
+    width: 155px;
+    height: auto;
+    transform: translateX(-6px) translateY(3px);
+  }
+
+  .icon-email :global(svg:nth-child(2)) {
+    position: absolute;
+    width: 130px;
+    transform: translateX(-15px) translateY(8px);
+  }
+
+  .icon-email :global(svg:nth-child(3)) {
+    position: absolute;
+    width: 140px;
+  }
+
+  .icon-email :global(svg:nth-child(4)) {
+    position: absolute;
+    width: 100px;
   }
 </style>
