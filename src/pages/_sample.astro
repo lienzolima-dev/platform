@@ -12,7 +12,15 @@ if (ipBucket.check(clientIP, 1)) {
   tooManyRequests = true;
 }
 
-const newDate = new Date("2024-11-06 19:59:23");
+const newDate = new Date("2024-11-08T04:59:06.944Z");
+console.log(newDate.getHours());
+console.log(newDate.getMinutes());
+const aDate = new Date();
+
+aDate.setHours(23, 59);
+console.log("aDate: ", aDate.getHours());
+console.log("aDate: ", aDate.getMinutes());
+console.log("aDate: ", aDate.toISOString());
 ---
 
 <h1>HOLA</h1>

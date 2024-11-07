@@ -26,7 +26,7 @@
   ];
 
   // This should be taken from the dab
-  const paymentsTypes = [
+  const paymentStates = [
     { value: "advance", label: "Adelanto" },
     { value: "full", label: "Pago completo" },
     { value: "partial", label: "Pago Parcial" },
@@ -37,11 +37,15 @@
   let selectedSystem: Selected<unknown> | undefined = $state(undefined);
   let selectedExtra: Selected<unknown> | undefined = $state(undefined);
   let selectedManicurist: Selected<unknown> | undefined = $state(undefined);
-  let selectedPayment: Selected<unknown> | undefined = $state(undefined);
+  let selectedPaymentState: Selected<unknown> | undefined = $state(undefined);
 </script>
 
 <form>
   <div class="left">
+    <div class="input-container">
+      <Label for="name">Nombre</Label>
+      <Input type="text" id="name" required />
+    </div>
     <div class="input-container">
       <Label for="email">Email</Label>
       <Input type="email" id="email" required />
@@ -95,8 +99,8 @@
       <Label for="payment">Pago</Label>
       <div class="payment-inputs">
         <Select
-          selectableValues={paymentsTypes}
-          bind:selected={selectedPayment}
+          selectableValues={paymentStates}
+          bind:selected={selectedPaymentState}
         />
         <Input type="number" id="payment" required />
       </div>
