@@ -1,0 +1,37 @@
+---
+import SideBar from "../../components/admin/SideBar.astro";
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import Header from "../../components/admin/Header.astro";
+import Sample from "../../components/Sample.svelte";
+
+const user = Astro.locals.user;
+
+// If the user is not an admin, redirect to the home page
+if (!user || user.role !== "admin") return Astro.redirect("/home", 302);
+
+const { avatarURL, username, role, email } = user;
+---
+
+<AdminLayout title="Admin">
+  <SideBar />
+  <div>
+    <Header {avatarURL} {username} {role} />
+    <main>
+      <h1>Bookings</h1>
+      <div>
+        <Sample client:load />
+      </div>
+    </main>
+  </div>
+</AdminLayout>
+
+<style>
+  main {
+    padding-top: var(--section-spacing);
+    padding-inline: var(--section-spacing);
+    padding-bottom: var(--section-spacing);
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1440px;
+  }
+</style>
