@@ -3,22 +3,26 @@ import PinIcon from "../../svgs/admin/IndexContent/PinIcon.astro";
 import CheckIcon from "../../svgs/admin/IndexContent/CheckIcon.astro";
 import TrashIcon from "../../svgs/admin/IndexContent/TrashIcon.astro";
 import NewTaskForm from "./NewTaskForm.astro";
+import TaskCheckButton from "./TaskCheckButton.astro";
 
 // This should be taken from the database
 const tasks = [
   {
+    id: "1",
     date: "20/8",
     creationTime: "15:40",
     description:
       "Lorem ipsum dolor sit amet, oloribus beatae aperiam quidem aliquam architecto! Porro",
   },
   {
+    id: "2",
     date: "20/8",
     creationTime: "15:40",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo doloribus ",
   },
   {
+    id: "3",
     date: "20/8",
     creationTime: "15:40",
     description: "Lorem ipsum dolor sit amet, consecteturh",
@@ -51,9 +55,7 @@ const tasks = [
               </div>
             </div>
             <div class="buttons">
-              <button class="check-button">
-                <CheckIcon />
-              </button>
+              <TaskCheckButton taskId={taskItem.id} />
               <button class="trash-button">
                 <TrashIcon />
               </button>

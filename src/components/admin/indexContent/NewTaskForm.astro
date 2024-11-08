@@ -1,10 +1,14 @@
 ---
 import CheckIcon from "../../svgs/admin/IndexContent/CheckIcon.astro";
+import { actions } from "astro:actions";
 ---
 
-<!-- TODO: Implement -->
-<form action="">
-  <input type="text" placeholder="Insertar nuevo recordatorio" />
+<form action={actions.db.tasks.add} method="post">
+  <input
+    type="text"
+    placeholder="Insertar nuevo recordatorio"
+    name="description"
+  />
   <button type="submit">
     <CheckIcon />
   </button>
@@ -25,7 +29,7 @@ import CheckIcon from "../../svgs/admin/IndexContent/CheckIcon.astro";
 
   button {
     position: relative;
-    background-color: rgb(230, 230, 230);
+    background-color: #e6e6e6;
     height: 40px;
     width: 40px;
     border: none;

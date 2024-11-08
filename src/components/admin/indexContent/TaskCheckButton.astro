@@ -1,0 +1,57 @@
+---
+import CheckIcon from "../../../components/svgs/admin/IndexContent/CheckIcon.astro";
+
+type Props = {
+  taskId: string;
+};
+
+const { taskId } = Astro.props;
+---
+
+<task-check-button data-task-id={JSON.stringify({ taskId })}>
+  <button class="check-button">
+    <CheckIcon />
+  </button>
+</task-check-button>
+
+<script>
+  import { actions } from "astro:actions";
+
+  class TaskCheckButton extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector("button");
+      if (!button) throw "Button not found";
+
+      button.addEventListener("click", async () => {
+        const taskId = JSON.parse(this.dataset.taskId ?? "").taskId;
+        await actions.db.tasks.complete({ id: taskId });
+      });
+    }
+  }
+
+  customElements.define("task-check-button", TaskCheckButton);
+</script>
+
+<style>
+  button {
+    position: relative;
+    background-color: rgb(230, 230, 230);
+    height: 40px;
+    width: 40px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  button:hover {
+    background-color: rgb(200, 200, 200);
+  }
+
+  button :global(svg) {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 1rem;
+    height: 1rem;
+  }
+</style>
