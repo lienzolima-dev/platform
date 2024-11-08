@@ -5,6 +5,8 @@ import LogoWhite from "../svgs/LogoWhite.astro";
 // TODO: Get this from top-level Astro component
 const user = Astro.locals.user;
 const isLoggedIn = user !== undefined;
+const isAdmin = user?.role === "admin";
+const avatarURL = user?.avatarURL || "/imgs/default-pfp.png";
 
 function isActive(link: string) {
   const url = Astro.request.url;
@@ -67,9 +69,17 @@ const navList = [
     </label>
     {
       isLoggedIn ? (
-        <a class="btn" href="/logout">
-          Salir
-        </a>
+        <div class="user-dropdown">
+          <button class="user-icon">
+            <div class="avatar-circle">
+              <img src={avatarURL} alt="User Avatar" class="avatar-img" />
+            </div>
+          </button>
+          <div class="dropdown-content">
+            {isAdmin && <a href="/admin">Panel de administrador</a>}
+            <a href="/logout">Cerrar sesión</a>
+          </div>
+        </div>
       ) : (
         <a class="btn" href="/login">
           Loguéate
@@ -184,6 +194,61 @@ const navList = [
 
   .dropdown-menu-item {
     display: none;
+  }
+
+  .user-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .user-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .avatar-circle {
+    width: 40px;
+    height: 40px;
+    background-color: var(--secondary-400);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .avatar-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    min-width: 160px;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  .user-dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+    border-radius: 10px;
   }
 
   @media only screen and (max-width: 768px) {
