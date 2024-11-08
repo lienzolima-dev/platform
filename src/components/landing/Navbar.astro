@@ -76,11 +76,7 @@ const navList = [
             </div>
           </button>
           <div class="dropdown-content">
-            {
-              isAdmin && (
-                <a href="/admin">Panel de administrador</a>
-              )
-            }
+            {isAdmin && <a href="/admin">Panel de administrador</a>}
             <a href="/logout">Cerrar sesión</a>
           </div>
         </div>
