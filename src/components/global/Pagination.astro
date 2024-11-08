@@ -1,0 +1,116 @@
+---
+import { getPaginationButtons } from "./pagination";
+import ThinArrowIcon from "../svgs/ThinArrow.astro";
+
+type Props = {
+  currentPage: number;
+  totalPages: number;
+};
+
+const { currentPage, totalPages } = Astro.props;
+
+const defaultButtonsAmount = 2;
+const url = Astro.url;
+const previousPage = currentPage > 1 ? currentPage - 1 : 1;
+const nextPage = currentPage < totalPages ? currentPage + 1 : totalPages;
+
+const paginationButtons = getPaginationButtons({
+  totalPages,
+  defaultButtonsAmount,
+  currentPage,
+});
+---
+
+<section>
+  <a
+    class="prev"
+    class:list={[{ disabled: currentPage <= 1 }]}
+    href={url.pathname + "?page=" + previousPage}
+  >
+    <ThinArrowIcon direction="left" color="black" />
+    <span>Previous</span>
+  </a>
+  <div class="pag-buttons">
+    {
+      paginationButtons.map((buttonNumber) => (
+        <a
+          class:list={{
+            btn: true,
+            selected: buttonNumber === currentPage,
+          }}
+          href={url.pathname + "?page=" + buttonNumber}
+        >
+          {buttonNumber}
+        </a>
+      ))
+    }
+  </div>
+  <a
+    class="next"
+    class:list={[{ disabled: currentPage >= totalPages }]}
+    href={url.pathname + "?page=" + nextPage}
+  >
+    <span>Next</span>
+    <ThinArrowIcon direction="right" color="black" />
+  </a>
+</section>
+
+<style>
+  section {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .prev,
+  .next {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    color: black;
+  }
+
+  .disabled {
+    cursor: not-allowed;
+  }
+
+  a,
+  button {
+    background: none;
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+    font-size: 1rem;
+  }
+
+  .pag-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .pag-buttons a {
+    color: black;
+    background: #ececec;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .selected {
+    background: black;
+  }
+
+  span {
+    line-height: 1;
+  }
+
+  .pag-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>

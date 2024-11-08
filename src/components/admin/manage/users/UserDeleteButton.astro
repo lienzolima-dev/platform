@@ -2,10 +2,29 @@
 import TrashIcon from "../../../svgs/admin/IndexContent/TrashIcon.astro";
 ---
 
-<button>
-  <TrashIcon color={"white"} />
-  <span>Eliminar</span>
-</button>
+<user-delete-button>
+  <button>
+    <TrashIcon color={"white"} />
+    <span>Eliminar</span>
+  </button>
+</user-delete-button>
+
+<script>
+  import { openDialog } from "../../../global/dialog/utils";
+
+  class UserDeleteButton extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector("button");
+      if (!button) throw "Button not found";
+
+      button.addEventListener("click", () => {
+        openDialog("deleteUser");
+      });
+    }
+  }
+
+  customElements.define("user-delete-button", UserDeleteButton);
+</script>
 
 <style>
   button {
