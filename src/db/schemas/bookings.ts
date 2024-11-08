@@ -12,7 +12,7 @@ export const bookings = sqliteTable("bookings", {
     .notNull(),
   startTime: text("start_time").notNull(),
   endTime: text("end_time").notNull(),
-  paymentType: text("payment_type", {
+  paymentStatus: text("payment_status", {
     enum: ["advance", "full", "partial", "none"],
   }).notNull(),
 });
