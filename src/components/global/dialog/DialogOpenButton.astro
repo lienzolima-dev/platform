@@ -1,0 +1,40 @@
+---
+type Props = {
+  id: string;
+};
+
+const { id } = Astro.props;
+---
+
+<component-dialog-btn data-id={id}>
+  <slot>
+    <button>Open Dialog</button>
+  </slot>
+</component-dialog-btn>
+
+<script>
+  import { openDialog } from "./utils";
+
+  class DialogBtnComponent extends HTMLElement {
+    connectedCallback() {
+      this.addEventListener("click", () => {
+        if (this.dataset.id) {
+          openDialog(this.dataset.id);
+        }
+      });
+    }
+  }
+
+  customElements.define("component-dialog-btn", DialogBtnComponent);
+</script>
+
+<style>
+  button {
+    background-color: rgb(236, 236, 236);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+</style>

@@ -1,0 +1,213 @@
+---
+type Props = {
+  id: string;
+  manualClose?: boolean;
+};
+
+const { id, manualClose = false } = Astro.props;
+---
+
+<component-dialog data-id={id} data-manual-close={manualClose}>
+  <div class="import-dialog-container hide">
+    <div class="background-overlay"></div>
+    <div class="modal">
+      <div class="import-dialog-close-button">
+        <slot name="close-button">
+          <button class="close">
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </button>
+        </slot>
+      </div>
+      <div class="content">
+        <slot>
+          <h2>This is a dialog component</h2>
+        </slot>
+      </div>
+    </div>
+  </div>
+</component-dialog>
+
+<script>
+  import { closeDialog } from "./utils";
+
+  type DialogEvent = CustomEvent<{ id: string }>;
+
+  declare global {
+    interface DocumentEventMap {
+      "dialog-open": DialogEvent;
+      "dialog-close": DialogEvent;
+    }
+  }
+
+  class DialogComponent extends HTMLElement {
+    connectedCallback() {
+      try {
+        const dialog = this.querySelector(".import-dialog-container");
+        const closeBtn = this.querySelector(".import-dialog-close-button");
+        const overlay = this.querySelector(".background-overlay");
+
+        if (!dialog) throw new Error("Dialog container not found");
+        if (!closeBtn) throw new Error("Close button not found");
+        if (!overlay) throw new Error("Overlay not found");
+
+        const dialogID = this.dataset.id;
+        const manualClose = this.dataset.manualClose === "true";
+
+        const handleCloseBtnClick = () => {
+          if (dialogID) closeDialog(dialogID);
+        };
+
+        const handleClickOutside = () => {
+          if (!manualClose && dialogID) closeDialog(dialogID);
+        };
+
+        const handleKeyDown = (event: KeyboardEvent) => {
+          if ((event.key === "Escape" || event.key === "Esc") && !manualClose) {
+            if (dialogID) closeDialog(dialogID);
+          }
+        };
+
+        const handleDialogOpen = (event: DialogEvent) => {
+          if (event.detail.id === dialogID) {
+            dialog.classList.remove("hide");
+            document.addEventListener("dialog-close", handleDialogClose);
+            document.addEventListener("keydown", handleKeyDown);
+            closeBtn.addEventListener("click", handleCloseBtnClick);
+            overlay.addEventListener("click", handleClickOutside);
+          }
+        };
+
+        const handleDialogClose = (event: DialogEvent) => {
+          if (event.detail.id === dialogID) {
+            dialog.classList.add("hide");
+            document.removeEventListener("dialog-close", handleDialogClose);
+            closeBtn.removeEventListener("click", handleCloseBtnClick);
+            overlay.removeEventListener("click", handleClickOutside);
+            document.removeEventListener("keydown", handleKeyDown);
+          }
+        };
+
+        document.addEventListener("dialog-open", handleDialogOpen);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+
+  if (!customElements.get("component-dialog")) {
+    customElements.define("component-dialog", DialogComponent);
+  }
+</script>
+
+<style>
+  component-dialog {
+    --dialog-background: #fff;
+    --dialog-color: #000;
+    --dialog-border: 0px solid #000;
+    --max-width: 600px;
+    --padding: 3rem;
+    --gap: 1rem;
+  }
+
+  .import-dialog-container {
+    position: fixed;
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .import-dialog-container:not(.hide) {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0 0 0 / 40%);
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.1s ease;
+  }
+
+  .background-overlay:not(.hide) {
+    opacity: 1;
+  }
+
+  .modal {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    padding: var(--padding);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    color: var(--dialog-color);
+    background-color: var(--dialog-background);
+    border: var(--dialog-border);
+    border-radius: 0.5rem;
+    max-width: var(--max-width);
+    width: 100%;
+    height: min-content;
+    z-index: 200;
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+    transition:
+      opacity 0.1s ease,
+      transform 0.1s ease;
+  }
+
+  .import-dialog-container:not(.hide) .modal {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .import-dialog-close-button {
+    right: 2rem;
+    top: 2rem;
+    position: absolute;
+    background: transparent;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .import-dialog-close-button button {
+    background: transparent;
+  }
+
+  .close {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background-color: transparent;
+  }
+
+  .bar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 25px;
+    height: 3px;
+    background-color: #000;
+    border-radius: 2px;
+    transform-origin: center;
+  }
+
+  .bar:nth-child(1) {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  .bar:nth-child(2) {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+</style>
