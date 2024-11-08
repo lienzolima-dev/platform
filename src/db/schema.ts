@@ -4,5 +4,5 @@ export { tasks } from "./schemas/tasks";
 export { bookings } from "./schemas/bookings";
 export { services } from "./schemas/services";
 export { extras } from "./schemas/extras";
-export { bookingsServicesDetails } from "./schemas/bookingsDervicesDetails";
+export { bookingsServicesDetails } from "./schemas/bookingsServicesDetails";
 export { bookingsExtrasDetails } from "./schemas/bookingsExtrasDetails";
