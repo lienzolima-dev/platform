@@ -1,4 +1,10 @@
 import type { users } from "../schema";
+import type { tasks } from "../schema";
+import type { services } from "../schema";
+import type { extras } from "../schema";
+import type { bookings } from "../schema";
+import type { bookingsServicesDetails } from "../schema";
+import type { bookingsExtrasDetails } from "../schema";
 
 export const adminsToSeed: (typeof users.$inferInsert)[] = [
   {
@@ -9,3 +15,809 @@ export const adminsToSeed: (typeof users.$inferInsert)[] = [
     passwordHash: "123", // For testing purposes only
   },
 ];
+
+export const manicuristsToSeed: (typeof users.$inferInsert)[] = [
+  {
+    id: "01JC512JXKE2FW711X9VWPPCWY",
+    email: "dayala@gmail.com",
+    username: "Diana Ayala",
+    emailVerified: true,
+    role: "manicurist",
+    passwordHash: "123", // For testing purposes only
+  },
+  {
+    id: "01JC512JXKFSERT3ANJ8PGXG36",
+    email: "jossy_benavente03@gmail.com",
+    username: "Josselyn Benavente",
+    emailVerified: true,
+    role: "manicurist",
+    passwordHash: "123", // For testing purposes only
+  },
+];
+
+export const tasksToSeed: (typeof tasks.$inferInsert)[] = [
+  {
+    createdAt: "2024-11-05T10:00:30.348Z",
+    description: "Preparar estación de manicura para el primer cliente.",
+  },
+  {
+    createdAt: "2024-11-05T10:10:12.348Z",
+    description: "Organizar productos de esmaltado en el mostrador.",
+  },
+  {
+    createdAt: "2024-11-05T12:42:50.348Z",
+    description: "Revisar el inventario de gel y softgel.",
+  },
+  {
+    createdAt: "2024-11-05T14:48:22.348Z",
+    description: "Limpiar y desinfectar herramientas de manicura.",
+  },
+  {
+    createdAt: "2024-11-06T10:20:45.348Z",
+    description: "Llamar a los clientes para confirmar sus citas.",
+  },
+  {
+    createdAt: "2024-11-06T11:05:30.348Z",
+    description: "Actualizar la agenda de citas en el sistema.",
+  },
+  {
+    createdAt: "2024-11-06T15:10:30.348Z",
+    description: "Revisar nuevas tendencias en diseños de uñas.",
+  },
+  {
+    createdAt: "2024-11-06T17:15:40.348Z",
+    description: "Realizar pedido de suministros faltantes.",
+  },
+  {
+    createdAt: "2024-11-06T19:20:15.348Z",
+    description: "Preparar kits de manicura para el día.",
+  },
+  {
+    createdAt: "2024-11-07T10:00:40.348Z",
+    description: "Organizar materiales en el área de recepción.",
+  },
+  {
+    createdAt: "2024-11-07T10:35:10.348Z",
+    description: "Asegurarse de que las estaciones tengan toallas limpias.",
+  },
+  {
+    createdAt: "2024-11-07T11:40:20.348Z",
+    description: "Organizar esmaltes nuevos.",
+  },
+  {
+    createdAt: "2024-11-07T16:50:00.348Z",
+    description: "Enviar recordatorios de cita a los clientes.",
+  },
+];
+
+export const servicesToSeed: (typeof services.$inferInsert)[] = [
+  {
+    id: "01JC53FH8KEBP3BQW5DSF59PW7",
+    name: "Sistema acrílico con tips",
+    price: 75.9,
+    description:
+      "Extensiones de uñas con tips, complementado con un baño de acrílico.",
+    durationHours: 2.0,
+    category: "Sistemas",
+  },
+  {
+    id: "01JC52DEJ4GD5QH858ZSWY23VS",
+    name: "Sistema softgel",
+    price: 69.9,
+    description:
+      "Extensiones de tips suaves, con aspecto de uña natural, adheridos con gel.",
+    durationHours: 1.3,
+    category: "Sistemas",
+  },
+  {
+    id: "01JC52DFDX3AS6352QJS5G4BWR",
+    name: "Esmaltado Gel",
+    price: 44.9,
+    description: "Extensiones en uñas naturales con gel, secado en lámpara UV.",
+    durationHours: 1.0,
+    category: "Uña natural",
+  },
+  {
+    id: "01JC53DMQ8FGZ6ZNS999G4D5P4",
+    name: "Esmaltado Rubber",
+    price: 64.9,
+    description:
+      "Esmaltado y nivelado en uñas naturales, secado en lámpara UV. Aporta volumen y fuerza a la uña natural.",
+    durationHours: 1.0,
+    category: "Uña natural",
+  },
+  {
+    name: "Sistema acrílico o softgel (Retiro)",
+    price: 39.9,
+    durationHours: 1.0,
+    category: "Retiros",
+  },
+  {
+    id: "01JC53K2HS9A775TF1KYVDGRBJ",
+    name: "Previo servicio (Retiro)",
+    price: 34.9,
+    description:
+      "Retiramos la capa de gel y desgastamos el acrílico. Luego retiramos los restos con un removedor.",
+    durationHours: 0.6,
+    category: "Retiros",
+  },
+  {
+    name: "Esmaltado en gel (Retiro)",
+    price: 19.9,
+    description: "Retiramos la capa de gel con drill y un removedor.",
+    durationHours: 0.5,
+    category: "Retiros",
+  },
+  {
+    id: "01JC53PDYQ3CX0ZJEV613EP0R2",
+    name: "Esmaltado en Rubber (Retiro)",
+    price: 25.9,
+    description: "Retiramos la capa de rubber con drill y un removedor.",
+    durationHours: 0.5,
+    category: "Retiros",
+  },
+  {
+    name: "Sistema acrílico o softgel (Retoque)",
+    price: 64.9,
+    description:
+      "Se realiza previa evaluación del sistema, luego se realiza el retoque para finalizar con un esmaltado en gel.",
+    durationHours: 2.0,
+    category: "Retoques",
+  },
+  {
+    id: "01JC541CHR17WQEBGMWBQXBRDP",
+    name: "Esmaltado Rubber (Retoque)",
+    price: 59.9,
+    description:
+      "Retiramos la primera capa de gel con drill y luego nivelamos con rubber para proceder a esmaltar con gel nuevamente.",
+    durationHours: 1.5,
+    category: "Retoques",
+  },
+];
+
+export const extrasToSeed: (typeof extras.$inferInsert)[] = [
+  {
+    name: "Relieve / Cat Eye",
+    price: 9.9,
+    description: "Agrega relieve o efecto cat eye a tu esmaltado.",
+  },
+  {
+    name: "Pan de oro",
+    price: 2.9,
+    description: "Agrega pan de oro a tu diseño de uñas.",
+  },
+  {
+    name: "Pedreria",
+    price: 2.5,
+    description: "Agrega pedrería a tu diseño de uñas.",
+  },
+  {
+    name: "Perlas",
+    price: 2.5,
+    description: "Agrega perlas a tu diseño de uñas.",
+  },
+  {
+    name: "Efecto aura",
+    price: 14.9,
+    description: "Agrega efecto aura a tu esmaltado.",
+  },
+  {
+    id: "01JC5CGZ0BWXGY1VAZ1B82TCF9",
+    name: "Mano alzada básica",
+    price: 12.9,
+    description: "Agrega un diseño básico a mano alzada.",
+  },
+  {
+    name: "Mano alzada compleja",
+    price: 15.9,
+    description: "Agrega un diseño complejo a mano alzada.",
+  },
+  {
+    name: "Mano alzada nail art",
+    price: 24.9,
+    description: "Agrega un diseño nail art a mano alzada.",
+  },
+  {
+    name: "Aurora/espejo/holográfico/unicornio",
+    price: 8.9,
+    description: "Agrega efecto aurora, espejo u holográfico a tu esmaltado.",
+  },
+  {
+    name: "Difuminado con gel / blooming",
+    price: 12.9,
+    description: "Agrega un difuminado con gel o blooming a tu esmaltado.",
+  },
+];
+
+export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
+  {
+    id: "01JC5D5D41WPQ3P4YYWKH7358B",
+    name: "Rosa",
+    email: "r_sanchez92@gmail.com",
+    totalPrice: 64.9,
+    idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
+    startTime: "2024-10-14T20:00:30.348Z",
+    endTime: "2024-10-14T21:00:30.348Z",
+    paymentType: "none",
+  },
+  {
+    id: "01JC5D5D4CCJFKVBK22A1B4CHZ",
+    name: "Andrea",
+    email: "andrea_mgarcia@gmail.com",
+    totalPrice: 25.9,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-10-15T10:00:30.348Z",
+    endTime: "2024-10-15T10:30:30.348Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5D98CEWVYMHDW0P3Q42NER",
+    name: "Patricia",
+    email: "patriciacecilia01@gmail.com",
+    totalPrice: 64.9,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-10-15T16:00:30.348Z",
+    endTime: "2024-10-15T17:00:30.348Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5D9B8C4D8TF7HDT6ZKFANS",
+    name: "Jessica",
+    email: "jalvarezmunoz@gmail.com",
+    totalPrice: 64.9,
+    idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
+    startTime: "2024-10-15T16:00:30.348Z",
+    endTime: "2024-10-15T17:00:30.348Z",
+    paymentType: "full",
+  },
+  {
+    id: "01JC5D9SYD2S58SJ1PA2N3HGS4",
+    name: "Faria",
+    email: "faria_munante@gmail.com",
+    totalPrice: 59.9,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-10-16T17:00:30.348Z",
+    endTime: "2024-10-16T16:00:30.348Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5D9WTK3FWDQ68MWW3F1EJS",
+    name: "Luciana",
+    email: "luluFarias@gmail.com",
+    totalPrice: 39.9,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-10-18T17:30:30.348Z",
+    endTime: "2024-10-18T18:00:30.348Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DAQ8HYXRJGDTRTZMKC6X2",
+    name: "Carolina",
+    email: "carolina_lopez07@gmail.com",
+    totalPrice: 45.0,
+    idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
+    startTime: "2024-10-19T10:00:00.000Z",
+    endTime: "2024-10-19T11:00:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DAT4CQXYSFEXZ8P5KVQGW",
+    name: "Estefania",
+    email: "estefperez_99@gmail.com",
+    totalPrice: 64.9,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-10-19T11:00:00.000Z",
+    endTime: "2024-10-19T12:00:00.000Z",
+    paymentType: "full",
+  },
+  {
+    id: "01JC5DB7TK3FSYQ11APN3FD5QG",
+    name: "Sandra",
+    email: "sandra_martinez09@gmail.com",
+    totalPrice: 50.0,
+    idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
+    startTime: "2024-10-19T12:00:00.000Z",
+    endTime: "2024-10-19T13:00:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DBARC4CSTWWRTGC31MP6T",
+    name: "Margarita",
+    email: "marmar.torres@gmail.com",
+    totalPrice: 35.0,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-10-20T13:00:00.000Z",
+    endTime: "2024-10-20T14:00:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DBNFV31YGF3MCD4TFKR90",
+    name: "Alejandra",
+    email: "a_jimenez11@gmail.com",
+    totalPrice: 60.0,
+    idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
+    startTime: "2024-10-21T14:00:00.000Z",
+    endTime: "2024-10-21T15:00:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DBQE26PF67DM8C7P80F7M",
+    name: "Gabriela",
+    email: "gaby10diazr@gmail.com",
+    totalPrice: 70.0,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-10-22T15:00:00.000Z",
+    endTime: "2024-10-22T16:00:00.000Z",
+    paymentType: "full",
+  },
+  {
+    id: "01JC5DC45VQK4J7KZB8QJ15D2R",
+    name: "Raquel",
+    email: "rvt1994@gmail.com",
+    totalPrice: 25.9,
+    idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
+    startTime: "2024-10-22T16:00:00.000Z",
+    endTime: "2024-10-22T17:00:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DC71WVPKMCFP98QZD99R4",
+    name: "Lidia",
+    email: "lidiaRuiz_2001@hotmail.com",
+    totalPrice: 45.9,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-10-23T17:00:00.000Z",
+    endTime: "2024-10-23T18:00:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DCFVM3M6BRF6ZJECRV5J9",
+    name: "Martha",
+    email: "martha02davila@gmail.com",
+    totalPrice: 30.0,
+    idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
+    startTime: "2024-10-23T18:00:00.000Z",
+    endTime: "2024-10-23T19:00:00.000Z",
+    paymentType: "full",
+  },
+  {
+    id: "01JC5DCPP9W8JKA29YP1J865JZ",
+    name: "Claudia",
+    email: "claudia_rivera16@gmail.com",
+    totalPrice: 50.9,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-10-24T10:00:00.000Z",
+    endTime: "2024-10-24T11:00:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DD1GQ75FCY7ZY9KY31RYB",
+    name: "Gianella",
+    email: "giane_j@gmail.com",
+    totalPrice: 60.0,
+    idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
+    startTime: "2024-10-24T11:00:00.000Z",
+    endTime: "2024-10-24T12:00:00.000Z",
+    paymentType: "full",
+  },
+  {
+    id: "01JC5DD3C16B7WDKXNRJTVAD06",
+    name: "Cinthia",
+    email: "cinthia_baldeon@gmail.com",
+    totalPrice: 45.0,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-10-25T12:00:00.000Z",
+    endTime: "2024-10-25T13:00:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DDWTDCG4BH9R8AZC76N8T",
+    name: "Isabel",
+    email: "isabelopez92@gmail.com",
+    totalPrice: 55.0,
+    idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
+    startTime: "2024-10-25T13:00:00.000Z",
+    endTime: "2024-10-25T14:00:00.000Z",
+    paymentType: "full",
+  },
+  {
+    id: "01JC5DDYQ8E7S85ZNFWV82XD38",
+    name: "Lucía",
+    email: "lucialuna20@gmail.com",
+    totalPrice: 40.0,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-10-26T14:00:00.000Z",
+    endTime: "2024-10-26T15:00:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DEAGAFH8JW8SRNECV4T0V",
+    name: "Julia",
+    email: "juliatorres_95@gmail.com",
+    totalPrice: 60.0,
+    idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
+    startTime: "2024-10-26T15:00:00.000Z",
+    endTime: "2024-10-26T16:00:00.000Z",
+    paymentType: "full",
+  },
+  {
+    id: "01JC5DECCREH3323D0MVQKA3RF",
+    name: "Mónica",
+    email: "ruizmonica22@gmail.com",
+    totalPrice: 30.0,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-10-26T16:00:00.000Z",
+    endTime: "2024-10-26T17:00:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DEZYN4NWKB2E5PFJ76Z2P",
+    name: "Dayana",
+    email: "dayis.regina74@gmail.com",
+    totalPrice: 50.0,
+    idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
+    startTime: "2024-10-27T17:00:00.000Z",
+    endTime: "2024-10-27T18:00:00.000Z",
+    paymentType: "full",
+  },
+  {
+    id: "01JC5DF2V6VSP92Q7X7XC3EH60",
+    name: "Natalia",
+    email: "natalia.perez54@gmail.com",
+    totalPrice: 40.0,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-10-28T18:00:00.000Z",
+    endTime: "2024-10-28T19:00:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DFGH2JFPJEZEYGD7JPH39",
+    name: "Mariana",
+    email: "mromero10@gmail.com",
+    totalPrice: 45.0,
+    idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
+    startTime: "2024-10-28T19:00:00.000Z",
+    endTime: "2024-10-28T20:00:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DFJFQKRQKZPBG710FGJX6",
+    name: "Susana",
+    email: "susydn12_30@gmail.com",
+    totalPrice: 60.0,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-10-29T10:00:00.000Z",
+    endTime: "2024-10-29T11:00:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DFY6KK434HJY9KHW0MF8D",
+    name: "Claudia",
+    email: "claujimenez_j27@gmail.com",
+    totalPrice: 55.0,
+    idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
+    startTime: "2024-10-29T11:00:00.000Z",
+    endTime: "2024-10-29T12:00:00.000Z",
+    paymentType: "full",
+  },
+  {
+    id: "01JC5DG23CGY097Z7EN1VEPJ4S",
+    name: "Violeta",
+    email: "violeta_gh56@gmail.com",
+    totalPrice: 75.0,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-10-30T12:00:00.000Z",
+    endTime: "2024-10-30T13:00:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DGMNSKP7NV8PR525NESQF",
+    name: "Noelia",
+    email: "noelia.torres29@gmail.com",
+    totalPrice: 80.0,
+    idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
+    startTime: "2024-10-31T13:00:00.000Z",
+    endTime: "2024-10-31T14:00:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DGQJWJ7KSCEEDTDN3W0SN",
+    name: "Alyson",
+    email: "alyss09art@gmail.com",
+    totalPrice: 60.0,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-10-31T14:00:00.000Z",
+    endTime: "2024-10-31T15:00:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DHNWRMSY01H47BXQ6DJP5",
+    name: "Allison",
+    email: "allisgaby.14@gmail.com",
+    totalPrice: 59.9,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-11-02T15:00:00.000Z",
+    endTime: "2024-11-02T16:00:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DHQW7WYSKV7XMB9CD22VJ",
+    name: "Olenka",
+    email: "olerika78@gmail.com",
+    totalPrice: 64.9,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-11-02T10:10:00.000Z",
+    endTime: "2024-11-02T11:10:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DJ9E8Z4A1R12GTPT8MZM4",
+    name: "Isabel",
+    email: "isa_puentesrivas@gmail.com",
+    totalPrice: 64.9,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-11-02T17:30:00.000Z",
+    endTime: "2024-11-02T18:30:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DJCAHYY6KAZ8WS896ZCEJ",
+    name: "Fiorella",
+    email: "fio.rojas47@hotmail.com",
+    totalPrice: 35.0,
+    idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
+    startTime: "2024-11-02T13:30:00.000Z",
+    endTime: "2024-11-02T14:30:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DKBJJPDR1DXBKGZWFRDP0",
+    name: "Cinthia",
+    email: "cpoma_02@hotmail.com",
+    totalPrice: 35.0,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-11-02T13:30:00.000Z",
+    endTime: "2024-11-02T14:30:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DKEGHV20K66HBCZ0EETTV",
+    name: "Alexa1",
+    email: "alexajj8@gmail.com",
+    totalPrice: 54.5,
+    idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
+    startTime: "2024-11-04T18:20:00.000Z",
+    endTime: "2024-11-04T19:20:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DM51W7EZAMSTG2TXY9GRE",
+    name: "Alexa",
+    email: "alexajj8@gmail.com",
+    totalPrice: 54.5,
+    idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
+    startTime: "2024-11-04T20:00:00.000Z",
+    endTime: "2024-11-04T21:00:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DM7WSVDE05C8SMAWEQMZM",
+    name: "Olenka",
+    email: "ole.huertas001@gmail.com",
+    totalPrice: 69.9,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-11-05T10:00:00.000Z",
+    endTime: "2024-11-05T11:00:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DMJMYNEZ8FVSE7M0T9W3H",
+    name: "Judith",
+    email: "judyrivas1998@gmail.com",
+    totalPrice: 64.9,
+    idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
+    startTime: "2024-11-05T20:00:00.000Z",
+    endTime: "2024-11-05T21:20:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DMPH0D92E7KDHDYCK7T7T",
+    name: "Ariana",
+    email: "arinoe421@gmail.com",
+    totalPrice: 79.8,
+    idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
+    startTime: "2024-11-05T18:30:00.000Z",
+    endTime: "2024-11-05T20:30:00.000Z",
+    paymentType: "advance",
+  },
+  {
+    id: "01JC5DNRR8H4ZD5FY6P665KSTY",
+    name: "Evy",
+    email: "evy05_saldivar@gmail.com",
+    totalPrice: 59.9,
+    idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
+    startTime: "2024-11-07T18:20:00.000Z",
+    endTime: "2024-11-07T20:30:00.000Z",
+    paymentType: "none",
+  },
+];
+
+export const bookingsServicesDetailsToSeed: (typeof bookingsServicesDetails.$inferInsert)[] =
+  [
+    {
+      idService: "01JC52DEJ4GD5QH858ZSWY23VS",
+      idBooking: "01JC5D5D41WPQ3P4YYWKH7358B",
+    },
+    {
+      idService: "01JC53PDYQ3CX0ZJEV613EP0R2",
+      idBooking: "01JC5D5D4CCJFKVBK22A1B4CHZ",
+    },
+    {
+      idService: "01JC53DMQ8FGZ6ZNS999G4D5P4",
+      idBooking: "01JC5D98CEWVYMHDW0P3Q42NER",
+    },
+    {
+      idService: "01JC52DEJ4GD5QH858ZSWY23VS",
+      idBooking: "01JC5D9B8C4D8TF7HDT6ZKFANS",
+    },
+    {
+      idService: "01JC541CHR17WQEBGMWBQXBRDP",
+      idBooking: "01JC5D9SYD2S58SJ1PA2N3HGS4",
+    },
+    {
+      idService: "01JC52DFDX3AS6352QJS5G4BWR",
+      idBooking: "01JC5D9WTK3FWDQ68MWW3F1EJS",
+    },
+    {
+      idService: "01JC52DEJ4GD5QH858ZSWY23VS",
+      idBooking: "01JC5DAQ8HYXRJGDTRTZMKC6X2",
+    },
+    {
+      idService: "01JC53PDYQ3CX0ZJEV613EP0R2",
+      idBooking: "01JC5DAT4CQXYSFEXZ8P5KVQGW",
+    },
+    {
+      idService: "01JC53DMQ8FGZ6ZNS999G4D5P4",
+      idBooking: "01JC5DB7TK3FSYQ11APN3FD5QG",
+    },
+    {
+      idService: "01JC52DEJ4GD5QH858ZSWY23VS",
+      idBooking: "01JC5DBARC4CSTWWRTGC31MP6T",
+    },
+    {
+      idService: "01JC541CHR17WQEBGMWBQXBRDP",
+      idBooking: "01JC5DBNFV31YGF3MCD4TFKR90",
+    },
+    {
+      idService: "01JC52DFDX3AS6352QJS5G4BWR",
+      idBooking: "01JC5DBQE26PF67DM8C7P80F7M",
+    },
+    {
+      idService: "01JC52DEJ4GD5QH858ZSWY23VS",
+      idBooking: "01JC5DC45VQK4J7KZB8QJ15D2R",
+    },
+    {
+      idService: "01JC53PDYQ3CX0ZJEV613EP0R2",
+      idBooking: "01JC5DC71WVPKMCFP98QZD99R4",
+    },
+    {
+      idService: "01JC53DMQ8FGZ6ZNS999G4D5P4",
+      idBooking: "01JC5DCFVM3M6BRF6ZJECRV5J9",
+    },
+    {
+      idService: "01JC52DEJ4GD5QH858ZSWY23VS",
+      idBooking: "01JC5DCPP9W8JKA29YP1J865JZ",
+    },
+    {
+      idService: "01JC541CHR17WQEBGMWBQXBRDP",
+      idBooking: "01JC5DD1GQ75FCY7ZY9KY31RYB",
+    },
+    {
+      idService: "01JC52DFDX3AS6352QJS5G4BWR",
+      idBooking: "01JC5DD3C16B7WDKXNRJTVAD06",
+    },
+    {
+      idService: "01JC52DEJ4GD5QH858ZSWY23VS",
+      idBooking: "01JC5DDWTDCG4BH9R8AZC76N8T",
+    },
+    {
+      idService: "01JC53PDYQ3CX0ZJEV613EP0R2",
+      idBooking: "01JC5DDYQ8E7S85ZNFWV82XD38",
+    },
+    {
+      idService: "01JC53DMQ8FGZ6ZNS999G4D5P4",
+      idBooking: "01JC5DEAGAFH8JW8SRNECV4T0V",
+    },
+    {
+      idService: "01JC52DEJ4GD5QH858ZSWY23VS",
+      idBooking: "01JC5DECCREH3323D0MVQKA3RF",
+    },
+    {
+      idService: "01JC541CHR17WQEBGMWBQXBRDP",
+      idBooking: "01JC5DEZYN4NWKB2E5PFJ76Z2P",
+    },
+    {
+      idService: "01JC52DFDX3AS6352QJS5G4BWR",
+      idBooking: "01JC5DF2V6VSP92Q7X7XC3EH60",
+    },
+    {
+      idService: "01JC52DFDX3AS6352QJS5G4BWR",
+      idBooking: "01JC5DFGH2JFPJEZEYGD7JPH39",
+    },
+    {
+      idService: "01JC52DEJ4GD5QH858ZSWY23VS",
+      idBooking: "01JC5DFJFQKRQKZPBG710FGJX6",
+    },
+    {
+      idService: "01JC52DFDX3AS6352QJS5G4BWR",
+      idBooking: "01JC5DFY6KK434HJY9KHW0MF8D",
+    },
+    {
+      idService: "01JC52DFDX3AS6352QJS5G4BWR",
+      idBooking: "01JC5DG23CGY097Z7EN1VEPJ4S",
+    },
+    {
+      idService: "01JC52DFDX3AS6352QJS5G4BWR",
+      idBooking: "01JC5DGMNSKP7NV8PR525NESQF",
+    },
+    {
+      idService: "01JC52DEJ4GD5QH858ZSWY23VS",
+      idBooking: "01JC5DGQJWJ7KSCEEDTDN3W0SN",
+    },
+    {
+      idService: "01JC541CHR17WQEBGMWBQXBRDP",
+      idBooking: "01JC5DHNWRMSY01H47BXQ6DJP5",
+    },
+    {
+      idService: "01JC53DMQ8FGZ6ZNS999G4D5P4",
+      idBooking: "01JC5DHQW7WYSKV7XMB9CD22VJ",
+    },
+    {
+      idService: "01JC53DMQ8FGZ6ZNS999G4D5P4",
+      idBooking: "01JC5DJ9E8Z4A1R12GTPT8MZM4",
+    },
+    {
+      idService: "01JC52DFDX3AS6352QJS5G4BWR",
+      idBooking: "01JC5DJCAHYY6KAZ8WS896ZCEJ",
+    },
+    {
+      idService: "01JC52DFDX3AS6352QJS5G4BWR",
+      idBooking: "01JC5DKBJJPDR1DXBKGZWFRDP0",
+    },
+    {
+      idService: "01JC53DMQ8FGZ6ZNS999G4D5P4",
+      idBooking: "01JC5DKEGHV20K66HBCZ0EETTV",
+    },
+    {
+      idService: "01JC53DMQ8FGZ6ZNS999G4D5P4",
+      idBooking: "01JC5DM51W7EZAMSTG2TXY9GRE",
+    },
+    {
+      idService: "01JC52DEJ4GD5QH858ZSWY23VS",
+      idBooking: "01JC5DM7WSVDE05C8SMAWEQMZM",
+    },
+    {
+      idService: "01JC53DMQ8FGZ6ZNS999G4D5P4",
+      idBooking: "01JC5DMJMYNEZ8FVSE7M0T9W3H",
+    },
+    {
+      idService: "01JC53K2HS9A775TF1KYVDGRBJ",
+      idBooking: "01JC5DMPH0D92E7KDHDYCK7T7T",
+    },
+    {
+      idService: "01JC52DFDX3AS6352QJS5G4BWR",
+      idBooking: "01JC5DMPH0D92E7KDHDYCK7T7T",
+    },
+    {
+      idService: "01JC53FH8KEBP3BQW5DSF59PW7",
+      idBooking: "01JC5DNRR8H4ZD5FY6P665KSTY",
+    },
+  ];
+
+export const bookingsExtrasDetailsToSeed: (typeof bookingsExtrasDetails.$inferInsert)[] =
+  [
+    {
+      idExtra: "01JC5CGZ0BWXGY1VAZ1B82TCF9",
+      idBooking: "01JC5DG23CGY097Z7EN1VEPJ4S",
+    },
+  ];
