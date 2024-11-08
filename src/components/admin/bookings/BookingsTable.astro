@@ -1,6 +1,7 @@
 ---
 import BookingDeleteButton from "./BookingDeleteButton.astro";
 import BookingEditButton from "./BookingEditButton.astro";
+import Pagination from "../../global/Pagination.astro";
 
 const headers = [
   "Hora",
@@ -71,7 +72,6 @@ const bookings = [
             <div>{booking.extras.join(", ")}</div>
             <div>{booking.totalPrice}</div>
             <div class="action-buttons">
-              <BookingEditButton />
               <BookingDeleteButton />
             </div>
           </div>
@@ -79,6 +79,7 @@ const bookings = [
       }
     </div>
   </div>
+  <Pagination currentPage={1} totalPages={10} />
 </div>
 
 <style>
@@ -95,6 +96,7 @@ const bookings = [
     border-radius: 8px;
     min-width: 800px;
     overflow: hidden;
+    margin-bottom: 1rem;
   }
 
   .table-head {

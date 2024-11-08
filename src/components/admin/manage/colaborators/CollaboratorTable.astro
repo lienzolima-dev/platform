@@ -3,6 +3,7 @@ import TableHead from "../../../global/table/TableHead.astro";
 import TableRow from "../../../global/table/TableRow.astro";
 import ColabEditButton from "./CollaboratorEditButton.astro";
 import ColabDeleteButton from "./CollaboratorDeleteButton.astro";
+import Pagination from "../../../global/Pagination.astro";
 
 const columns = ["ID", "Nombre", "Email", "Rol", "Teléfono", "Acciones"]; // Mock data
 const rowData = ["1", "John Doe", "doe@doe.com", "Admin", "982 345 785"]; // Mock data
@@ -26,6 +27,7 @@ const tableRows = Array.from({ length: 6 }, () => rowData);
       }
     </tbody>
   </table>
+  <Pagination currentPage={1} totalPages={2} />
 </div>
 
 <style>
@@ -36,6 +38,7 @@ const tableRows = Array.from({ length: 6 }, () => rowData);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
     border-radius: 5px;
     overflow: hidden;
+    margin-bottom: 1.5rem;
   }
 
   .action-button {

@@ -1,1 +1,88 @@
-<h1>TODO</h1>
+---
+import DeleteIcon from "../../../components/svgs/admin/IndexContent/DeleteIcon.astro";
+import AlertIcon from "../../../components/svgs/admin/IndexContent/AlertIcon.astro";
+---
+
+<section class="container">
+  <AlertIcon />
+  <h3>Estas seguro de que quiere eliminar esta reserva?</h3>
+  <p>Al eliminar esta reserva no se podrá recuperar su información.</p>
+  <div class="buttons">
+    <!-- TODO: Add action -->
+    <form method="POST" id="delete-booking-form">
+      <input type="hidden" name="booking-id" />
+
+      <button type="submit">
+        <DeleteIcon color="#fff" />
+        <span>Sí, eliminar esta reserva</span>
+      </button>
+    </form>
+    <button class="cancel">Cancelar</button>
+  </div>
+</section>
+
+<script>
+  import { closeDialog } from "../../global/dialog/utils";
+
+  try {
+    const buttonCancel = document.querySelector("button.cancel");
+    if (!buttonCancel) throw "Button not found";
+
+    buttonCancel.addEventListener("click", () => closeDialog("deleteUser"));
+  } catch (e) {
+    console.error("Error:", e);
+  }
+</script>
+
+<style>
+  .container {
+    width: 100%;
+    display: flex;
+    gap: 1.25rem;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    align-items: center;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  button {
+    border: none;
+    cursor: pointer;
+    background-color: #c35162;
+    color: white;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  button.cancel {
+    background-color: #47a04c;
+  }
+
+  #selected-user {
+    text-decoration: underline;
+    font-size: 1.75rem;
+  }
+
+  h3 {
+    font-size: 1.75rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.25;
+  }
+</style>
