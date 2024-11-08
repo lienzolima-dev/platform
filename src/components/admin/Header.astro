@@ -6,33 +6,51 @@ type Props = {
 };
 
 const { avatarURL, username, role } = Astro.props;
+const isAdmin = role === "admin";
 ---
 
 <header>
   <div class="dashboard-header">
-    <img
-      src={avatarURL ?? "/imgs/default-pfp.png"}
-      alt="Foto de perfil"
-      class="user-photo"
-    />
-    <div class="info-user">
-      <span class="user-name">{username}</span>
-      <span class="user-role">{role}</span>
+    <div class="user-dropdown">
+      <div class="user">
+        <img
+          src={avatarURL ?? "/imgs/default-pfp.png"}
+          alt="Foto de perfil"
+          class="user-photo"
+        />
+        <div class="info-user">
+          <span class="user-name">{username}</span>
+          <span class="user-role">{role}</span>
+        </div>
+      </div>
+      <div class="dropdown-content">
+        {isAdmin && <a href="/admin">Panel de administrador</a>}
+        <a href="/logout">Cerrar sesión</a>
+      </div>
     </div>
-    <a class="btn" href="/logout">Cerrar sesión</a>
   </div>
 </header>
 
 <style>
   header {
-    padding: 1rem;
+    padding: 1rem 6rem;
     border-bottom: var(--scroll-border);
   }
 
   .dashboard-header {
     display: flex;
     justify-content: flex-end;
+  }
+
+  .user {
+    display: flex;
     align-items: center;
+    cursor: pointer;
+  }
+
+  .user-dropdown {
+    position: relative;
+    display: inline-block;
   }
 
   .info-user {
@@ -56,7 +74,30 @@ const { avatarURL, username, role } = Astro.props;
     color: #484848;
   }
 
-  .btn {
-    margin-left: 1rem;
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    min-width: 160px;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  .user-dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+    border-radius: 10px;
   }
 </style>
