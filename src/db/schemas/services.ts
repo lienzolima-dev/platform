@@ -6,6 +6,6 @@ export const services = sqliteTable("services", {
   name: text("name").notNull(),
   price: real("price").notNull(),
   description: text("description"),
-  duration: real("duration_hours").notNull(),
+  durationHours: real("duration_hours").notNull(),
   category: text("category").notNull(),
 });
