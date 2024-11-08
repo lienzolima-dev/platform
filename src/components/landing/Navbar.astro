@@ -5,6 +5,7 @@ import LogoWhite from "../svgs/LogoWhite.astro";
 // TODO: Get this from top-level Astro component
 const user = Astro.locals.user;
 const isLoggedIn = user !== undefined;
+const isAdmin = user?.role === "admin";
 
 function isActive(link: string) {
   const url = Astro.request.url;
@@ -42,6 +43,13 @@ const navList = [
     link: instagramDirectMessageUrl,
   },
 ];
+
+if (isAdmin) {
+  navList.push({
+    name: "Panel de administrador",
+    link: "/admin",
+  });
+}
 ---
 
 <div class="spacer"></div>
