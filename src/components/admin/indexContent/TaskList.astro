@@ -1,9 +1,9 @@
 ---
 import PinIcon from "../../svgs/admin/IndexContent/PinIcon.astro";
-import CheckIcon from "../../svgs/admin/IndexContent/CheckIcon.astro";
-import TrashIcon from "../../svgs/admin/IndexContent/TrashIcon.astro";
 import NewTaskForm from "./NewTaskForm.astro";
 import TaskCheckButton from "./TaskCheckButton.astro";
+import TaskDeleteButton from "./TaskDeleteButton.astro";
+
 
 // This should be taken from the database
 const tasks = [
@@ -56,9 +56,7 @@ const tasks = [
             </div>
             <div class="buttons">
               <TaskCheckButton taskId={taskItem.id} />
-              <button class="trash-button">
-                <TrashIcon />
-              </button>
+              <TaskDeleteButton taskId={taskItem.id} />
             </div>
           </div>
         );

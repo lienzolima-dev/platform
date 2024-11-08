@@ -1,5 +1,5 @@
 ---
-import CheckIcon from "../../../components/svgs/admin/IndexContent/CheckIcon.astro";
+import TrashIcon from "$lib/components/svgs/admin/IndexContent/TrashIcon.astro";
 
 type Props = {
   taskId: string;
@@ -10,7 +10,7 @@ const { taskId } = Astro.props;
 
 <task-delete-button data-task-id={JSON.stringify({ taskId })}>
   <button class="check-button">
-    <CheckIcon />
+    <TrashIcon />
   </button>
 </task-delete-button>
 

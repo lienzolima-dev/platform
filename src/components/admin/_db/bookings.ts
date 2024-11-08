@@ -9,22 +9,22 @@ type Booking = {
   paymentStatus: string;
 };
 
-async function getCurrentDateTimeFromAPI(): Promise<Date> {
-  try {
-    const response = await fetch(
-      "https://timeapi.io/api/Time/current/zone?timeZone=America/Lima",
-    );
-    const data = await response.json();
-    const currentTime = new Date(data.dateTime);
-    return currentTime;
-  } catch (error) {
-    console.error(
-      "Error fetching time from TimeAPI, using server time as fallback.",
-      error,
-    );
-    return new Date();
-  }
-}
+// async function getCurrentDateTimeFromAPI(): Promise<Date> {
+//   try {
+//     const response = await fetch(
+//       "https://timeapi.io/api/Time/current/zone?timeZone=America/Lima",
+//     );
+//     const data = await response.json();
+//     const currentTime = new Date(data.dateTime);
+//     return currentTime;
+//   } catch (error) {
+//     console.error(
+//       "Error fetching time from TimeAPI, using server time as fallback.",
+//       error,
+//     );
+//     return new Date();
+//   }
+// }
 
 function formatBookingData(booking: {
   startTime: string;
@@ -77,8 +77,8 @@ function formatPaymentStatus(paymentStatus: string): string {
 }
 
 export const getAllBookings = async (): Promise<Booking[]> => {
-  const now = await getCurrentDateTimeFromAPI();
-  const nowUTC = new Date(now.toISOString());
+  const now = new Date();
+  now.getTime();
 
   const bookingsList = await db
     .select({
@@ -93,7 +93,7 @@ export const getAllBookings = async (): Promise<Booking[]> => {
   const upcomingBookings = bookingsList
     .filter((booking) => {
       const bookingDate = new Date(booking.startTime);
-      return bookingDate > nowUTC;
+      return bookingDate > now;
     })
     .slice(0, 5)
     .map(formatBookingData);
