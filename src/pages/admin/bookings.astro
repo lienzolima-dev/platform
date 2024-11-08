@@ -21,12 +21,12 @@ const { avatarURL, username, role, email } = user;
   <div>
     <Header {avatarURL} {username} {role} />
     <main>
-      <Dialog id="editBooking"><BookingEditForm /></Dialog>
-      <Dialog id="deleteBooking"><BookingDeleteForm /></Dialog>
       <h1>Añadir reserva</h1>
       <BookingForm client:load />
       <h1>Reservas</h1>
       <BookingsTable />
+      <Dialog id="editBooking"><BookingEditForm /></Dialog>
+      <Dialog id="deleteBooking"><BookingDeleteForm /></Dialog>
     </main>
   </div>
 </AdminLayout>
