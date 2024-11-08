@@ -1,0 +1,169 @@
+---
+// import type { users } from "../../../../db/schema";
+
+// type UserInsertType = typeof users.$inferInsert;
+
+// type UserRoles = {
+//   value: UserInsertType["role"];
+//   label: string;
+// };
+
+// const roles: UserRoles[] = [
+//   { value: "admin", label: "Admin" },
+//   { value: "user", label: "User" },
+//   { value: "manicurist", label: "Manicurista" },
+// ];
+---
+
+<section>
+  <div class="form-container">
+    <h2>Editar Usuario</h2>
+    <form id="edit-user-form">
+      <input type="hidden" id="edit-user-id" name="userId" />
+
+      <label for="username">
+        Nombre: <span class="required">*</span>
+      </label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        placeholder="Ingresa nombre completo"
+        required
+      />
+
+      <label for="user-email">Email <span class="required">*</span> </label>
+      <input
+        type="email"
+        id="user-email"
+        name="email"
+        placeholder="Ingresa email"
+        required
+      />
+
+      <label for="user-email">Teléfono<span class="required">*</span> </label>
+      <input
+        type="email"
+        id="user-email"
+        name="email"
+        placeholder="Ingresa email"
+        required
+      />
+
+      <button type="submit">Guardar</button>
+    </form>
+    <div id="edit-user-error-content"></div>
+  </div>
+</section>
+
+<script>
+  import { actions, isInputError } from "astro:actions";
+
+  const form = document.getElementById("edit-user-form");
+  const errorContent = document.getElementById("edit-user-error-content");
+
+  if (form instanceof HTMLFormElement) {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      // const formData = new FormData(form);
+
+      // const { error } = await actions.editUser(formData);
+      // if (!error) location.reload();
+
+      // if (error && errorContent instanceof HTMLElement) {
+      //   errorContent.innerHTML = "";
+
+      //   if (isInputError(error)) {
+      //     const ul = document.createElement("ul");
+
+      //     error.issues.forEach((err) => {
+      //       const li = document.createElement("li");
+      //       li.innerText = err.message;
+      //       ul.appendChild(li);
+      //     });
+
+      //     errorContent.appendChild(ul);
+      //     return;
+      //   }
+      //   errorContent.innerText = error.message;
+      // }
+    });
+  }
+</script>
+
+<style>
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+
+  input,
+  select {
+    border: 1px solid #ccc;
+    outline: none;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-container h3 {
+    margin-bottom: 2rem;
+  }
+
+  .list:checked ~ .form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  #edit-user-error-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: #b11313;
+  }
+
+  .required {
+    color: #b11313;
+  }
+
+  .optional {
+    font-style: italic;
+  }
+
+  button {
+    background-color: #47a04c;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  #user-password-fields:not(.hidden) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+</style>

@@ -1,36 +1,36 @@
 ---
-import TrashIcon from "../../../svgs/admin/IndexContent/TrashIcon.astro";
+import EditIcon from "../../svgs/admin/IndexContent/EditIcon.astro";
 ---
 
-<collaborator-delete-button>
+<booking-edit-button>
   <button>
-    <TrashIcon color={"white"} />
-    <span>Eliminar</span>
+    <EditIcon color="white" />
+    <span>Editar</span>
   </button>
-</collaborator-delete-button>
+</booking-edit-button>
 
 <script>
-  import { openDialog } from "../../../global/dialog/utils";
+  import { openDialog } from "../../global/dialog/utils";
 
-  class CollaboratorDeleteButton extends HTMLElement {
+  class BookingEditButton extends HTMLElement {
     connectedCallback() {
       const button = this.querySelector("button");
       if (!button) throw "Button not found";
 
       button.addEventListener("click", () => {
-        openDialog("deleteCollaborator");
+        openDialog("editBooking");
       });
     }
   }
 
-  customElements.define("collaborator-delete-button", CollaboratorDeleteButton);
+  customElements.define("booking-edit-button", BookingEditButton);
 </script>
 
 <style>
   button {
     display: flex;
     align-items: center;
-    background-color: #c35162;
+    background-color: #169db5;
     gap: 0.25rem;
     border-radius: 4px;
     padding: 4px 8px;

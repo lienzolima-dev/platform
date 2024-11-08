@@ -2,10 +2,29 @@
 import EditIcon from "../../../svgs/admin/IndexContent/EditIcon.astro";
 ---
 
-<button>
-  <EditIcon color="white" />
-  <span>Editar</span>
-</button>
+<user-collaborator-button>
+  <button>
+    <EditIcon color="white" />
+    <span>Editar</span>
+  </button>
+</user-collaborator-button>
+
+<script>
+  import { openDialog } from "../../../global/dialog/utils";
+
+  class CollaboratorEditButton extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector("button");
+      if (!button) throw "Button not found";
+
+      button.addEventListener("click", () => {
+        openDialog("editCollaborator");
+      });
+    }
+  }
+
+  customElements.define("user-collaborator-button", CollaboratorEditButton);
+</script>
 
 <style>
   button {

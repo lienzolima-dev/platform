@@ -1,0 +1,30 @@
+---
+export type Props = {
+  direction: "left" | "right" | "up" | "down";
+  color: string;
+};
+
+const { direction, color } = Astro.props;
+
+const arrowDirection = {
+  left: "rotate(0deg)",
+  right: "rotate(180deg)",
+  up: "rotate(90deg)",
+  down: "rotate(270deg)",
+}[direction];
+---
+
+<svg
+  style={`transform: ${arrowDirection};`}
+  width="8"
+  xmlns="http://www.w3.org/2000/svg"
+  height="8"
+  viewBox="4283.3 10087 8 8"
+  fill="none"
+>
+  <path
+    d="M4291.3 10090.5h-6.085l2.795-2.795-.71-.705-4 4 4 4 .705-.705-2.79-2.795h6.085v-1Z"
+    style=`fill: ${color};`
+  >
+  </path>
+</svg>

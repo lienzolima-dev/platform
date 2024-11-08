@@ -1,4 +1,8 @@
 ---
+import BookingDeleteButton from "./BookingDeleteButton.astro";
+import BookingEditButton from "./BookingEditButton.astro";
+import Pagination from "../../global/Pagination.astro";
+
 const headers = [
   "Hora",
   "Manicurista",
@@ -68,14 +72,14 @@ const bookings = [
             <div>{booking.extras.join(", ")}</div>
             <div>{booking.totalPrice}</div>
             <div class="action-buttons">
-              <button class="edit">Editar</button>
-              <button class="delete">Eliminar</button>
+              <BookingDeleteButton />
             </div>
           </div>
         ))
       }
     </div>
   </div>
+  <Pagination currentPage={1} totalPages={10} />
 </div>
 
 <style>
@@ -92,6 +96,7 @@ const bookings = [
     border-radius: 8px;
     min-width: 800px;
     overflow: hidden;
+    margin-bottom: 1rem;
   }
 
   .table-head {
@@ -99,7 +104,7 @@ const bookings = [
     grid-template-columns: repeat(7, 1fr);
     gap: 1rem;
     padding: 1rem;
-    background-color: #333;
+    background-color: #2b9398;
     color: white;
     font-weight: bold;
     border-bottom: 2px solid #ddd;
@@ -135,15 +140,16 @@ const bookings = [
     cursor: pointer;
     font-size: 0.9rem;
     transition: background-color 0.2s;
+    font-family: var(--font-body);
   }
 
   button.edit {
-    background-color: #007bff;
+    background-color: #2b9398;
     color: #fff;
   }
 
   button.edit:hover {
-    background-color: #0056b3;
+    background-color: #007f80;
   }
 
   button.delete {

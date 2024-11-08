@@ -1,0 +1,235 @@
+---
+import Toggle from "../../../../components/global/form/Toggle.astro";
+---
+
+<section>
+  <div class="form-container">
+    <h2>Editar Usuario</h2>
+    <form id="edit-collaborator-form">
+      <input type="hidden" id="edit-collaborator-id" name="userId" />
+
+      <label for="username">
+        Nombre: <span class="required">*</span>
+      </label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        placeholder="Ingresa nombre completo"
+        required
+      />
+
+      <label for="collaborator-email"
+        >Email <span class="required">*</span>
+      </label>
+      <input
+        type="email"
+        id="collaborator-email"
+        name="email"
+        placeholder="Ingresa un email"
+        required
+      />
+
+      <label for="collaborator-cellphone"
+        >Teléfono<span class="required">*</span>
+      </label>
+      <input
+        type="email"
+        id="collaborator-cellphone"
+        name="collaborator-cellphone"
+        placeholder="Ingresa un teléfono"
+        required
+      />
+
+      <div class="toggle">
+        <Toggle id="collaborator-toggle-password" name="changePassword">
+          Cambiar contraseña
+        </Toggle>
+      </div>
+
+      <div id="collaborator-password-fields" class="hidden">
+        <label for="collaborator-password">
+          Contraseña<span class="required">*</span>
+        </label>
+        <input
+          type="password"
+          id="edit-collaborator-password"
+          name="password"
+          placeholder="Ingresa nueva contraseña"
+        />
+
+        <label for="collaborator-confirm-password">
+          Confirmar Contraseña <span class="required">*</span>
+        </label>
+        <input
+          type="password"
+          id="edit-collaborator-confirm-password"
+          name="confirmPassword"
+          placeholder="Confirma la nueva contraseña"
+        />
+      </div>
+
+      <button type="submit">Guardar</button>
+    </form>
+    <div id="edit-collaborator-error-content"></div>
+  </div>
+</section>
+
+<script>
+  import { actions, isInputError } from "astro:actions";
+
+  const form = document.getElementById("edit-collaborator-form");
+  const errorContent = document.getElementById(
+    "edit-collaborator-error-content"
+  );
+  const togglePassword = document.getElementById(
+    "collaborator-toggle-password"
+  );
+  const passwordFields = document.getElementById(
+    "collaborator-password-fields"
+  );
+  const passwordInput = document.getElementById("edit-collaborator-password");
+  const confirmPasswordInput = document.getElementById(
+    "edit-collaborator-confirm-password"
+  );
+
+  if (!passwordInput || !(passwordInput instanceof HTMLInputElement)) {
+    throw new Error("Password input not found");
+  }
+
+  if (
+    !confirmPasswordInput ||
+    !(confirmPasswordInput instanceof HTMLInputElement)
+  ) {
+    throw new Error("Confirm password input not found");
+  }
+
+  if (togglePassword instanceof HTMLInputElement && passwordFields) {
+    togglePassword.addEventListener("change", () => {
+      passwordFields.classList.toggle("hidden");
+
+      if (togglePassword.checked) {
+        passwordInput.required = true;
+        confirmPasswordInput.required = true;
+      } else {
+        passwordInput.required = false;
+        passwordInput.value = "";
+        confirmPasswordInput.required = false;
+        confirmPasswordInput.value = "";
+      }
+    });
+  }
+
+  if (form instanceof HTMLFormElement) {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      // const formData = new FormData(form);
+
+      // const { error } = await actions.editUser(formData);
+      // if (!error) location.reload();
+
+      // if (error && errorContent instanceof HTMLElement) {
+      //   errorContent.innerHTML = "";
+
+      //   if (isInputError(error)) {
+      //     const ul = document.createElement("ul");
+
+      //     error.issues.forEach((err) => {
+      //       const li = document.createElement("li");
+      //       li.innerText = err.message;
+      //       ul.appendChild(li);
+      //     });
+
+      //     errorContent.appendChild(ul);
+      //     return;
+      //   }
+      //   errorContent.innerText = error.message;
+      // }
+    });
+  }
+</script>
+
+<style>
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+
+  input,
+  select {
+    border: 1px solid #ccc;
+    outline: none;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-container h3 {
+    margin-bottom: 2rem;
+  }
+
+  .list:checked ~ .form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  #edit-collaborator-error-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: #b11313;
+  }
+
+  .required {
+    color: #b11313;
+  }
+
+  .optional {
+    font-style: italic;
+  }
+
+  button {
+    background-color: #47a04c;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  #collaborator-password-fields:not(.hidden) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .toggle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+</style>

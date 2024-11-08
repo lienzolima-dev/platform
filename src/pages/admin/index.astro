@@ -3,7 +3,6 @@ import SideBar from "../../components/admin/SideBar.astro";
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import Header from "../../components/admin/Header.astro";
 import IndexContent from "../../components/admin/indexContent/IndexContent.astro";
-import Dialog from "../../components/global/dialog/Dialog.astro";
 
 const user = Astro.locals.user;
 
@@ -25,10 +24,6 @@ const userInfo = {
   <div>
     <Header {avatarURL} {username} {role} />
     <main>
-      <Dialog id="dialog-1">
-        <h2>Dialog 1</h2>
-        <p>This is a dialog component</p>
-      </Dialog>
       <IndexContent {userInfo} />
     </main>
   </div>
@@ -42,14 +37,5 @@ const userInfo = {
     margin: 0 auto;
     width: 100%;
     max-width: 1440px;
-  }
-
-  button {
-    background-color: rgb(236, 236, 236);
-    color: var(--white);
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
   }
 </style>
