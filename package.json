@@ -20,7 +20,7 @@
     "db:createfile": "node -e \"require('fs').writeFileSync('./local.db', '')\"",
     "db:push": "pnpm drizzle-kit push",
     "db:hard-reset": "pnpm db:delete && pnpm db:createfile && pnpm db:push && pnpm db:seed",
-    
+
     "check:format:prettier": "prettier --check --plugin prettier-plugin-astro --plugin prettier-plugin-svelte . \"!./.db\"",
     "check:format:biome": "pnpm biome format .",
     "check:format": "pnpm check:format:biome && pnpm check:format:prettier",
