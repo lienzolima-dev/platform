@@ -1,29 +1,29 @@
 ---
-import TrashIcon from "../../../svgs/admin/IndexContent/TrashIcon.astro";
+import TrashIcon from "../../svgs/admin/IndexContent/TrashIcon.astro";
 ---
 
-<collaborator-delete-button>
+<booking-delete-button>
   <button>
     <TrashIcon color={"white"} />
     <span>Eliminar</span>
   </button>
-</collaborator-delete-button>
+</booking-delete-button>
 
 <script>
-  import { openDialog } from "../../../global/dialog/utils";
+  import { openDialog } from "../../global/dialog/utils";
 
-  class CollaboratorDeleteButton extends HTMLElement {
+  class BookingDeleteButton extends HTMLElement {
     connectedCallback() {
       const button = this.querySelector("button");
       if (!button) throw "Button not found";
 
       button.addEventListener("click", () => {
-        openDialog("deleteCollaborator");
+        openDialog("deleteBooking");
       });
     }
   }
 
-  customElements.define("collaborator-delete-button", CollaboratorDeleteButton);
+  customElements.define("booking-delete-button", BookingDeleteButton);
 </script>
 
 <style>

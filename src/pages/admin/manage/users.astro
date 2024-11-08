@@ -4,6 +4,9 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
 import Header from "../../../components/admin/Header.astro";
 import UsersHeader from "../../../components/admin/manage/users/UsersHeader.astro";
 import UsersTable from "../../../components/admin/manage/users/UsersTable.astro";
+import Dialog from "../../../components/global/dialog/Dialog.astro";
+import UserEditForm from "$lib/components/admin/manage/users/UserEditForm.astro";
+import UserDeleteForm from "$lib/components/admin/manage/users/UserDeleteForm.astro";
 
 const user = Astro.locals.user;
 
@@ -21,6 +24,8 @@ const usersAmount = 10;
   <div>
     <Header {avatarURL} {username} {role} />
     <main>
+      <Dialog id="editUser"><UserEditForm /></Dialog>
+      <Dialog id="deleteUser"><UserDeleteForm /></Dialog>
       <UsersHeader {usersAmount} />
       <UsersTable />
     </main>
