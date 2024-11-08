@@ -1,38 +1,9 @@
 ---
 import CalendarIcon from "../../svgs/admin/IndexContent/CalendarIcon.astro";
 import UserIcon from "../../svgs/admin/IndexContent/UserIcon.astro";
+import { getAllBookings } from "../_db/bookings";
 
-// This should be taken from the database
-const bookings = [
-  {
-    startTime: "10:10",
-    endTime: "10:20",
-    date: "12 de noviembre",
-    username: "Olga Cardin Villameriel",
-    paymentDescription: "Adelanto",
-  },
-  {
-    startTime: "10:10",
-    endTime: "10:20",
-    date: "12 de noviembre",
-    username: "Marcos Santiago Carral",
-    paymentDescription: "Pago completo",
-  },
-  {
-    startTime: "10:10",
-    endTime: "10:20",
-    date: "12 de noviembre",
-    username: "Elvira Ochoa Pascual",
-    paymentDescription: "Adelanto",
-  },
-  {
-    startTime: "10:10",
-    endTime: "10:20",
-    date: "12 de noviembre",
-    username: "Elvira Ochoa Pascual",
-    paymentDescription: "Adelanto",
-  },
-];
+const bookings = await getAllBookings();
 ---
 
 <section>
@@ -42,30 +13,34 @@ const bookings = [
   </header>
   <div class="booking-list">
     {
-      bookings.map((bookingItem) => {
-        return (
-          <div class="item">
-            <span class="item-rectangle" />
-            <div class="item-inner">
-              <div class="item-top">
-                <span>
-                  {bookingItem.startTime} - {bookingItem.endTime}
-                </span>
-                <div class="item-user">
-                  <UserIcon />
-                  <span>{bookingItem.username.toUpperCase()}</span>
+      bookings.length === 0 ? (
+        <p>No hay próximas citas disponibles</p>
+      ) : (
+        bookings.map((bookingItem) => {
+          return (
+            <div class="item">
+              <span class="item-rectangle" />
+              <div class="item-inner">
+                <div class="item-top">
+                  <span>
+                    {bookingItem.startTime} - {bookingItem.endTime}
+                  </span>
+                  <div class="item-user">
+                    <UserIcon />
+                    <span>{bookingItem.username.toUpperCase()}</span>
+                  </div>
+                </div>
+                <div class="item-bottom">
+                  <span class="item-payment-label">
+                    {bookingItem.paymentStatus}
+                  </span>
+                  <span class="item-date-label">{bookingItem.date}</span>
                 </div>
               </div>
-              <div class="item-bottom">
-                <span class="item-payment-label">
-                  {bookingItem.paymentDescription}
-                </span>
-                <span class="item-date-label">{bookingItem.date}</span>
-              </div>
             </div>
-          </div>
-        );
-      })
+          );
+        })
+      )
     }
   </div>
 </section>

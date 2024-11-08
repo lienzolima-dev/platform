@@ -11,6 +11,8 @@
     "format:prettier": "prettier --write --plugin prettier-plugin-astro --plugin prettier-plugin-svelte . \"!./.db\"",
     "format:biome": "pnpm biome format . --write",
     "format": "pnpm format:biome && pnpm format:prettier",
+
+    "db:studio": "pnpm drizzle-kit studio",
     "db:seed": "pnpm tsx ./src/db/seed/seed.ts",
     "db:delete:w": "rimraf ./local.db",
     "db:delete:l": "rm -rf ./local.db",
@@ -18,6 +20,7 @@
     "db:createfile": "node -e \"require('fs').writeFileSync('./local.db', '')\"",
     "db:push": "pnpm drizzle-kit push",
     "db:hard-reset": "pnpm db:delete && pnpm db:createfile && pnpm db:push && pnpm db:seed",
+
     "check:format:prettier": "prettier --check --plugin prettier-plugin-astro --plugin prettier-plugin-svelte . \"!./.db\"",
     "check:format:biome": "pnpm biome format .",
     "check:format": "pnpm check:format:biome && pnpm check:format:prettier",
