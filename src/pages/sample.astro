@@ -1,4 +1,6 @@
 ---
+import Dialog from "../components/global/dialog/Dialog.astro";
+import DialogOpenButton from "../components/global/dialog/DialogOpenButton.astro";
 import { ipBucket } from "../utils/rate-limit";
 
 let tooManyRequests = false;
@@ -24,5 +26,14 @@ console.log("aDate: ", aDate.toISOString());
 ---
 
 <h1>HOLA</h1>
+<Dialog id="dialog-1">
+  <h2>Dialog 1</h2>
+  <p>This is a dialog component</p>
+</Dialog>
+
+<DialogOpenButton id="dialog-1">
+  <button>Open Dialog</button>
+</DialogOpenButton>
+
 {JSON.stringify(newDate)}
 {tooManyRequests && <p>Too many requests</p>}
