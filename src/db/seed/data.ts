@@ -238,7 +238,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
     startTime: "2024-10-14T20:00:30.348Z",
     endTime: "2024-10-14T21:00:30.348Z",
-    paymentType: "none",
+    paymentStatus: "none",
   },
   {
     id: "01JC5D5D4CCJFKVBK22A1B4CHZ",
@@ -248,7 +248,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-10-15T10:00:30.348Z",
     endTime: "2024-10-15T10:30:30.348Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5D98CEWVYMHDW0P3Q42NER",
@@ -258,7 +258,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-10-15T16:00:30.348Z",
     endTime: "2024-10-15T17:00:30.348Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5D9B8C4D8TF7HDT6ZKFANS",
@@ -268,7 +268,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
     startTime: "2024-10-15T16:00:30.348Z",
     endTime: "2024-10-15T17:00:30.348Z",
-    paymentType: "full",
+    paymentStatus: "full",
   },
   {
     id: "01JC5D9SYD2S58SJ1PA2N3HGS4",
@@ -278,7 +278,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-10-16T17:00:30.348Z",
     endTime: "2024-10-16T16:00:30.348Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5D9WTK3FWDQ68MWW3F1EJS",
@@ -288,7 +288,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-10-18T17:30:30.348Z",
     endTime: "2024-10-18T18:00:30.348Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DAQ8HYXRJGDTRTZMKC6X2",
@@ -298,7 +298,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
     startTime: "2024-10-19T10:00:00.000Z",
     endTime: "2024-10-19T11:00:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DAT4CQXYSFEXZ8P5KVQGW",
@@ -308,7 +308,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-10-19T11:00:00.000Z",
     endTime: "2024-10-19T12:00:00.000Z",
-    paymentType: "full",
+    paymentStatus: "full",
   },
   {
     id: "01JC5DB7TK3FSYQ11APN3FD5QG",
@@ -318,7 +318,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
     startTime: "2024-10-19T12:00:00.000Z",
     endTime: "2024-10-19T13:00:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DBARC4CSTWWRTGC31MP6T",
@@ -328,7 +328,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-10-20T13:00:00.000Z",
     endTime: "2024-10-20T14:00:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DBNFV31YGF3MCD4TFKR90",
@@ -338,7 +338,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
     startTime: "2024-10-21T14:00:00.000Z",
     endTime: "2024-10-21T15:00:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DBQE26PF67DM8C7P80F7M",
@@ -348,7 +348,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-10-22T15:00:00.000Z",
     endTime: "2024-10-22T16:00:00.000Z",
-    paymentType: "full",
+    paymentStatus: "full",
   },
   {
     id: "01JC5DC45VQK4J7KZB8QJ15D2R",
@@ -358,7 +358,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
     startTime: "2024-10-22T16:00:00.000Z",
     endTime: "2024-10-22T17:00:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DC71WVPKMCFP98QZD99R4",
@@ -368,7 +368,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-10-23T17:00:00.000Z",
     endTime: "2024-10-23T18:00:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DCFVM3M6BRF6ZJECRV5J9",
@@ -378,7 +378,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
     startTime: "2024-10-23T18:00:00.000Z",
     endTime: "2024-10-23T19:00:00.000Z",
-    paymentType: "full",
+    paymentStatus: "full",
   },
   {
     id: "01JC5DCPP9W8JKA29YP1J865JZ",
@@ -388,7 +388,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-10-24T10:00:00.000Z",
     endTime: "2024-10-24T11:00:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DD1GQ75FCY7ZY9KY31RYB",
@@ -398,7 +398,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
     startTime: "2024-10-24T11:00:00.000Z",
     endTime: "2024-10-24T12:00:00.000Z",
-    paymentType: "full",
+    paymentStatus: "full",
   },
   {
     id: "01JC5DD3C16B7WDKXNRJTVAD06",
@@ -408,7 +408,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-10-25T12:00:00.000Z",
     endTime: "2024-10-25T13:00:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DDWTDCG4BH9R8AZC76N8T",
@@ -418,7 +418,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
     startTime: "2024-10-25T13:00:00.000Z",
     endTime: "2024-10-25T14:00:00.000Z",
-    paymentType: "full",
+    paymentStatus: "full",
   },
   {
     id: "01JC5DDYQ8E7S85ZNFWV82XD38",
@@ -428,7 +428,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-10-26T14:00:00.000Z",
     endTime: "2024-10-26T15:00:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DEAGAFH8JW8SRNECV4T0V",
@@ -438,7 +438,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
     startTime: "2024-10-26T15:00:00.000Z",
     endTime: "2024-10-26T16:00:00.000Z",
-    paymentType: "full",
+    paymentStatus: "full",
   },
   {
     id: "01JC5DECCREH3323D0MVQKA3RF",
@@ -448,7 +448,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-10-26T16:00:00.000Z",
     endTime: "2024-10-26T17:00:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DEZYN4NWKB2E5PFJ76Z2P",
@@ -458,7 +458,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
     startTime: "2024-10-27T17:00:00.000Z",
     endTime: "2024-10-27T18:00:00.000Z",
-    paymentType: "full",
+    paymentStatus: "full",
   },
   {
     id: "01JC5DF2V6VSP92Q7X7XC3EH60",
@@ -468,7 +468,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-10-28T18:00:00.000Z",
     endTime: "2024-10-28T19:00:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DFGH2JFPJEZEYGD7JPH39",
@@ -478,7 +478,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
     startTime: "2024-10-28T19:00:00.000Z",
     endTime: "2024-10-28T20:00:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DFJFQKRQKZPBG710FGJX6",
@@ -488,7 +488,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-10-29T10:00:00.000Z",
     endTime: "2024-10-29T11:00:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DFY6KK434HJY9KHW0MF8D",
@@ -498,7 +498,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
     startTime: "2024-10-29T11:00:00.000Z",
     endTime: "2024-10-29T12:00:00.000Z",
-    paymentType: "full",
+    paymentStatus: "full",
   },
   {
     id: "01JC5DG23CGY097Z7EN1VEPJ4S",
@@ -508,7 +508,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-10-30T12:00:00.000Z",
     endTime: "2024-10-30T13:00:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DGMNSKP7NV8PR525NESQF",
@@ -518,7 +518,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
     startTime: "2024-10-31T13:00:00.000Z",
     endTime: "2024-10-31T14:00:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DGQJWJ7KSCEEDTDN3W0SN",
@@ -528,7 +528,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-10-31T14:00:00.000Z",
     endTime: "2024-10-31T15:00:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DHNWRMSY01H47BXQ6DJP5",
@@ -538,7 +538,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-11-02T15:00:00.000Z",
     endTime: "2024-11-02T16:00:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DHQW7WYSKV7XMB9CD22VJ",
@@ -548,7 +548,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-11-02T10:10:00.000Z",
     endTime: "2024-11-02T11:10:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DJ9E8Z4A1R12GTPT8MZM4",
@@ -558,7 +558,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-11-02T17:30:00.000Z",
     endTime: "2024-11-02T18:30:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DJCAHYY6KAZ8WS896ZCEJ",
@@ -568,7 +568,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
     startTime: "2024-11-02T13:30:00.000Z",
     endTime: "2024-11-02T14:30:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DKBJJPDR1DXBKGZWFRDP0",
@@ -578,7 +578,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-11-02T13:30:00.000Z",
     endTime: "2024-11-02T14:30:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DKEGHV20K66HBCZ0EETTV",
@@ -588,7 +588,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
     startTime: "2024-11-04T18:20:00.000Z",
     endTime: "2024-11-04T19:20:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DM51W7EZAMSTG2TXY9GRE",
@@ -598,7 +598,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
     startTime: "2024-11-04T20:00:00.000Z",
     endTime: "2024-11-04T21:00:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DM7WSVDE05C8SMAWEQMZM",
@@ -608,7 +608,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-11-05T10:00:00.000Z",
     endTime: "2024-11-05T11:00:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DMJMYNEZ8FVSE7M0T9W3H",
@@ -618,7 +618,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKE2FW711X9VWPPCWY",
     startTime: "2024-11-05T20:00:00.000Z",
     endTime: "2024-11-05T21:20:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DMPH0D92E7KDHDYCK7T7T",
@@ -628,7 +628,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
     startTime: "2024-11-05T18:30:00.000Z",
     endTime: "2024-11-05T20:30:00.000Z",
-    paymentType: "advance",
+    paymentStatus: "advance",
   },
   {
     id: "01JC5DNRR8H4ZD5FY6P665KSTY",
@@ -638,7 +638,7 @@ export const bookingsToSeed: (typeof bookings.$inferInsert)[] = [
     idManicurist: "01JC512JXKFSERT3ANJ8PGXG36",
     startTime: "2024-11-07T18:20:00.000Z",
     endTime: "2024-11-07T20:30:00.000Z",
-    paymentType: "none",
+    paymentStatus: "none",
   },
 ];
 
