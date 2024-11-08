@@ -1,32 +1,11 @@
 ---
+import { getTasks } from "$lib/pages/admin/_db/tasks";
 import PinIcon from "../../svgs/admin/IndexContent/PinIcon.astro";
 import NewTaskForm from "./NewTaskForm.astro";
 import TaskCheckButton from "./TaskCheckButton.astro";
 import TaskDeleteButton from "./TaskDeleteButton.astro";
 
-// This should be taken from the database
-const tasks = [
-  {
-    id: "1",
-    date: "20/8",
-    creationTime: "15:40",
-    description:
-      "Lorem ipsum dolor sit amet, oloribus beatae aperiam quidem aliquam architecto! Porro",
-  },
-  {
-    id: "2",
-    date: "20/8",
-    creationTime: "15:40",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo doloribus ",
-  },
-  {
-    id: "3",
-    date: "20/8",
-    creationTime: "15:40",
-    description: "Lorem ipsum dolor sit amet, consecteturh",
-  },
-];
+const tasks = await getTasks();
 ---
 
 <section>
@@ -60,6 +39,15 @@ const tasks = [
           </div>
         );
       })
+    }
+    {
+      tasks.length === 0 && (
+        <div class="item">
+          <div class="item-inner">
+            <p>Añade un nuevo recordatorio</p>
+          </div>
+        </div>
+      )
     }
   </div>
 </section>

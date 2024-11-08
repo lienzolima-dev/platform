@@ -25,6 +25,7 @@ const { taskId } = Astro.props;
       button.addEventListener("click", async () => {
         const taskId = JSON.parse(this.dataset.taskId ?? "").taskId;
         await actions.db.tasks.remove({ id: taskId });
+        window.location.reload();
       });
     }
   }
