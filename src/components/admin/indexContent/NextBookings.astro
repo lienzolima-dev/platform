@@ -1,7 +1,7 @@
 ---
+import { getAllBookings } from "../../../pages/admin/_db/bookings";
 import CalendarIcon from "../../svgs/admin/IndexContent/CalendarIcon.astro";
 import UserIcon from "../../svgs/admin/IndexContent/UserIcon.astro";
-import { getAllBookings } from "../_db/bookings";
 
 const bookings = await getAllBookings();
 ---

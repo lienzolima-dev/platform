@@ -19,5 +19,5 @@ export const users = sqliteTable("users", {
   emailVerified: integer("email_verified", { mode: "boolean" })
     .notNull()
     .default(false),
-  createdAt: text("created_at").notNull().default(sql`(current_timestamp)`),
+  createdAt: text("created_at").notNull().default(new Date().toISOString()),
 });

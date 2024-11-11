@@ -1,29 +1,11 @@
 ---
+import { getTasks } from "$lib/pages/admin/_db/tasks";
 import PinIcon from "../../svgs/admin/IndexContent/PinIcon.astro";
-import CheckIcon from "../../svgs/admin/IndexContent/CheckIcon.astro";
-import TrashIcon from "../../svgs/admin/IndexContent/TrashIcon.astro";
 import NewTaskForm from "./NewTaskForm.astro";
+import TaskCheckButton from "./TaskCheckButton.astro";
+import TaskDeleteButton from "./TaskDeleteButton.astro";
 
-// This should be taken from the database
-const tasks = [
-  {
-    date: "20/8",
-    creationTime: "15:40",
-    description:
-      "Lorem ipsum dolor sit amet, oloribus beatae aperiam quidem aliquam architecto! Porro",
-  },
-  {
-    date: "20/8",
-    creationTime: "15:40",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo doloribus ",
-  },
-  {
-    date: "20/8",
-    creationTime: "15:40",
-    description: "Lorem ipsum dolor sit amet, consecteturh",
-  },
-];
+const tasks = await getTasks();
 ---
 
 <section>
@@ -51,16 +33,21 @@ const tasks = [
               </div>
             </div>
             <div class="buttons">
-              <button class="check-button">
-                <CheckIcon />
-              </button>
-              <button class="trash-button">
-                <TrashIcon />
-              </button>
+              <TaskCheckButton taskId={taskItem.id} />
+              <TaskDeleteButton taskId={taskItem.id} />
             </div>
           </div>
         );
       })
+    }
+    {
+      tasks.length === 0 && (
+        <div class="item">
+          <div class="item-inner">
+            <p>Añade un nuevo recordatorio</p>
+          </div>
+        </div>
+      )
     }
   </div>
 </section>
