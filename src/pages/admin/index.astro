@@ -3,6 +3,8 @@ import SideBar from "../../components/admin/SideBar.astro";
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import Header from "../../components/admin/Header.astro";
 import IndexContent from "../../components/admin/indexContent/IndexContent.astro";
+import { getTasks } from "./_db/tasks";
+import { getAllBookings } from "./_db/bookings";
 
 const user = Astro.locals.user;
 
@@ -17,6 +19,8 @@ const userInfo = {
   username,
   role,
 };
+
+const [tasks, bookings] = await Promise.all([getTasks(), getAllBookings()]);
 ---
 
 <AdminLayout title="Admin">
@@ -24,7 +28,7 @@ const userInfo = {
   <div>
     <Header {avatarURL} {username} {role} />
     <main>
-      <IndexContent {userInfo} />
+      <IndexContent {bookings} {tasks} {userInfo} />
     </main>
   </div>
 </AdminLayout>

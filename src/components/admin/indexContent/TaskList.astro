@@ -1,11 +1,16 @@
 ---
-import { getTasks } from "$lib/pages/admin/_db/tasks";
+import { getTasks } from "../../../pages/admin/_db/tasks";
+import type { Task } from "../../../pages/admin/_db/types";
 import PinIcon from "../../svgs/admin/IndexContent/PinIcon.astro";
 import NewTaskForm from "./NewTaskForm.astro";
 import TaskCheckButton from "./TaskCheckButton.astro";
 import TaskDeleteButton from "./TaskDeleteButton.astro";
 
-const tasks = await getTasks();
+type Props = {
+  tasks: Task[];
+};
+
+const { tasks } = Astro.props;
 ---
 
 <section>

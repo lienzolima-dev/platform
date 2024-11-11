@@ -1,13 +1,7 @@
 import { db } from "$lib/db/db";
 import { tasks } from "$lib/db/schema";
-import { eq } from "drizzle-orm";
-
-export type Task = {
-  id: string;
-  date: string;
-  creationTime: string;
-  description: string;
-};
+import { desc, eq } from "drizzle-orm";
+import type { Task } from "./types";
 
 // {
 //     id: "3",
@@ -52,7 +46,7 @@ export async function getTasks(): Promise<Task[]> {
     })
     .from(tasks)
     .where(eq(tasks.status, "pending"))
-    .orderBy(tasks.createdAt);
+    .orderBy(desc(tasks.createdAt));
 
   return tasksList.map(formatTasksData).slice(0, 5);
 }
