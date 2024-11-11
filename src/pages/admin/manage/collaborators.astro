@@ -8,6 +8,7 @@ import CollaboratorEditForm from "../../../components/admin/manage/colaborators/
 import Dialog from "../../../components/global/dialog/Dialog.astro";
 import CollaboratorDeleteForm from "../../../components/admin/manage/colaborators/CollaboratorDeleteForm.astro";
 import { getCollaboratorsTableData } from "../_db/collaborators";
+import CollaboratorAddForm from "$lib/components/admin/manage/colaborators/CollaboratorAddForm.astro";
 
 const user = Astro.locals.user;
 
@@ -27,6 +28,7 @@ const colabsAmount = collaborators.length;
     <main>
       <Dialog id="editCollaborator"><CollaboratorEditForm /></Dialog>
       <Dialog id="deleteCollaborator"><CollaboratorDeleteForm /></Dialog>
+      <Dialog id="addCollaborator"><CollaboratorAddForm /></Dialog>
       <CollaboratorsHeader {colabsAmount} />
       <CollaboratorTable {collaborators} />
     </main>

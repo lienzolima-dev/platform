@@ -5,8 +5,11 @@ export const userRoles = ["user", "admin", "manicurist"] as const;
 
 export const users = sqliteTable("users", {
   id: text("user_id").primaryKey().$defaultFn(ulid).notNull(),
+  status: text("status", { enum: ["active", "inactive", "deleted"] })
+    .notNull()
+    .default("active"),
   anonymous: integer("anonymous", { mode: "boolean" }).notNull().default(false),
-  cellPhone: text("cell_phone"),
+  phone: text("phone"),
   username: text("username").notNull(),
   googleID: integer("google_id").unique(),
   passwordHash: text("password_hash"),

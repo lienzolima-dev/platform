@@ -24,14 +24,13 @@ const { collaborator } = Astro.props;
     connectedCallback() {
       const button = this.querySelector("button");
       const form = document.getElementById("delete-collaborator-form");
-      const selectedCollaboratorElement = document.getElementById(
-        "selected-collaborator"
-      );
+      const errorContent = document.getElementById("c-delete-error-content");
+      const selectedCollab = document.getElementById("selected-collaborator");
 
       if (!button) throw "Button not found";
       if (!(form instanceof HTMLFormElement)) throw "Form not found";
-      if (!selectedCollaboratorElement)
-        throw "Selected collaborator element not found";
+      if (!selectedCollab) throw "Selected collaborator element not found";
+      if (!errorContent) throw "Error content not found";
 
       button.addEventListener("click", () => {
         const { id, name }: CollaboratorsTableData = JSON.parse(
@@ -39,7 +38,8 @@ const { collaborator } = Astro.props;
         );
 
         form.collaboratorId.value = id;
-        selectedCollaboratorElement.innerHTML = name;
+        selectedCollab.innerHTML = name;
+        errorContent.innerText = "";
 
         openDialog("deleteCollaborator");
       });

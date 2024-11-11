@@ -58,112 +58,112 @@ const userRolesMap: Record<(typeof userRoles)[number], string> = {
       </select>
 
       <div class="toggle">
-        <Toggle id="collaborator-toggle-password" name="changePassword">
+        <Toggle id="c-toggle-password" name="changePassword">
           Cambiar contraseña
         </Toggle>
       </div>
 
-      <div id="collaborator-password-fields" class="hidden">
-        <label for="collaborator-password">
+      <div id="c-password-fields" class="hidden">
+        <label for="c-password">
           Contraseña<span class="required">*</span>
         </label>
         <input
           type="password"
-          id="collaborator-password"
+          id="c-password"
           name="password"
           placeholder="Ingresa nueva contraseña"
         />
 
-        <label for="collaborator-confirm-password">
+        <label for="c-confirm-password">
           Confirmar Contraseña <span class="required">*</span>
         </label>
         <input
           type="password"
-          id="collaborator-confirm-password"
+          id="c-confirm-password"
           name="confirmPassword"
           placeholder="Confirma la nueva contraseña"
         />
       </div>
 
-      <button type="submit">Guardar</button>
+      <button id="c-edit-submit-btn" type="submit">Guardar</button>
     </form>
-    <div id="edit-collaborator-error-content"></div>
+    <div id="c-edit-error-content"></div>
   </div>
 </section>
 
 <script>
   import { actions, isInputError } from "astro:actions";
 
-  const form = document.getElementById("edit-collaborator-form");
-  const errorContent = document.getElementById(
-    "edit-collaborator-error-content"
-  );
-  const togglePassword = document.getElementById(
-    "collaborator-toggle-password"
-  );
-  const passwordFields = document.getElementById(
-    "collaborator-password-fields"
-  );
-  const passwordInput = document.getElementById("collaborator-password");
-  const confirmPasswordInput = document.getElementById(
-    "collaborator-confirm-password"
-  );
+  try {
+    const form = document.getElementById("edit-collaborator-form");
+    const errorContent = document.getElementById("c-edit-error-content");
+    const togglePassword = document.getElementById("c-toggle-password");
+    const passwordFields = document.getElementById("c-password-fields");
+    const passwordInput = document.getElementById("c-password");
+    const confirmPasswordInput = document.getElementById("c-confirm-password");
+    const submitButton = document.getElementById("c-edit-submit-btn");
 
-  if (!passwordInput || !(passwordInput instanceof HTMLInputElement)) {
-    throw new Error("Password input not found");
-  }
+    if (!(passwordInput instanceof HTMLInputElement)) {
+      throw new Error("Password input not found");
+    }
 
-  if (
-    !confirmPasswordInput ||
-    !(confirmPasswordInput instanceof HTMLInputElement)
-  ) {
-    throw new Error("Confirm password input not found");
-  }
+    if (!(confirmPasswordInput instanceof HTMLInputElement)) {
+      throw new Error("Confirm password input not found");
+    }
 
-  if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
+    if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
 
-  if (togglePassword instanceof HTMLInputElement && passwordFields) {
-    togglePassword.addEventListener("change", () => {
-      passwordFields.classList.toggle("hidden");
+    if (!(submitButton instanceof HTMLButtonElement)) {
+      throw new Error("Submit button not found");
+    }
 
-      if (togglePassword.checked) {
-        passwordInput.required = true;
-        confirmPasswordInput.required = true;
-      } else {
-        passwordInput.required = false;
-        passwordInput.value = "";
-        confirmPasswordInput.required = false;
-        confirmPasswordInput.value = "";
+    if (togglePassword instanceof HTMLInputElement && passwordFields) {
+      togglePassword.addEventListener("change", () => {
+        passwordFields.classList.toggle("hidden");
+
+        if (togglePassword.checked) {
+          passwordInput.required = true;
+          confirmPasswordInput.required = true;
+        } else {
+          passwordInput.required = false;
+          passwordInput.value = "";
+          confirmPasswordInput.required = false;
+          confirmPasswordInput.value = "";
+        }
+      });
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+
+      submitButton.disabled = true;
+      const { error } = await actions.db.users.editCollaborator(formData);
+      submitButton.disabled = false;
+      if (!error) location.reload();
+
+      if (error && errorContent instanceof HTMLElement) {
+        errorContent.innerHTML = "";
+
+        if (isInputError(error)) {
+          const ul = document.createElement("ul");
+
+          error.issues.forEach((err) => {
+            const li = document.createElement("li");
+            li.innerText = err.message;
+            ul.appendChild(li);
+          });
+
+          errorContent.appendChild(ul);
+          return;
+        }
+        errorContent.innerText = error.message;
       }
     });
+  } catch (e) {
+    console.error("Error:", e);
   }
-
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(form);
-
-    const { error } = await actions.db.users.editCollaborator(formData);
-    if (!error) location.reload();
-
-    if (error && errorContent instanceof HTMLElement) {
-      errorContent.innerHTML = "";
-
-      if (isInputError(error)) {
-        const ul = document.createElement("ul");
-
-        error.issues.forEach((err) => {
-          const li = document.createElement("li");
-          li.innerText = err.message;
-          ul.appendChild(li);
-        });
-
-        errorContent.appendChild(ul);
-        return;
-      }
-      errorContent.innerText = error.message;
-    }
-  });
 </script>
 
 <style>
@@ -207,7 +207,7 @@ const userRolesMap: Record<(typeof userRoles)[number], string> = {
     margin-bottom: 0.5rem;
   }
 
-  #edit-collaborator-error-content {
+  #c-edit-error-content {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -231,11 +231,15 @@ const userRolesMap: Record<(typeof userRoles)[number], string> = {
     padding: 0.5rem 1rem;
   }
 
+  button:disabled {
+    background-color: #ccc;
+  }
+
   .hidden {
     display: none;
   }
 
-  #collaborator-password-fields:not(.hidden) {
+  #c-password-fields:not(.hidden) {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;

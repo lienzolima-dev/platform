@@ -1,4 +1,4 @@
-import { eq, not } from "drizzle-orm";
+import { and, eq, not } from "drizzle-orm";
 import { users } from "../../../db/schema";
 import { db } from "../../../db/db";
 import type { CollaboratorsTableData } from "./types";
@@ -12,10 +12,10 @@ export async function getCollaboratorsTableData(): Promise<
       name: users.username,
       email: users.email,
       role: users.role,
-      phone: users.cellPhone,
+      phone: users.phone,
     })
     .from(users)
-    .where(not(eq(users.role, "user")))
+    .where(and(not(eq(users.role, "user")), not(eq(users.status, "deleted"))))
     .orderBy(users.createdAt);
   return collaborators;
 }
