@@ -1,12 +1,19 @@
 ---
+import type { userRoles } from "../../../../db/schemas/users";
 import Toggle from "../../../../components/global/form/Toggle.astro";
+
+const userRolesMap: Record<(typeof userRoles)[number], string> = {
+  admin: "Administrador",
+  manicurist: "Manicurista",
+  user: "Usuario",
+};
 ---
 
 <section>
   <div class="form-container">
     <h2>Editar Usuario</h2>
     <form id="edit-collaborator-form">
-      <input type="hidden" id="edit-collaborator-id" name="userId" />
+      <input type="hidden" id="collaborator-id" name="userId" />
 
       <label for="username">
         Nombre: <span class="required">*</span>
@@ -30,16 +37,25 @@ import Toggle from "../../../../components/global/form/Toggle.astro";
         required
       />
 
-      <label for="collaborator-cellphone"
-        >Teléfono<span class="required">*</span>
-      </label>
+      <label for="collaborator-phone">Teléfono</label>
       <input
-        type="email"
-        id="collaborator-cellphone"
-        name="collaborator-cellphone"
+        type="text"
+        id="collaborator-phone"
+        name="phone"
         placeholder="Ingresa un teléfono"
-        required
       />
+
+      <label for="collaborator-role">
+        Rol <span class="required">*</span>
+      </label>
+
+      <select id="collaborator-role" name="userRole">
+        {
+          Object.entries(userRolesMap).map(([role, label]) => (
+            <option value={role}>{label}</option>
+          ))
+        }
+      </select>
 
       <div class="toggle">
         <Toggle id="collaborator-toggle-password" name="changePassword">
@@ -53,7 +69,7 @@ import Toggle from "../../../../components/global/form/Toggle.astro";
         </label>
         <input
           type="password"
-          id="edit-collaborator-password"
+          id="collaborator-password"
           name="password"
           placeholder="Ingresa nueva contraseña"
         />
@@ -63,7 +79,7 @@ import Toggle from "../../../../components/global/form/Toggle.astro";
         </label>
         <input
           type="password"
-          id="edit-collaborator-confirm-password"
+          id="collaborator-confirm-password"
           name="confirmPassword"
           placeholder="Confirma la nueva contraseña"
         />
@@ -88,9 +104,9 @@ import Toggle from "../../../../components/global/form/Toggle.astro";
   const passwordFields = document.getElementById(
     "collaborator-password-fields"
   );
-  const passwordInput = document.getElementById("edit-collaborator-password");
+  const passwordInput = document.getElementById("collaborator-password");
   const confirmPasswordInput = document.getElementById(
-    "edit-collaborator-confirm-password"
+    "collaborator-confirm-password"
   );
 
   if (!passwordInput || !(passwordInput instanceof HTMLInputElement)) {
@@ -103,6 +119,8 @@ import Toggle from "../../../../components/global/form/Toggle.astro";
   ) {
     throw new Error("Confirm password input not found");
   }
+
+  if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
 
   if (togglePassword instanceof HTMLInputElement && passwordFields) {
     togglePassword.addEventListener("change", () => {
@@ -120,34 +138,32 @@ import Toggle from "../../../../components/global/form/Toggle.astro";
     });
   }
 
-  if (form instanceof HTMLFormElement) {
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-      // const formData = new FormData(form);
+    const formData = new FormData(form);
 
-      // const { error } = await actions.editUser(formData);
-      // if (!error) location.reload();
+    const { error } = await actions.db.users.editCollaborator(formData);
+    if (!error) location.reload();
 
-      // if (error && errorContent instanceof HTMLElement) {
-      //   errorContent.innerHTML = "";
+    if (error && errorContent instanceof HTMLElement) {
+      errorContent.innerHTML = "";
 
-      //   if (isInputError(error)) {
-      //     const ul = document.createElement("ul");
+      if (isInputError(error)) {
+        const ul = document.createElement("ul");
 
-      //     error.issues.forEach((err) => {
-      //       const li = document.createElement("li");
-      //       li.innerText = err.message;
-      //       ul.appendChild(li);
-      //     });
+        error.issues.forEach((err) => {
+          const li = document.createElement("li");
+          li.innerText = err.message;
+          ul.appendChild(li);
+        });
 
-      //     errorContent.appendChild(ul);
-      //     return;
-      //   }
-      //   errorContent.innerText = error.message;
-      // }
-    });
-  }
+        errorContent.appendChild(ul);
+        return;
+      }
+      errorContent.innerText = error.message;
+    }
+  });
 </script>
 
 <style>

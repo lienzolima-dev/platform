@@ -1,14 +1,28 @@
 ---
 import TableHead from "../../../global/table/TableHead.astro";
 import TableRow from "../../../global/table/TableRow.astro";
-import ColabEditButton from "./CollaboratorEditButton.astro";
-import ColabDeleteButton from "./CollaboratorDeleteButton.astro";
+import CollaboratorEditButton from "./CollaboratorEditButton.astro";
+import CollaboratorDeleteButton from "./CollaboratorDeleteButton.astro";
 import Pagination from "../../../global/Pagination.astro";
+import type { CollaboratorsTableData } from "../../../../pages/admin/_db/types";
+import type { TableLabel } from "../../../global/table/types";
 
-const columns = ["ID", "Nombre", "Email", "Rol", "Teléfono", "Acciones"]; // Mock data
-const rowData = ["1", "John Doe", "doe@doe.com", "Admin", "982 345 785"]; // Mock data
+type Props = {
+  collaborators: CollaboratorsTableData[];
+};
 
-const tableRows = Array.from({ length: 6 }, () => rowData);
+const { collaborators } = Astro.props;
+
+const columns = ["Nombre", "Email", "Rol", "Teléfono", "Acciones"];
+
+const rowData = collaborators.reduce(
+  (acc: Record<string, (string | TableLabel | null)[]>, collaborator) => {
+    const { id, name, email, role, phone } = collaborator;
+    acc[id] = [name, email, role, phone];
+    return acc;
+  },
+  {}
+);
 ---
 
 <div class="container">
@@ -16,11 +30,11 @@ const tableRows = Array.from({ length: 6 }, () => rowData);
     <TableHead columnsNames={columns} />
     <tbody>
       {
-        tableRows.map((rowData) => (
-          <TableRow rowData={rowData}>
+        collaborators.map((collaborator) => (
+          <TableRow rowData={rowData[collaborator.id]}>
             <div class="action-button">
-              <ColabEditButton />
-              <ColabDeleteButton />
+              <CollaboratorEditButton {collaborator} />
+              <CollaboratorDeleteButton {collaborator} />
             </div>
           </TableRow>
         ))

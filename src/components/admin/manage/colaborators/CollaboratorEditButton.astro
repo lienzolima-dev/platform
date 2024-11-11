@@ -1,8 +1,15 @@
 ---
+import type { CollaboratorsTableData } from "../../../../pages/admin/_db/types";
 import EditIcon from "../../../svgs/admin/IndexContent/EditIcon.astro";
+
+type Props = {
+  collaborator: CollaboratorsTableData;
+};
+
+const { collaborator } = Astro.props;
 ---
 
-<user-collaborator-button>
+<user-collaborator-button data-collaborator={JSON.stringify(collaborator)}>
   <button>
     <EditIcon color="white" />
     <span>Editar</span>
@@ -10,14 +17,28 @@ import EditIcon from "../../../svgs/admin/IndexContent/EditIcon.astro";
 </user-collaborator-button>
 
 <script>
+  import type { CollaboratorsTableData } from "../../../../pages/admin/_db/types";
   import { openDialog } from "../../../global/dialog/utils";
 
   class CollaboratorEditButton extends HTMLElement {
     connectedCallback() {
       const button = this.querySelector("button");
-      if (!button) throw "Button not found";
+      const form = document.getElementById("edit-collaborator-form");
 
-      button.addEventListener("click", () => {
+      if (!button) throw "Button not found";
+      if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
+
+      const collaborator: CollaboratorsTableData = JSON.parse(
+        this.dataset.collaborator || "{}"
+      );
+
+      button.addEventListener("click", async () => {
+        form.userId.value = collaborator.id;
+        form.username.value = collaborator.name;
+        form.email.value = collaborator.email;
+        form.phone.value = collaborator.phone;
+        form.userRole.value = collaborator.role;
+
         openDialog("editCollaborator");
       });
     }

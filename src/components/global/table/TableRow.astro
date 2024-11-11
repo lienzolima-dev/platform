@@ -2,7 +2,7 @@
 import type { TableLabel } from "./types";
 
 type Props = {
-  rowData: (string | TableLabel)[];
+  rowData: (string | TableLabel | null)[];
 };
 
 const { rowData } = Astro.props;
@@ -11,6 +11,10 @@ const { rowData } = Astro.props;
 <tr>
   {
     rowData.map((row) => {
+      if (row === null) {
+        return <td>---</td>;
+      }
+
       // If the row is a TableLabel
       if (typeof row === "object") {
         return (

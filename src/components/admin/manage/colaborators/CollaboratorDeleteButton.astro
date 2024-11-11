@@ -1,8 +1,15 @@
 ---
+import type { CollaboratorsTableData } from "../../../../pages/admin/_db/types";
 import TrashIcon from "../../../svgs/admin/IndexContent/TrashIcon.astro";
+
+type Props = {
+  collaborator: CollaboratorsTableData;
+};
+
+const { collaborator } = Astro.props;
 ---
 
-<collaborator-delete-button>
+<collaborator-delete-button data-collaborator={JSON.stringify(collaborator)}>
   <button>
     <TrashIcon color={"white"} />
     <span>Eliminar</span>
@@ -10,14 +17,30 @@ import TrashIcon from "../../../svgs/admin/IndexContent/TrashIcon.astro";
 </collaborator-delete-button>
 
 <script>
+  import type { CollaboratorsTableData } from "../../../../pages/admin/_db/types";
   import { openDialog } from "../../../global/dialog/utils";
 
   class CollaboratorDeleteButton extends HTMLElement {
     connectedCallback() {
       const button = this.querySelector("button");
+      const form = document.getElementById("delete-collaborator-form");
+      const selectedCollaboratorElement = document.getElementById(
+        "selected-collaborator"
+      );
+
       if (!button) throw "Button not found";
+      if (!(form instanceof HTMLFormElement)) throw "Form not found";
+      if (!selectedCollaboratorElement)
+        throw "Selected collaborator element not found";
 
       button.addEventListener("click", () => {
+        const { id, name }: CollaboratorsTableData = JSON.parse(
+          this.dataset.collaborator || "{}"
+        );
+
+        form.collaboratorId.value = id;
+        selectedCollaboratorElement.innerHTML = name;
+
         openDialog("deleteCollaborator");
       });
     }

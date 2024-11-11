@@ -7,6 +7,7 @@ import CollaboratorTable from "../../../components/admin/manage/colaborators/Col
 import CollaboratorEditForm from "../../../components/admin/manage/colaborators/CollaboratorEditForm.astro";
 import Dialog from "../../../components/global/dialog/Dialog.astro";
 import CollaboratorDeleteForm from "../../../components/admin/manage/colaborators/CollaboratorDeleteForm.astro";
+import { getCollaboratorsTableData } from "../_db/collaborators";
 
 const user = Astro.locals.user;
 
@@ -15,8 +16,8 @@ if (!user || user.role !== "admin") return Astro.redirect("/home", 302);
 
 const { avatarURL, username, role } = user;
 
-// TODO: Fetch users from the database
-const colabsAmount = 10;
+const collaborators = await getCollaboratorsTableData();
+const colabsAmount = collaborators.length;
 ---
 
 <AdminLayout title="Admin">
@@ -27,7 +28,7 @@ const colabsAmount = 10;
       <Dialog id="editCollaborator"><CollaboratorEditForm /></Dialog>
       <Dialog id="deleteCollaborator"><CollaboratorDeleteForm /></Dialog>
       <CollaboratorsHeader {colabsAmount} />
-      <CollaboratorTable />
+      <CollaboratorTable {collaborators} />
     </main>
   </div>
 </AdminLayout>
