@@ -1,36 +1,66 @@
 ---
 import DeleteIcon from "../../../../components/svgs/admin/IndexContent/DeleteIcon.astro";
 import AlertIcon from "../../../../components/svgs/admin/IndexContent/AlertIcon.astro";
+import { actions } from "astro:actions";
 ---
 
 <section class="container">
   <AlertIcon />
   <h3>
-    Estas seguro de que quiere eliminar a <span id="selected-collaborator">
-      Username
-    </span>?
+    Estas seguro de que quiere eliminar a
+    <span id="selected-collaborator">Username</span>?
   </h3>
   <p>Al eliminar a un calaborador, no se podrá recuperar su información.</p>
   <div class="buttons">
     <!-- TODO: Add action -->
-    <form method="POST" id="delete-collaborator-form">
+    <form
+      action={actions.db.users.deleteCollaborator}
+      method="post"
+      id="delete-collaborator-form"
+    >
       <input type="hidden" name="collaboratorId" />
 
-      <button type="submit">
+      <button id="c-delete-submit-btn" type="submit">
         <DeleteIcon color="#fff" />
         <span>Sí, eliminar colaborador</span>
       </button>
     </form>
     <button class="cancel">Cancelar</button>
   </div>
+  <p id="c-delete-error-content"></p>
 </section>
 
 <script>
+  import { actions } from "astro:actions";
   import { closeDialog } from "../../../global/dialog/utils";
 
   try {
+    const form = document.getElementById("delete-collaborator-form");
+    const submitButton = document.getElementById("c-delete-submit-btn");
     const buttonCancel = document.querySelector("button.cancel");
+    const errorContent = document.getElementById("c-delete-error-content");
+
     if (!buttonCancel) throw "Button not found";
+    if (!(submitButton instanceof HTMLButtonElement)) throw "Button not found";
+    if (!(form instanceof HTMLFormElement)) throw "Form not found";
+    if (!errorContent) throw "Error content not found";
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      submitButton.disabled = true;
+      const { error } = await actions.db.users.deleteCollaborator(formData);
+      submitButton.disabled = false;
+
+      if (!error) {
+        location.reload();
+        return;
+      }
+
+      errorContent.innerText = error.message;
+    });
 
     buttonCancel.addEventListener("click", () =>
       closeDialog("deleteCollaborator")
@@ -90,5 +120,16 @@ import AlertIcon from "../../../../components/svgs/admin/IndexContent/AlertIcon.
     font-weight: bold;
     text-align: center;
     line-height: 1.25;
+  }
+
+  p {
+    text-align: center;
+  }
+
+  #c-delete-error-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: #b11313;
   }
 </style>

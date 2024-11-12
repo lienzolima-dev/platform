@@ -9,13 +9,30 @@ const { colabsAmount } = Astro.props;
 <div class="container">
   <div class="title">
     <h2>Colaboradores ({colabsAmount})</h2>
-    <button>Añadir</button>
+    <button id="add-collaborator-btn">Añadir</button>
   </div>
   <div class="search-input">
     <input type="text" placeholder="Buscar por nombre o email" />
     <button>Buscar</button>
   </div>
 </div>
+
+<script>
+  import { openDialog } from "../../../../components/global/dialog/utils";
+
+  const addCollaboratorBtn = document.getElementById("add-collaborator-btn");
+
+  try {
+    if (!addCollaboratorBtn)
+      throw new Error("Add collaborator button not found");
+
+    addCollaboratorBtn.addEventListener("click", () => {
+      openDialog("addCollaborator");
+    });
+  } catch (e) {
+    console.error("Error: ", e);
+  }
+</script>
 
 <style>
   .container {

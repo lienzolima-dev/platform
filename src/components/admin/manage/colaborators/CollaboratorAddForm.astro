@@ -1,0 +1,221 @@
+---
+import type { userRoles } from "../../../../db/schemas/users";
+
+const userRolesMap: Record<
+  Exclude<(typeof userRoles)[number], "user">,
+  string
+> = {
+  admin: "Administrador",
+  manicurist: "Manicurista",
+};
+---
+
+<collaborator-add-form>
+  <section>
+    <div class="form-container">
+      <h2>Añadir Usuario</h2>
+      <form id="add-collaborator-form">
+        <label>
+          Nombre: <span class="required">*</span>
+        </label>
+        <input
+          type="text"
+          class="username"
+          name="username"
+          placeholder="Ingresa nombre completo"
+          required
+        />
+
+        <label>Email <span class="required">*</span> </label>
+        <input
+          type="email"
+          class="email"
+          name="email"
+          placeholder="Ingresa un email"
+          required
+        />
+
+        <label>Teléfono</label>
+        <input
+          type="text"
+          class="phone"
+          name="phone"
+          placeholder="Ingresa un teléfono"
+        />
+
+        <label>Rol <span class="required">*</span></label>
+
+        <select name="userRole" class="user-role" required>
+          {
+            Object.entries(userRolesMap).map(([role, label]) => (
+              <option value={role}>{label}</option>
+            ))
+          }
+        </select>
+
+        <label>
+          Contraseña<span class="required">*</span>
+        </label>
+        <input
+          type="password"
+          name="password"
+          class="password"
+          placeholder="Ingresa nueva contraseña"
+        />
+
+        <label>
+          Confirmar Contraseña <span class="required">*</span>
+        </label>
+        <input
+          type="password"
+          name="confirmPassword"
+          class="confirm-password"
+          placeholder="Confirma la nueva contraseña"
+        />
+
+        <button class="submit-button" type="submit">Guardar</button>
+      </form>
+      <div class="error-content"></div>
+    </div>
+  </section>
+</collaborator-add-form>
+
+<script>
+  import { actions, isInputError } from "astro:actions";
+
+  class CollaboratorAddForm extends HTMLElement {
+    connectedCallback() {
+      const form = this.querySelector("form");
+      const errorContent = this.querySelector(".error-content");
+      const submitButton = this.querySelector(".submit-button");
+
+      if (!form) throw new Error("Form not found");
+      if (!errorContent) throw new Error("Error content not found");
+      if (!(submitButton instanceof HTMLButtonElement))
+        throw new Error("Submit button not found");
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+
+        submitButton.disabled = true;
+        const { error } = await actions.db.users.addCollaborator(formData);
+        submitButton.disabled = false;
+
+        if (!error) {
+          location.reload();
+          return;
+        }
+
+        if (error && errorContent instanceof HTMLElement) {
+          errorContent.innerHTML = "";
+
+          if (isInputError(error)) {
+            const ul = document.createElement("ul");
+
+            error.issues.forEach((err) => {
+              const li = document.createElement("li");
+              li.innerText = err.message;
+              ul.appendChild(li);
+            });
+
+            errorContent.appendChild(ul);
+            return;
+          }
+          errorContent.innerText = error.message;
+        }
+      });
+    }
+  }
+
+  customElements.define("collaborator-add-form", CollaboratorAddForm);
+</script>
+
+<style>
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+
+  input,
+  select {
+    border: 1px solid #ccc;
+    outline: none;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-container h3 {
+    margin-bottom: 2rem;
+  }
+
+  .list:checked ~ .form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  #c-edit-error-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: #b11313;
+  }
+
+  .required {
+    color: #b11313;
+  }
+
+  .optional {
+    font-style: italic;
+  }
+
+  button {
+    background-color: #47a04c;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+  }
+
+  button:disabled {
+    background-color: #ccc;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  #c-password-fields:not(.hidden) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .toggle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+</style>
