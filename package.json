@@ -11,7 +11,6 @@
     "format:prettier": "prettier --write --plugin prettier-plugin-astro --plugin prettier-plugin-svelte . \"!./.db\"",
     "format:biome": "pnpm biome format . --write",
     "format": "pnpm format:biome && pnpm format:prettier",
-
     "db:studio": "pnpm drizzle-kit studio",
     "db:seed": "pnpm tsx ./src/db/seed/seed.ts",
     "db:delete:w": "rimraf ./local.db",
@@ -20,17 +19,17 @@
     "db:createfile": "node -e \"require('fs').writeFileSync('./local.db', '')\"",
     "db:push": "pnpm drizzle-kit push",
     "db:hard-reset": "pnpm db:delete && pnpm db:createfile && pnpm db:push && pnpm db:seed",
-
     "check:format:prettier": "prettier --check --plugin prettier-plugin-astro --plugin prettier-plugin-svelte . \"!./.db\"",
     "check:format:biome": "pnpm biome format .",
     "check:format": "pnpm check:format:biome && pnpm check:format:prettier",
-    "check": "pnpm check:format && astro check"
+    "check": "pnpm check:format && astro check",
+    "test:webkit": "pnpm playwright test ./tests/webkit.spec.ts --headed --browser=webkit"
   },
   "dependencies": {
     "@astrojs/check": "0.9.3",
     "@astrojs/node": "8.3.4",
     "@astrojs/svelte": "5.7.3",
-    "@astrojs/tailwind": "^5.1.2",
+    "@astrojs/tailwind": "5.1.2",
     "@fontsource-variable/playfair-display": "5.1.0",
     "@fontsource/poppins": "5.1.0",
     "@libsql/client": "0.14.0",
@@ -54,6 +53,8 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.2",
     "@internationalized/date": "3.5.6",
+    "@playwright/test": "1.48.2",
+    "@types/node": "22.9.0",
     "bits-ui": "0.21.16",
     "clsx": "2.1.1",
     "drizzle-kit": "0.25.0",

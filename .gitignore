@@ -25,3 +25,7 @@ pnpm-debug.log*
 
 # local db file
 local.db
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
