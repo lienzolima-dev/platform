@@ -1,4 +1,5 @@
 ---
+import type { Booking, Task } from "../../../pages/admin/_db/types";
 import NextBookings from "./NextBookings.astro";
 import TaskList from "./TaskList.astro";
 import TopSection from "./TopSection.astro";
@@ -10,9 +11,11 @@ type Props = {
     username: string;
     role: string;
   };
+  tasks: Task[];
+  bookings: Booking[];
 };
 
-const { userInfo } = Astro.props;
+const { userInfo, tasks, bookings } = Astro.props;
 
 let cargo = "No definido";
 
@@ -23,8 +26,8 @@ if (userInfo.role === "manicurist") cargo = "Manicurista";
 <section>
   <TopSection username={userInfo.username} email={userInfo.email} {cargo} />
   <div class="grid">
-    <NextBookings />
-    <TaskList />
+    <NextBookings {bookings} />
+    <TaskList {tasks} />
   </div>
 </section>
 

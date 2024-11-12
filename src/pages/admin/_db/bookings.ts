@@ -1,13 +1,6 @@
 import { db } from "../../../db/db";
 import { bookings } from "../../../db/schemas/bookings";
-
-type Booking = {
-  startTime: string;
-  endTime: string;
-  date: string;
-  username: string;
-  paymentStatus: string;
-};
+import type { Booking } from "./types";
 
 // async function getCurrentDateTimeFromAPI(): Promise<Date> {
 //   try {
