@@ -27,83 +27,77 @@ import { instagramDirectMessageUrl } from "../../utils/global";
   </p>
 
   <div class="wrapper-boxes" data-aos="fade-up" data-aos-duration="700">
-    <div class="container-boxes">
+    <div class="left">
       <div class="box box1">
-        <BoxShape1 />
-        <div class="content">
+        <div class="box-svg-container"><BoxShape1 /></div>
+        <div class="box-content">
           <div class="reason">
-            <BoxReason />
+            <div class="reason-svg-container"><BoxReason /></div>
             <div class="icon-reason">
               <IconOven />
             </div>
           </div>
-          <div class="text-content">
-            <h3>Horno esterilizador</h3>
-            <p>Esterilizamos nuestros materiales, horneándolos por 1 hora</p>
-          </div>
+          <h3>Horno esterilizador</h3>
+          <p>Esterilizamos nuestros materiales, horneándolos por 1 hora</p>
         </div>
       </div>
       <div class="box box2">
-        <BoxShape1 />
-        <div class="content">
+        <div class="box-svg-container"><BoxShape1 /></div>
+        <div class="box-content">
           <div class="reason">
-            <BoxReason />
+            <div class="reason-svg-container"><BoxReason /></div>
             <div class="icon-reason">
               <IconWarranty />
             </div>
           </div>
-          <div class="text-content">
-            <h3>Garantía</h3>
-            <p>Ofrecemos garantía por 5 días</p>
-          </div>
+          <h3>Garantía</h3>
+          <p>Ofrecemos garantía por 5 días</p>
         </div>
       </div>
+    </div>
+    <div class="center">
       <div class="box central">
-        <BoxShape2 />
-        <div class="content cont-central">
-          <div class="booking-content">
-            <h3>¡Reserva ahora!</h3>
-            <p>
-              Reserva tu cita con LIENZO Estudio y disfruta de una experiencia
-              única y estilizada.
-            </p>
-            <a href={instagramDirectMessageUrl} class="booking-btn btn">
-              Reservar una cita
-            </a>
-            <div class="booking-image">
-              <NailPolish />
-            </div>
+        <div class="box-svg-container"><BoxShape2 /></div>
+        <div class="box-content">
+          <h3>¡Reserva ahora!</h3>
+          <p>
+            Reserva tu cita con LIENZO Estudio y disfruta de una experiencia
+            única y estilizada.
+          </p>
+          <a href={instagramDirectMessageUrl} class="booking-btn btn">
+            Reservar una cita
+          </a>
+          <div class="booking-image">
+            <NailPolish />
           </div>
         </div>
       </div>
+    </div>
+    <div class="right">
       <div class="box box3">
-        <BoxShape1 />
-        <div class="content">
+        <div class="box-svg-container"><BoxShape1 /></div>
+        <div class="box-content">
           <div class="reason">
-            <BoxReason />
+            <div class="reason-svg-container"><BoxReason /></div>
             <div class="icon-reason">
               <IconAttention />
             </div>
           </div>
-          <div class="text-content">
-            <h3>Atención personalizada</h3>
-            <p>Te asesoramos con nuestros profesionales</p>
-          </div>
+          <h3>Atención personalizada</h3>
+          <p>Te asesoramos con nuestros profesionales</p>
         </div>
       </div>
       <div class="box box4">
-        <BoxShape1 />
-        <div class="content">
+        <div class="box-svg-container"><BoxShape1 /></div>
+        <div class="box-content">
           <div class="reason">
-            <BoxReason />
+            <div class="reason-svg-container"><BoxReason /></div>
             <div class="icon-reason">
               <IconNails />
             </div>
           </div>
-          <div class="text-content">
-            <h3>Diseños exclusivos</h3>
-            <p>Realizamos diseños de acuerdo a tu gusto personal</p>
-          </div>
+          <h3>Diseños exclusivos</h3>
+          <p>Realizamos diseños de acuerdo a tu gusto personal</p>
         </div>
       </div>
     </div>
@@ -111,15 +105,105 @@ import { instagramDirectMessageUrl } from "../../utils/global";
 </section>
 
 <style>
-  .container {
-    margin-top: var(--section-spacing);
-    padding-block: 0 6rem;
+  h3 {
+    font-size: 1.5rem;
+    text-align: center;
+    color: var(--secondary-400);
+  }
+
+  p {
+    font-size: 1rem;
+    text-align: center;
+    color: white;
   }
 
   .wrapper-boxes {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .box {
+    position: relative;
+    height: 100%;
+  }
+
+  .box.central {
+    position: relative;
+    display: flex;
     align-items: center;
+    height: 100%;
+  }
+
+  .box-content {
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .box-content a {
+    display: inline-block;
+  }
+
+  .box-svg-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .box-svg-container :global(svg) {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -20;
+  }
+
+  .left,
+  .right {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .reason {
+    position: relative;
+    width: 90px;
+    height: 90px;
+  }
+
+  .reason-svg-container {
+    position: absolute;
+    z-index: -10;
+  }
+
+  .icon-reason {
+    position: absolute;
+    width: min-content;
+    height: min-content;
+    inset: 0;
+    margin: auto;
+  }
+
+  .icon-reason :global(svg) {
+    width: 40px;
+    height: 40px;
+  }
+
+  .reason-svg-container :global(svg) {
+    height: 100%;
+    width: 100%;
+    margin-right: 1rem;
+  }
+
+  .booking-image :global(svg) {
+    width: 170px;
+  }
+
+  .container {
+    margin-top: var(--section-spacing);
+    padding-block: 0 6rem;
   }
 
   .title-section {
@@ -145,316 +229,35 @@ import { instagramDirectMessageUrl } from "../../utils/global";
     margin-bottom: 2rem;
   }
 
-  .container-boxes {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-template-rows: auto;
-    gap: 1rem;
-    width: 80vw;
-    margin: 0;
-    padding: 0;
-  }
-
-  .box {
-    display: flex;
-    position: relative;
-    justify-content: center;
-    align-items: center;
-    padding: 0.5rem;
-  }
-
-  .content {
-    display: flex;
-    position: absolute;
-    flex-direction: column;
-    justify-content: center;
-    color: white;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    padding: 2rem;
-    box-sizing: border-box;
-    gap: 0.5rem;
-  }
-
-  .cont-central {
-    padding: 0;
-  }
-
-  .text-content {
-    display: grid;
-    grid-template-rows: auto auto;
-    justify-items: center;
-    row-gap: 1.5rem;
-    text-align: center;
-    align-items: center;
-    width: 100%;
-  }
-
-  .text-content h3 {
-    font-family: var(--font-body);
-    font-size: 1.15rem;
-    color: var(--secondary-400);
-  }
-
-  .text-content p {
-    font-size: 1rem;
-  }
-
-  .reason {
-    display: flex;
-    position: relative;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1.1rem;
-  }
-
-  .icon-reason {
-    display: flex;
-    position: absolute;
-    justify-content: center;
-  }
-
-  .icon-reason :global(svg) {
-    width: 20%;
-    height: auto;
-  }
-
-  .central {
-    grid-column: 2 / 3;
-    grid-row: 1 / 3;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 0;
-  }
-
-  .booking-image :global(svg) {
-    max-width: 150px;
-    width: 100%;
-    height: auto;
-  }
-
-  .booking-content {
-    display: grid;
-    grid-template-rows: auto auto auto;
-    grid-gap: 1rem;
-    justify-items: center;
-    align-items: center;
-    width: 100%;
-    height: auto;
-    padding: 1rem;
-  }
-
-  .booking-content h3 {
-    font-size: 1.8rem;
-    font-family: var(--font-heading);
-    color: var(--secondary-400);
-    grid-row: 1;
-  }
-
-  .booking-content p {
-    font-size: 1rem;
-    color: var(--neutral-400);
-    grid-row: 2;
-  }
-
-  .booking-btn {
-    background-color: var(--secondary-400);
-    color: var(--primary-400);
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    border: none;
-    cursor: pointer;
-    grid-row: 3;
-    transition: background-color 0.3s ease;
-  }
-
-  .booking-btn:hover {
-    background-color: var(--secondary-400);
-  }
-
-  .booking-image {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-row: 4;
-  }
-
-  @media (min-width: 1300px) {
-    .container-boxes {
-      grid-template-columns: repeat(3, minmax(250px, 1fr));
-    }
-  }
-
-  @media (max-width: 768px) {
-    .container-boxes {
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: auto auto auto;
-    }
-
-    .central {
-      grid-column: 1 / 3;
-      grid-row: 3 / 4;
+  @media (max-width: 900px) {
+    .wrapper-boxes {
+      flex-direction: column;
+      gap: 2rem;
     }
 
     .box {
-      padding: 0.3rem;
-    }
-
-    .content {
+      max-width: 400px;
       width: 100%;
-      padding: 1rem;
     }
 
-    .text-content {
-      row-gap: 0.5rem;
+    .left,
+    .right,
+    .center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    .text-content h3 {
-      font-size: 1.2rem;
-    }
-
-    .text-content p {
-      font-size: 0.8rem;
-    }
-
-    .reason {
-      margin-bottom: 0;
-    }
-
-    .reason :global(svg) {
-      width: 35%;
-    }
-
-    .icon-reason :global(svg) {
-      width: 20%;
-      height: auto;
-    }
-  }
-
-  @media (min-width: 481px) and (max-width: 560px) {
-    .description {
-      width: 95%;
-    }
-
-    .box {
-      height: auto;
-    }
-
-    .content {
-      padding: 1rem;
-      box-sizing: border-box;
-    }
-
-    .text-content h3 {
-      font-size: 1rem;
-    }
-
-    .reason {
-      margin-bottom: 0.2rem;
-    }
-
-    .reason :global(svg) {
-      width: 22%;
-    }
-
-    .icon-reason :global(svg) {
-      width: 12%;
-      height: auto;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .container-boxes {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto;
-    }
-
-    .box {
-      order: 0;
-    }
-
-    .central {
+    .left {
       order: 1;
-      grid-column: 1 / 2;
-      grid-row: auto;
     }
 
-    .content {
-      padding: 2rem;
+    .right {
+      order: 2;
     }
 
-    .text-content {
-      height: 50%;
-    }
-
-    .text-content h3 {
-      font-size: 1.5rem;
-    }
-
-    .text-content p {
-      font-size: 1rem;
-    }
-
-    .reason :global(svg) {
-      width: 40%;
-    }
-
-    .icon-reason :global(svg) {
-      width: 20%;
-      height: auto;
-    }
-  }
-
-  @media (max-width: 360px) {
-    .content {
-      width: 100%;
-      height: 100%;
-    }
-
-    .text-content h3 {
-      font-size: 1.3rem;
-    }
-
-    .text-content p {
-      font-size: 0.9rem;
-    }
-
-    .booking-image :global(svg) {
-      max-width: 150px;
-      width: 75%;
-      height: auto;
-    }
-  }
-
-  @media (max-width: 320px) {
-    .title-section :global(svg) {
-      display: none;
-    }
-
-    .text-content h3 {
-      font-size: 1.1rem;
-    }
-
-    .text-content p {
-      font-size: 0.9rem;
-    }
-
-    .booking-content h3 {
-      font-size: 1.2rem;
-    }
-
-    .booking-content p {
-      font-size: 0.9rem;
-    }
-
-    .booking-image :global(svg) {
-      max-width: 150px;
-      width: 70%;
-      height: auto;
+    .center {
+      order: 3;
     }
   }
 </style>
