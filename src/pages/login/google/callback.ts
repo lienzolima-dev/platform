@@ -69,11 +69,20 @@ export async function GET(context: APIContext): Promise<Response> {
 
       // Update googleID if necessary
       if (existingUser.googleID !== googleUser.sub) {
+        const dataToUpdate: Pick<
+          typeof users.$inferInsert,
+          "googleID" | "status"
+        > = {
+          googleID: googleUser.sub,
+        };
+
+        if (existingUser.status === "deleted") {
+          dataToUpdate.status = "active";
+        }
+
         await db
           .update(users)
-          .set({
-            googleID: googleUser.sub,
-          })
+          .set(dataToUpdate)
           .where(eq(users.id, existingUser.id));
       }
 

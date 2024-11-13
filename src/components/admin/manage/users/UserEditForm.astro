@@ -37,58 +37,68 @@
         type="email"
         id="user-email"
         name="email"
-        placeholder="Ingresa email"
+        placeholder="Ingresa un email"
         required
       />
 
-      <label for="user-email">Teléfono<span class="required">*</span> </label>
+      <label for="user-phone">Teléfono</label>
       <input
-        type="email"
-        id="user-email"
-        name="email"
-        placeholder="Ingresa email"
-        required
+        type="text"
+        id="user-phone"
+        name="phone"
+        placeholder="Ingresa un teléfono"
       />
 
-      <button type="submit">Guardar</button>
+      <button id="u-edit-submit-btn" type="submit">Guardar</button>
     </form>
-    <div id="edit-user-error-content"></div>
+    <div id="u-edit-error-content"></div>
   </div>
 </section>
 
 <script>
   import { actions, isInputError } from "astro:actions";
 
-  const form = document.getElementById("edit-user-form");
-  const errorContent = document.getElementById("edit-user-error-content");
+  try {
+    const form = document.getElementById("edit-user-form");
+    const errorContent = document.getElementById("u-edit-error-content");
+    const submitButton = document.getElementById("u-edit-submit-btn");
 
-  if (form instanceof HTMLFormElement) {
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
+    if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
 
-      // const formData = new FormData(form);
+    if (!(submitButton instanceof HTMLButtonElement)) {
+      throw new Error("Submit button not found");
+    }
 
-      // const { error } = await actions.editUser(formData);
-      // if (!error) location.reload();
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-      // if (error && errorContent instanceof HTMLElement) {
-      //   errorContent.innerHTML = "";
+      const formData = new FormData(form);
 
-      //   if (isInputError(error)) {
-      //     const ul = document.createElement("ul");
+      submitButton.disabled = true;
+      const { error } = await actions.db.users.editUser(formData);
+      submitButton.disabled = false;
+      if (!error) location.reload();
 
-      //     error.issues.forEach((err) => {
-      //       const li = document.createElement("li");
-      //       li.innerText = err.message;
-      //       ul.appendChild(li);
-      //     });
+      if (error && errorContent instanceof HTMLElement) {
+        errorContent.innerHTML = "";
 
-      //     errorContent.appendChild(ul);
-      //     return;
-      //   }
-      //   errorContent.innerText = error.message;
-      // }
+        if (isInputError(error)) {
+          const ul = document.createElement("ul");
+
+          error.issues.forEach((err) => {
+            const li = document.createElement("li");
+            li.innerText = err.message;
+            ul.appendChild(li);
+          });
+
+          errorContent.appendChild(ul);
+          return;
+        }
+        errorContent.innerText = error.message;
+      }
     });
+  } catch (e) {
+    console.error(e);
   }
 </script>
 

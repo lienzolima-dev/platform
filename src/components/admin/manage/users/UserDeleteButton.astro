@@ -1,8 +1,15 @@
 ---
+import type { UsersTableData } from "../../../../pages/admin/_db/types";
 import TrashIcon from "../../../svgs/admin/IndexContent/TrashIcon.astro";
+
+type Props = {
+  user: UsersTableData;
+};
+
+const { user } = Astro.props;
 ---
 
-<user-delete-button>
+<user-delete-button data-user={JSON.stringify(user)}>
   <button>
     <TrashIcon color={"white"} />
     <span>Eliminar</span>
@@ -10,14 +17,30 @@ import TrashIcon from "../../../svgs/admin/IndexContent/TrashIcon.astro";
 </user-delete-button>
 
 <script>
+  import type { UsersTableData } from "../../../../pages/admin/_db/types";
   import { openDialog } from "../../../global/dialog/utils";
 
   class UserDeleteButton extends HTMLElement {
     connectedCallback() {
       const button = this.querySelector("button");
+      const form = document.getElementById("delete-user-form");
+      const errorContent = document.getElementById("u-delete-error-content");
+      const selectedUser = document.getElementById("selected-user");
+
       if (!button) throw "Button not found";
+      if (!(form instanceof HTMLFormElement)) throw "Form not found";
+      if (!selectedUser) throw "Selected user element not found";
+      if (!errorContent) throw "Error content not found";
 
       button.addEventListener("click", () => {
+        const { id, name }: UsersTableData = JSON.parse(
+          this.dataset.user || "{}"
+        );
+
+        form.userId.value = id;
+        selectedUser.innerHTML = name;
+        errorContent.innerText = "";
+
         openDialog("deleteUser");
       });
     }
