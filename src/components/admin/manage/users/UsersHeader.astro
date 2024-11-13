@@ -27,11 +27,11 @@ const { usersAmount } = Astro.props;
     if (!(searchInput instanceof HTMLInputElement))
       throw new Error("Search input not found");
 
-    function handleSearch() {
-      const searchTerm = (searchInput as HTMLInputElement)?.value.trim() ?? "";
+    const handleSearch = () => {
+      const searchTerm = searchInput.value.trim() ?? "";
       const searchUrl = `?search=${encodeURIComponent(searchTerm)}`;
       window.location.href = searchUrl;
-    }
+    };
 
     searchUserBtn.addEventListener("click", handleSearch);
 

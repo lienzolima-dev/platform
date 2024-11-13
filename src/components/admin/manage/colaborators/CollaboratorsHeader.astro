@@ -1,14 +1,14 @@
 ---
 type Props = {
-  colabsAmount: number;
+  collabsAmount: number;
 };
 
-const { colabsAmount } = Astro.props;
+const { collabsAmount } = Astro.props;
 ---
 
 <div class="container">
   <div class="title">
-    <h2>Colaboradores ({colabsAmount})</h2>
+    <h2>Colaboradores ({collabsAmount})</h2>
     <button id="add-collaborator-btn">Añadir</button>
   </div>
   <div class="search-input">
@@ -42,11 +42,11 @@ const { colabsAmount } = Astro.props;
       openDialog("addCollaborator");
     });
 
-    function handleSearch() {
-      const searchTerm = (searchInput as HTMLInputElement)?.value.trim() ?? "";
+    const handleSearch = () => {
+      const searchTerm = searchInput.value.trim() ?? "";
       const searchUrl = `?search=${encodeURIComponent(searchTerm)}`;
       window.location.href = searchUrl;
-    }
+    };
 
     searchCollaboratorBtn.addEventListener("click", handleSearch);
 

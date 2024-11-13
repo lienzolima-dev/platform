@@ -38,7 +38,7 @@ const filteredCollaborators = searchQuery
       <Dialog id="editCollaborator"><CollaboratorEditForm /></Dialog>
       <Dialog id="deleteCollaborator"><CollaboratorDeleteForm /></Dialog>
       <Dialog id="addCollaborator"><CollaboratorAddForm /></Dialog>
-      <CollaboratorsHeader colabsAmount={filteredCollaborators.length} />
+      <CollaboratorsHeader collabsAmount={filteredCollaborators.length} />
       <CollaboratorTable collaborators={filteredCollaborators} />
     </main>
   </div>
