@@ -9,10 +9,41 @@ const { usersAmount } = Astro.props;
 <div class="container">
   <h2>Usuarios ({usersAmount})</h2>
   <div class="search-input">
-    <input type="text" placeholder="Buscar por nombre o email" />
-    <button>Buscar</button>
+    <input
+      type="text"
+      id="search-input"
+      placeholder="Buscar por nombre o email"
+    />
+    <button id="search-user-btn">Buscar</button>
   </div>
 </div>
+
+<script>
+  const searchUserBtn = document.getElementById("search-user-btn");
+  const searchInput = document.getElementById("search-input");
+  try {
+    if (!(searchUserBtn instanceof HTMLButtonElement))
+      throw new Error("Search user button not found");
+    if (!(searchInput instanceof HTMLInputElement))
+      throw new Error("Search input not found");
+
+    const handleSearch = () => {
+      const searchTerm = searchInput.value.trim() ?? "";
+      const searchUrl = `?search=${encodeURIComponent(searchTerm)}`;
+      window.location.href = searchUrl;
+    };
+
+    searchUserBtn.addEventListener("click", handleSearch);
+
+    searchInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        handleSearch();
+      }
+    });
+  } catch (e) {
+    console.error("Error: ", e);
+  }
+</script>
 
 <style>
   .container {
