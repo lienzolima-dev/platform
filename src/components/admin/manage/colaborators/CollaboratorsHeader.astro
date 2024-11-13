@@ -12,8 +12,12 @@ const { colabsAmount } = Astro.props;
     <button id="add-collaborator-btn">Añadir</button>
   </div>
   <div class="search-input">
-    <input type="text" placeholder="Buscar por nombre o email" />
-    <button>Buscar</button>
+    <input
+      type="text"
+      id="search-input"
+      placeholder="Buscar por nombre o email"
+    />
+    <button id="search-collaborator-btn">Buscar</button>
   </div>
 </div>
 
@@ -21,13 +25,29 @@ const { colabsAmount } = Astro.props;
   import { openDialog } from "../../../../components/global/dialog/utils";
 
   const addCollaboratorBtn = document.getElementById("add-collaborator-btn");
+  const searchCollaboratorBtn = document.getElementById(
+    "search-collaborator-btn"
+  );
+  const searchInput = document.getElementById("search-input");
 
   try {
     if (!addCollaboratorBtn)
       throw new Error("Add collaborator button not found");
+    if (!(searchCollaboratorBtn instanceof HTMLButtonElement))
+      throw new Error("Search collaborator button not found");
+    if (!(searchInput instanceof HTMLInputElement))
+      throw new Error("Search input not found");
 
     addCollaboratorBtn.addEventListener("click", () => {
       openDialog("addCollaborator");
+    });
+
+    searchCollaboratorBtn.addEventListener("click", () => {
+      const searchTerm = searchInput.value.trim();
+      const searchUrl = searchTerm
+        ? `?search=${encodeURIComponent(searchTerm)}`
+        : "?search=";
+      window.location.href = searchUrl;
     });
   } catch (e) {
     console.error("Error: ", e);
