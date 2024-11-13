@@ -17,7 +17,16 @@ if (!user || user.role !== "admin") return Astro.redirect("/home", 302);
 const { avatarURL, username, role } = user;
 
 const users = await getUsersTableData();
-const usersAmount = users.length;
+
+const { searchParams } = new URL(Astro.request.url);
+const searchQuery = (searchParams.get("search") || "").toLowerCase();
+const filteredUsers = searchQuery
+  ? users.filter(
+      (user) =>
+        user.name.toLowerCase().includes(searchQuery) ||
+        user.email.toLowerCase().includes(searchQuery)
+    )
+  : users;
 ---
 
 <AdminLayout title="Admin">
@@ -27,8 +36,8 @@ const usersAmount = users.length;
     <main>
       <Dialog id="editUser"><UserEditForm /></Dialog>
       <Dialog id="deleteUser"><UserDeleteForm /></Dialog>
-      <UsersHeader {usersAmount} />
-      <UsersTable {users} />
+      <UsersHeader usersAmount={filteredUsers.length} />
+      <UsersTable users={filteredUsers} />
     </main>
   </div>
 </AdminLayout>
