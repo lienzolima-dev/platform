@@ -20,3 +20,11 @@ export type CollaboratorsTableData = {
   role: "user" | "admin" | "manicurist";
   phone: string | null;
 };
+
+export type UsersTableData = {
+  id: string;
+  name: string;
+  email: string;
+  role: "user" | "admin" | "manicurist";
+  phone: string | null;
+};

@@ -4,19 +4,24 @@ import TableRow from "../../../global/table/TableRow.astro";
 import UserEditButton from "./UserEditButton.astro";
 import UserDeleteButton from "./UserDeleteButton.astro";
 import Pagination from "../../../global/Pagination.astro";
+import type { UsersTableData } from "../../../../pages/admin/_db/types";
+import type { TableLabel } from "../../../global/table/types";
 
-const columns = ["ID", "Nombre", "Email", "Estado", "Teléfono", "Acciones"]; // Mock data
-const rowData = [
-  "1",
-  "John Doe",
-  "doe@doe.com",
-  { label: "Verificado", color: "#47a04c" },
-  "982 345 785",
-]; // Mock data
+type Props = {
+  users: UsersTableData[];
+};
 
-const id = "1"; // Mock data
+const { users } = Astro.props;
 
-const tableRows = Array.from({ length: 6 }, () => rowData);
+const columns = ["Nombre", "Email", "Teléfono", "Acciones"];
+const rowData = users.reduce(
+  (acc: Record<string, (string | TableLabel | null)[]>, user) => {
+    const { id, name, email, phone } = user;
+    acc[id] = [name, email, phone];
+    return acc;
+  },
+  {}
+);
 ---
 
 <div class="container">
@@ -24,11 +29,11 @@ const tableRows = Array.from({ length: 6 }, () => rowData);
     <TableHead columnsNames={columns} />
     <tbody>
       {
-        tableRows.map((rowData) => (
-          <TableRow rowData={rowData}>
+        users.map((user) => (
+          <TableRow rowData={rowData[user.id]}>
             <div class="action-button">
-              <UserEditButton />
-              <UserDeleteButton />
+              <UserEditButton {user} />
+              <UserDeleteButton {user} />
             </div>
           </TableRow>
         ))

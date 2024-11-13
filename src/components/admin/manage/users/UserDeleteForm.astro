@@ -1,6 +1,7 @@
 ---
 import DeleteIcon from "../../../../components/svgs/admin/IndexContent/DeleteIcon.astro";
 import AlertIcon from "../../../../components/svgs/admin/IndexContent/AlertIcon.astro";
+import { actions } from "astro:actions";
 ---
 
 <section class="container">
@@ -13,24 +14,54 @@ import AlertIcon from "../../../../components/svgs/admin/IndexContent/AlertIcon.
   <p>Al eliminar a un usuario, no se podrá recuperar su información.</p>
   <div class="buttons">
     <!-- TODO: Add action -->
-    <form method="POST" id="delete-user-form">
+    <form
+      action={actions.db.users.deleteUser}
+      method="POST"
+      id="delete-user-form"
+    >
       <input type="hidden" name="userId" />
 
-      <button type="submit">
+      <button id="u-delete-submit-btn" type="submit">
         <DeleteIcon color="#fff" />
         <span>Sí, eliminar usuario</span>
       </button>
     </form>
     <button class="cancel">Cancelar</button>
   </div>
+  <p id="u-delete-error-content"></p>
 </section>
 
 <script>
+  import { actions } from "astro:actions";
   import { closeDialog } from "../../../global/dialog/utils";
 
   try {
+    const form = document.getElementById("delete-user-form");
+    const submitButton = document.getElementById("u-delete-submit-btn");
     const buttonCancel = document.querySelector("button.cancel");
+    const errorContent = document.getElementById("u-delete-error-content");
+
     if (!buttonCancel) throw "Button not found";
+    if (!(submitButton instanceof HTMLButtonElement)) throw "Button not found";
+    if (!(form instanceof HTMLFormElement)) throw "Form not found";
+    if (!errorContent) throw "Error content not found";
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      submitButton.disabled = true;
+      const { error } = await actions.db.users.deleteUser(formData);
+      submitButton.disabled = false;
+
+      if (!error) {
+        location.reload();
+        return;
+      }
+
+      errorContent.innerText = error.message;
+    });
 
     buttonCancel.addEventListener("click", () => closeDialog("deleteUser"));
   } catch (e) {

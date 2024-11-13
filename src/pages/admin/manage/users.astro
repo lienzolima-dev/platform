@@ -7,6 +7,7 @@ import UsersTable from "../../../components/admin/manage/users/UsersTable.astro"
 import Dialog from "../../../components/global/dialog/Dialog.astro";
 import UserEditForm from "$lib/components/admin/manage/users/UserEditForm.astro";
 import UserDeleteForm from "$lib/components/admin/manage/users/UserDeleteForm.astro";
+import { getUsersTableData } from "../_db/users";
 
 const user = Astro.locals.user;
 
@@ -15,8 +16,8 @@ if (!user || user.role !== "admin") return Astro.redirect("/home", 302);
 
 const { avatarURL, username, role } = user;
 
-// TODO: Fetch users from the database
-const usersAmount = 10;
+const users = await getUsersTableData();
+const usersAmount = users.length;
 ---
 
 <AdminLayout title="Admin">
@@ -27,7 +28,7 @@ const usersAmount = 10;
       <Dialog id="editUser"><UserEditForm /></Dialog>
       <Dialog id="deleteUser"><UserDeleteForm /></Dialog>
       <UsersHeader {usersAmount} />
-      <UsersTable />
+      <UsersTable {users} />
     </main>
   </div>
 </AdminLayout>

@@ -1,8 +1,15 @@
 ---
 import EditIcon from "../../../svgs/admin/IndexContent/EditIcon.astro";
+import type { UsersTableData } from "../../../../pages/admin/_db/types";
+
+type Props = {
+  user: UsersTableData;
+};
+
+const { user } = Astro.props;
 ---
 
-<user-edit-button>
+<user-edit-button data-user={JSON.stringify(user)}>
   <button>
     <EditIcon color="white" />
     <span>Editar</span>
@@ -10,14 +17,25 @@ import EditIcon from "../../../svgs/admin/IndexContent/EditIcon.astro";
 </user-edit-button>
 
 <script>
+  import type { UsersTableData } from "../../../../pages/admin/_db/types";
   import { openDialog } from "../../../global/dialog/utils";
 
   class UserEditButton extends HTMLElement {
     connectedCallback() {
       const button = this.querySelector("button");
-      if (!button) throw "Button not found";
+      const form = document.getElementById("edit-user-form");
 
-      button.addEventListener("click", () => {
+      if (!button) throw "Button not found";
+      if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
+
+      const user: UsersTableData = JSON.parse(this.dataset.user || "{}");
+
+      button.addEventListener("click", async () => {
+        form.userId.value = user.id;
+        form.username.value = user.name;
+        form.email.value = user.email;
+        form.phone.value = user.phone;
+
         openDialog("editUser");
       });
     }
