@@ -1,0 +1,22 @@
+---
+import BookingForm from "./BookingForm.svelte";
+---
+
+<section>
+  <h1>Añadir Reserva</h1>
+  <BookingForm client:load />
+</section>
+
+<style>
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1f1f1f;
+  }
+</style>
