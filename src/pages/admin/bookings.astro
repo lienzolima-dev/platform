@@ -2,7 +2,7 @@
 import SideBar from "../../components/admin/SideBar.astro";
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import Header from "../../components/admin/Header.astro";
-import BookingForm from "../../components/admin/bookings/BookingForm.svelte";
+import AddBooking from "../../components/admin/bookings/AddBooking.astro";
 
 const user = Astro.locals.user;
 
@@ -17,7 +17,7 @@ const { avatarURL, username, role } = user;
   <div>
     <Header {avatarURL} {username} {role} />
     <main>
-      <BookingForm client:load />
+      <AddBooking />
     </main>
   </div>
 </AdminLayout>

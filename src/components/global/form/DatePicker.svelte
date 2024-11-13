@@ -22,8 +22,8 @@
 
 <style>
   .date-picker :global(.date-time-picker) {
-    --date-picker-width: 30rem;
-    --date-picker-height: 30rem;
+    --date-picker-width: 20rem;
+    --date-picker-height: 20rem;
     --date-picker-font-size: 1rem;
 
     width: var(--date-picker-width);
