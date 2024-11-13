@@ -8,7 +8,7 @@ import CollaboratorEditForm from "../../../components/admin/manage/colaborators/
 import Dialog from "../../../components/global/dialog/Dialog.astro";
 import CollaboratorDeleteForm from "../../../components/admin/manage/colaborators/CollaboratorDeleteForm.astro";
 import { getCollaboratorsTableData } from "../_db/collaborators";
-import CollaboratorAddForm from "$lib/components/admin/manage/colaborators/CollaboratorAddForm.astro";
+import CollaboratorAddForm from "../../../components/admin/manage/colaborators/CollaboratorAddForm.astro";
 
 const user = Astro.locals.user;
 
@@ -18,7 +18,16 @@ if (!user || user.role !== "admin") return Astro.redirect("/home", 302);
 const { avatarURL, username, role } = user;
 
 const collaborators = await getCollaboratorsTableData();
-const colabsAmount = collaborators.length;
+
+const { searchParams } = new URL(Astro.request.url);
+const searchQuery = (searchParams.get("search") || "").toLowerCase();
+const filteredCollaborators = searchQuery
+  ? collaborators.filter(
+      (collaborator) =>
+        collaborator.name.toLowerCase().includes(searchQuery) ||
+        collaborator.email.toLowerCase().includes(searchQuery)
+    )
+  : collaborators;
 ---
 
 <AdminLayout title="Admin">
@@ -29,8 +38,8 @@ const colabsAmount = collaborators.length;
       <Dialog id="editCollaborator"><CollaboratorEditForm /></Dialog>
       <Dialog id="deleteCollaborator"><CollaboratorDeleteForm /></Dialog>
       <Dialog id="addCollaborator"><CollaboratorAddForm /></Dialog>
-      <CollaboratorsHeader {colabsAmount} />
-      <CollaboratorTable {collaborators} />
+      <CollaboratorsHeader collabsAmount={filteredCollaborators.length} />
+      <CollaboratorTable collaborators={filteredCollaborators} />
     </main>
   </div>
 </AdminLayout>

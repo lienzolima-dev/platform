@@ -1,5 +1,5 @@
-import { db } from "$lib/db/db";
-import { tasks } from "$lib/db/schema";
+import { db } from "../../../db/db";
+import { tasks } from "../../../db/schema";
 import { desc, eq } from "drizzle-orm";
 import type { Task } from "./types";
 

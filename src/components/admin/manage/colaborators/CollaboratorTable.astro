@@ -23,6 +23,8 @@ const rowData = collaborators.reduce(
   },
   {}
 );
+
+const noResults = collaborators.length === 0;
 ---
 
 <div class="container">
@@ -30,14 +32,22 @@ const rowData = collaborators.reduce(
     <TableHead columnsNames={columns} />
     <tbody>
       {
-        collaborators.map((collaborator) => (
-          <TableRow rowData={rowData[collaborator.id]}>
-            <div class="action-button">
-              <CollaboratorEditButton {collaborator} />
-              <CollaboratorDeleteButton {collaborator} />
-            </div>
-          </TableRow>
-        ))
+        noResults ? (
+          <tr>
+            <td colspan="5" style="text-align: center;">
+              No hay resultados
+            </td>
+          </tr>
+        ) : (
+          collaborators.map((collaborator) => (
+            <TableRow rowData={rowData[collaborator.id]}>
+              <div class="action-button">
+                <CollaboratorEditButton {collaborator} />
+                <CollaboratorDeleteButton {collaborator} />
+              </div>
+            </TableRow>
+          ))
+        )
       }
     </tbody>
   </table>
@@ -53,6 +63,10 @@ const rowData = collaborators.reduce(
     border-radius: 5px;
     overflow: hidden;
     margin-bottom: 1.5rem;
+  }
+
+  td {
+    padding: 0.5rem 0;
   }
 
   .action-button {
