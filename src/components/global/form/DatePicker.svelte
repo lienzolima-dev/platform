@@ -1,42 +1,44 @@
 <script lang="ts">
-  import CalendarIcon from "lucide-svelte/icons/calendar";
-  import {
-    DateFormatter,
-    type DateValue,
-    getLocalTimeZone,
-  } from "@internationalized/date";
-  import { cn } from "$lib/utils.js";
-  import { Button } from "$lib/components/ui/button/index.js";
-  import { Calendar } from "$lib/components/ui/calendar/index.js";
-  import * as Popover from "$lib/components/ui/popover/index.js";
-
-  const df = new DateFormatter("es-MX", {
-    dateStyle: "long",
-  });
+  import { DatePicker, localeFromDateFnsLocale } from "date-picker-svelte";
+  import { es } from "date-fns/locale";
 
   type Props = {
-    date: DateValue | undefined;
+    date: Date;
   };
+
   let { date = $bindable() }: Props = $props();
+
+  date = new Date();
+
+  let nextYear = new Date();
+  nextYear.setFullYear(nextYear.getFullYear() + 1);
+
+  let locale = localeFromDateFnsLocale(es);
 </script>
 
-<Popover.Root>
-  <Popover.Trigger asChild let:builder>
-    <Button
-      variant="outline"
-      class={cn(
-        "w-[280px] justify-start text-left font-normal border divide-slate-900  border-solid",
-        !date && "text-muted-foreground"
-      )}
-      builders={[builder]}
-    >
-      <CalendarIcon class="mr-2 h-4 w-4" />
-      {date
-        ? df.format(date.toDate(getLocalTimeZone()))
-        : "Selecciona una fecha"}
-    </Button>
-  </Popover.Trigger>
-  <Popover.Content class="w-auto p-0">
-    <Calendar bind:value={date} initialFocus />
-  </Popover.Content>
-</Popover.Root>
+<div class="date-picker">
+  <DatePicker bind:value={date} max={nextYear} {locale} />
+</div>
+
+<style>
+  .date-picker :global(.date-time-picker) {
+    --date-picker-width: 30rem;
+    --date-picker-height: 30rem;
+    --date-picker-font-size: 1rem;
+
+    width: var(--date-picker-width);
+    height: var(--date-picker-height);
+    font-size: var(--date-picker-font-size);
+  }
+
+  .date-picker :global(.tab-container) {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .date-picker :global(.tab-container > div) {
+    height: 100%;
+  }
+</style>

@@ -3,10 +3,6 @@ import SideBar from "../../components/admin/SideBar.astro";
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import Header from "../../components/admin/Header.astro";
 import BookingForm from "../../components/admin/bookings/BookingForm.svelte";
-import BookingsTable from "../../components/admin/bookings/BookingsTable.astro";
-import Dialog from "../../components/global/dialog/Dialog.astro";
-// import BookingEditForm from "../../components/admin/bookings/BookingEditForm.astro";
-import BookingDeleteForm from "../../components/admin/bookings/BookingDeleteForm.astro";
 
 const user = Astro.locals.user;
 
@@ -21,12 +17,7 @@ const { avatarURL, username, role } = user;
   <div>
     <Header {avatarURL} {username} {role} />
     <main>
-      <h1>Añadir reserva</h1>
       <BookingForm client:load />
-      <h1>Reservas</h1>
-      <BookingsTable />
-      <!-- <Dialog id="editBooking"><BookingEditForm /></Dialog> -->
-      <Dialog id="deleteBooking"><BookingDeleteForm /></Dialog>
     </main>
   </div>
 </AdminLayout>

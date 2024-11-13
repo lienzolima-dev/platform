@@ -1,6 +1,4 @@
 ---
-import BookingDeleteButton from "./BookingDeleteButton.astro";
-import BookingEditButton from "./BookingEditButton.astro";
 import Pagination from "../../global/Pagination.astro";
 
 const headers = [
@@ -71,9 +69,7 @@ const bookings = [
             <div>{booking.systems.join(", ")}</div>
             <div>{booking.extras.join(", ")}</div>
             <div>{booking.totalPrice}</div>
-            <div class="action-buttons">
-              <BookingDeleteButton />
-            </div>
+            <div class="action-buttons" />
           </div>
         ))
       }
