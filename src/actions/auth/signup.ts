@@ -48,7 +48,7 @@ export const signup = defineAction({
         .where(eq(users.email, input.email));
 
       // Check if user with that email already exists
-      if (existingUser) {
+      if (existingUser && existingUser.status !== "deleted") {
         throw new ActionError({
           code: "BAD_REQUEST",
           message: "El email ingresado ya está registrado",
@@ -67,16 +67,33 @@ export const signup = defineAction({
       const verificationCode = ulid();
       const verificationURL = `${baseUrl}/verify-email?code=${verificationCode}`;
 
-      // Add user to database
-      await db.insert(users).values({
-        id: ulid(),
+      const userData: typeof users.$inferInsert = {
         email: input.email,
         username: input.username,
-        avatarURL: null,
         passwordHash,
         emailVerified: false,
         verificationCode,
-      });
+      };
+
+      // Add user to database
+      if (!existingUser) {
+        console.log("INSERTING");
+        await db.insert(users).values({
+          id: ulid(),
+          avatarURL: null,
+          ...userData,
+        });
+      } else {
+        console.log("UPDATING");
+        await db
+          .update(users)
+          .set({
+            status: "active",
+            avatarURL: null,
+            ...userData,
+          })
+          .where(eq(users.id, existingUser.id));
+      }
 
       // Send email verification
       await resend.emails.send({

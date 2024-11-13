@@ -1,3 +1,5 @@
+import type { userRoles } from "../../../db/schemas/users";
+
 export type Task = {
   id: string;
   date: string;
@@ -17,7 +19,7 @@ export type CollaboratorsTableData = {
   id: string;
   name: string;
   email: string;
-  role: "user" | "admin" | "manicurist";
+  role: (typeof userRoles)[number];
   phone: string | null;
 };
 
@@ -25,6 +27,6 @@ export type UsersTableData = {
   id: string;
   name: string;
   email: string;
-  role: "user" | "admin" | "manicurist";
+  role: (typeof userRoles)[number];
   phone: string | null;
 };

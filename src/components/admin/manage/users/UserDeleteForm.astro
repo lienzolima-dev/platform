@@ -13,12 +13,7 @@ import { actions } from "astro:actions";
   </h3>
   <p>Al eliminar a un usuario, no se podrá recuperar su información.</p>
   <div class="buttons">
-    <!-- TODO: Add action -->
-    <form
-      action={actions.db.users.deleteUser}
-      method="POST"
-      id="delete-user-form"
-    >
+    <form id="delete-user-form">
       <input type="hidden" name="userId" />
 
       <button id="u-delete-submit-btn" type="submit">
