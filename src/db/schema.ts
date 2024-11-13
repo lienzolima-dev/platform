@@ -6,3 +6,4 @@ export { services } from "./schemas/services";
 export { extras } from "./schemas/extras";
 export { bookingsServicesDetails } from "./schemas/bookingsServicesDetails";
 export { bookingsExtrasDetails } from "./schemas/bookingsExtrasDetails";
+export { complaints } from "./schemas/complaints";

@@ -1,62 +1,170 @@
+---
+import { serviceOptions } from "../../db/schemas/complaints";
+import { complaintOptions } from "../../db/schemas/complaints";
+import { actions, isInputError } from "astro:actions";
+
+const complaintOptionsMap: Record<
+  Exclude<(typeof complaintOptions)[number], "complaints">,
+  string
+> = {
+  claim: "Reclamo",
+  complaint: "Queja",
+};
+
+const result = Astro.getActionResult(actions.db.complaints.addComplaint);
+console.log("Resultado de la acción:", result);
+
+let errorMessage = "";
+
+// Check if the result is an error
+if (result?.error && !isInputError(result?.error)) {
+  errorMessage = result.error.message;
+}
+
+// Check if the result is an input error
+if (isInputError(result?.error)) {
+  for (const issue of result.error.issues) {
+    errorMessage += `${issue.message} `;
+  }
+}
+---
+
 <section class="container">
   <h2 class="title">Libro de Reclamos</h2>
-  <form>
+  <form action={actions.db.complaints.addComplaint} method="POST">
     <div class="form-grid">
       <div class="form-group">
         <label for="fecha">Fecha de reclamo o queja</label>
-        <input type="date" id="fecha" required />
+        <input type="date" id="date" name="date" required />
       </div>
       <div class="form-group">
-        <label for="nombre">Nombres y Apellidos</label>
-        <input type="text" id="nombre" required />
+        <label for="fullName">Nombres y Apellidos</label>
+        <input type="text" id="fullName" name="fullName" required />
       </div>
       <div class="form-group">
         <label for="dni">DNI</label>
-        <input type="text" id="dni" required />
+        <input type="text" id="dni" name="dni" required />
       </div>
       <div class="form-group">
         <label for="email">Correo Electrónico</label>
-        <input type="email" id="email" required />
+        <input type="email" id="email" name="email" required />
       </div>
       <div class="form-group">
-        <label for="telefono">Teléfono</label>
-        <input type="tel" id="telefono" required />
+        <label for="phone">Teléfono</label>
+        <input type="tel" id="phone" name="phone" required />
       </div>
     </div>
     <div class="form-group">
-      <label>Identificación del bien contratado</label>
+      <label>Identificación del servicio adquirido</label>
       <div class="radio-group">
-        <label
-          ><input type="radio" name="bien" value="servicio" required /> Servicio</label
-        >
+        <select id="service" name="service">
+          <option value="" selected>--- Selecciona un servicio ---</option>
+          {
+            serviceOptions.map((option) => (
+              <option value={option}>{option}</option>
+            ))
+          }
+        </select>
       </div>
     </div>
     <div class="form-group">
-      <label for="descripcion">Descripción</label>
-      <textarea id="descripcion" rows="4" required></textarea>
+      <label for="serviceDescription">Descripción</label>
+      <textarea
+        id="serviceDescription"
+        name="serviceDescription"
+        rows="4"
+        required></textarea>
     </div>
     <div class="form-group">
       <label>Detalle de reclamación</label>
       <div class="radio-group">
-        <label
-          ><input type="radio" name="detalle" value="reclamo" required /> Reclamo</label
-        >
-        <label
-          ><input type="radio" name="detalle" value="queja" required /> Queja</label
-        >
+        {
+          complaintOptions.map((option) => (
+            <label for={option}>
+              <input type="radio" name="complaintOption" value={option} />
+              {complaintOptionsMap[option]}
+            </label>
+          ))
+        }
       </div>
     </div>
     <div class="form-group">
-      <label for="detalle">Detalle</label>
-      <textarea id="detalle" rows="4" required></textarea>
+      <label for="complaintDescription">Detalle</label>
+      <textarea
+        id="complaintDescription"
+        name="complaintDescription"
+        rows="4"
+        required></textarea>
     </div>
     <div class="form-group">
-      <label for="adicional">Información Adicional</label>
-      <textarea id="adicional" rows="4"></textarea>
+      <label for="adicionalInfo">Información Adicional</label>
+      <textarea id="adicionalInfo" name="adicionalInfo" rows="4"></textarea>
     </div>
-    <button type="submit" class="btn">Enviar</button>
+    <button type="submit" id="complaint-submit-btn" class="btn">Enviar</button>
   </form>
+  {errorMessage && <p class="error">{errorMessage}</p>}
 </section>
+
+<script>
+  const form = document.querySelector("form");
+
+  if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
+  form.addEventListener("submit", function (event) {
+    event.preventDefault(); // Para evitar el envío inmediato
+    console.log("Formulario enviado");
+    form.submit(); // Ahora enviamos el formulario de manera manual
+  });
+</script>
+
+<!--
+<script>
+  import { actions, isInputError } from "astro:actions";
+
+  try {
+    const form = document.getElementById("complaint-form");
+    const errorContent = document.getElementById("c-error-content");
+    const submitButton = document.getElementById("complaint-submit-btn");
+
+    if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
+    if (!(submitButton instanceof HTMLButtonElement))
+      throw new Error("Submit button not found");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+
+      submitButton.disabled = true;
+      const { error } = await actions.db.complaints.addComplaint(formData);
+      submitButton.disabled = false;
+
+      if (!error) {
+        location.reload();
+        return;
+      }
+
+      if (error && errorContent instanceof HTMLElement) {
+        errorContent.innerHTML = "";
+
+        if (isInputError(error)) {
+          const ul = document.createElement("ul");
+
+          error.issues.forEach((err) => {
+            const li = document.createElement("li");
+            li.innerText = err.message;
+            ul.appendChild(li);
+          });
+
+          errorContent.appendChild(ul);
+          return;
+        }
+        errorContent.innerText = error.message;
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  }
+</script>-->
 
 <style>
   .container {
