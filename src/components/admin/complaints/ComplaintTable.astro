@@ -1,0 +1,74 @@
+---
+import TableHead from "../../global/table/TableHead.astro";
+import TableRow from "../../global/table/TableRow.astro";
+import Pagination from "../../global/Pagination.astro";
+
+const columns = [
+  "DNI",
+  "Nombres y Apellidos",
+  "Email",
+  "Teléfono",
+  "Fecha",
+  "Acciones",
+]; // Mock data
+const rowData = [
+  "74633333",
+  "John Doe",
+  "doe@doe.com",
+  "982345785",
+  "2024-11-13T10:00:00Z",
+  "Sistemas",
+  "softgel",
+  "complaint",
+  "No duró el servicio",
+  "",
+]; // Mock data
+
+const tableRows = Array.from({ length: 6 }, () => rowData);
+---
+
+<div class="container">
+  <table>
+    <TableHead columnsNames={columns} />
+    <tbody>
+      {
+        tableRows.map((rowData) => (
+          <TableRow rowData={rowData}>
+            <div class="action-button">
+              <button>Ver</button>
+            </div>
+          </TableRow>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<style>
+  table {
+    --main-color: #2b9398;
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+
+  td {
+    padding: 0.5rem 0;
+  }
+
+  .action-button {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .container {
+      overflow-x: auto;
+    }
+  }
+</style>

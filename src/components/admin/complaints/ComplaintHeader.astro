@@ -1,0 +1,56 @@
+---
+type Props = {
+  complaintsAmount: number;
+};
+
+const { complaintsAmount } = Astro.props;
+---
+
+<div class="container">
+  <div class="title">
+    <h2>Reclamos ({complaintsAmount})</h2>
+  </div>
+</div>
+
+<style>
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .title {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .search-input {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: bold;
+    text-wrap: nowrap;
+  }
+
+  input {
+    width: 100%;
+    padding-inline: 1rem;
+  }
+
+  button {
+    padding: 0.5rem 1rem;
+    background-color: #2b9398;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+</style>

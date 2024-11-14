@@ -1,0 +1,42 @@
+---
+import SideBar from "../../components/admin/SideBar.astro";
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import Header from "../../components/admin/Header.astro";
+import ComplaintHeader from "../../components/admin/complaints/ComplaintHeader.astro";
+import ComplaintTable from "../../components/admin/complaints/ComplaintTable.astro";
+
+const user = Astro.locals.user;
+
+// If the user is not an admin, redirect to the home page
+if (!user || user.role !== "admin") return Astro.redirect("/home", 302);
+
+const { avatarURL, username, role } = user;
+
+//TODO: Get complaints amount from the database
+const complaintsAmount = 5;
+---
+
+<AdminLayout title="Admin">
+  <SideBar />
+  <div>
+    <Header {avatarURL} {username} {role} />
+    <main>
+      <ComplaintHeader {complaintsAmount} />
+      <ComplaintTable />
+    </main>
+  </div>
+</AdminLayout>
+
+<style>
+  main {
+    padding-top: var(--section-spacing);
+    padding-inline: var(--section-spacing);
+    padding-bottom: var(--section-spacing);
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+</style>
