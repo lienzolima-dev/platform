@@ -69,7 +69,7 @@ function formatPaymentStatus(paymentStatus: string): string {
   }
 }
 
-export const getAllBookings = async (): Promise<Booking[]> => {
+export const getUpcomingBookings = async (): Promise<Booking[]> => {
   const now = new Date();
   now.getTime();
 

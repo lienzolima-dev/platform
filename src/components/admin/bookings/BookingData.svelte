@@ -1,6 +1,7 @@
 <script lang="ts">
   import SimpleSelect from "./SimpleSelect.svelte";
   import StackableSelect from "./StackableSelect.svelte";
+  import type { SelectOption } from "../../global/form/types";
 
   type Props = {
     selectedManicurist: string;
@@ -8,6 +9,9 @@
     selectedServices: string[];
     selectedExtras: string[];
     totalPrice: number | null;
+    manicuristsOptions: SelectOption[];
+    servicesOptions: SelectOption[];
+    extrasOptions: SelectOption[];
   };
 
   let {
@@ -16,31 +20,16 @@
     selectedServices = $bindable([""]),
     selectedExtras = $bindable([""]),
     totalPrice = $bindable(null),
+    manicuristsOptions,
+    servicesOptions,
+    extrasOptions,
   }: Props = $props();
 
-  let manicuristOptions = [
-    { value: "1", text: "Manicurista 1" },
-    { value: "2", text: "Manicurista 2" },
-    { value: "3", text: "Manicurista 3" },
-  ];
-
   let payingStates = [
-    { value: "full", text: "Pago Completo" },
-    { value: "advance", text: "Adelanto" },
-    { value: "Partial", text: "Pago Parcial" },
-    { value: "none", text: "No Pago" },
-  ];
-
-  let servicesOptions = [
-    { value: "1", text: "Servicio 1" },
-    { value: "2", text: "Servicio 2" },
-    { value: "3", text: "Servicio 3" },
-  ];
-
-  let extrasOptions = [
-    { value: "1", text: "Adicional 1" },
-    { value: "2", text: "Adicional 2" },
-    { value: "3", text: "Adicional 3" },
+    { value: "full", label: "Pago Completo" },
+    { value: "advance", label: "Adelanto" },
+    { value: "Partial", label: "Pago Parcial" },
+    { value: "none", label: "No Pago" },
   ];
 </script>
 
@@ -70,7 +59,7 @@
     <div class="input-container">
       <label for="manicurist">Manicurista:</label>
       <SimpleSelect
-        options={manicuristOptions}
+        options={manicuristsOptions}
         noOptionText="Selecciona un manicurista"
         bind:value={selectedManicurist}
         required

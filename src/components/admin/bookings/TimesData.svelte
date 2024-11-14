@@ -1,6 +1,7 @@
 <script lang="ts">
   import { DateFormatter } from "@internationalized/date";
   import DatePicker from "../../global/form/DatePicker.svelte";
+  import { actions } from "astro:actions";
 
   type Props = {
     date: Date;
@@ -8,7 +9,7 @@
     endTime: string;
   };
 
-  const df = new DateFormatter("es-MX", {
+  const df = new DateFormatter("es-PE", {
     dateStyle: "long",
   });
 
@@ -17,6 +18,51 @@
     startTime = $bindable(),
     endTime = $bindable(),
   }: Props = $props();
+
+  type CurrentBooking = {
+    startTime: string;
+    endTime: string;
+    manicurist: string;
+    name: string;
+    state: string;
+  };
+
+  let currentBookings: CurrentBooking[] | null = $state(null);
+
+  function formatTimeFromDate(date: Date) {
+    const hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    return `${hours}:${minutes}`;
+  }
+
+  function getStateFromPaymentStatus(status: string) {
+    if (status === "advance") return "Adelantado";
+    if (status === "full") return "Pago completo";
+    if (status === "partial") return "Pago parcial";
+    if (status === "none") return "Sin pagar";
+  }
+
+  $effect(() => {
+    const currentDate = date;
+
+    async function updateCurrentBookings() {
+      const { data } = await actions.db.bookings.get({
+        date: currentDate.toISOString(),
+      });
+
+      if (data) {
+        currentBookings = data.map((booking) => ({
+          startTime: formatTimeFromDate(new Date(booking.startTime)),
+          endTime: formatTimeFromDate(new Date(booking.endTime)),
+          manicurist: booking.manicurist,
+          name: booking.name,
+          state: booking.paymentStatus,
+        }));
+      }
+    }
+
+    updateCurrentBookings();
+  });
 </script>
 
 <section>
@@ -27,43 +73,29 @@
       <DatePicker bind:date />
     </div>
     <div class="current-bookings">
-      <!-- This sections shows the current bookings times that are used -->
-      <h3>Horarios Usados el {df.format(date)}:</h3>
+      <h3>Horarios usados el <em>{df.format(date)}</em>:</h3>
       <div class="current-bookings-list">
         <div class="table-head">
           <div>Horario Usado</div>
           <div>Manicurista</div>
-          <div>Nombre</div>
+          <div>Cliente</div>
           <div>Estado</div>
         </div>
         <div class="table-body">
-          <div class="table-row">
-            <div>
-              <!-- {booking.startTime} - {booking.endTime} -->
-              12:00 - 13:00
-            </div>
-            <div>Manicurist</div>
-            <div>Pedro</div>
-            <div>Estado</div>
-          </div>
-          <div class="table-row">
-            <div>
-              <!-- {booking.startTime} - {booking.endTime} -->
-              12:00 - 13:00
-            </div>
-            <div>Manicurist</div>
-            <div>Ruperta</div>
-            <div>Estado</div>
-          </div>
-          <div class="table-row">
-            <div>
-              <!-- {booking.startTime} - {booking.endTime} -->
-              12:00 - 13:00
-            </div>
-            <div>Manicurist</div>
-            <div>Juana</div>
-            <div>Estado</div>
-          </div>
+          {#if currentBookings && currentBookings.length > 0}
+            {#each currentBookings as booking}
+              <div class="table-row">
+                <div>
+                  {booking.startTime} - {booking.endTime}
+                </div>
+                <div>{booking.manicurist}</div>
+                <div>{booking.name}</div>
+                <div>{getStateFromPaymentStatus(booking.state)}</div>
+              </div>
+            {/each}
+          {:else}
+            <div class="void-table-row">No hay horarios usados</div>
+          {/if}
         </div>
       </div>
     </div>
@@ -112,12 +144,14 @@
   }
 
   .current-bookings {
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
 
   .current-bookings-list {
+    width: 100%;
     border-radius: 8px;
     overflow: hidden;
   }
@@ -134,6 +168,7 @@
   }
 
   .table-head div {
+    text-wrap: nowrap;
     text-align: center;
   }
 
@@ -150,6 +185,12 @@
     padding: 1rem;
     border-bottom: 1px solid #eee;
     transition: background-color 0.2s;
+  }
+
+  .void-table-row {
+    padding: 1rem;
+    text-align: center;
+    background-color: #ffffff;
   }
 
   .table-row div {

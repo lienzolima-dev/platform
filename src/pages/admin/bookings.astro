@@ -3,6 +3,9 @@ import SideBar from "../../components/admin/SideBar.astro";
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import Header from "../../components/admin/Header.astro";
 import AddBooking from "../../components/admin/bookings/AddBooking.astro";
+import { getManicuristsOptions } from "./_db/users";
+import { getServices, getServicesOptions } from "./_db/services";
+import { getExtras, getExtrasOptions } from "./_db/extras";
 
 const user = Astro.locals.user;
 
@@ -10,6 +13,12 @@ const user = Astro.locals.user;
 if (!user || user.role !== "admin") return Astro.redirect("/home", 302);
 
 const { avatarURL, username, role } = user;
+
+const [manicuristsOptions, services, extras] = await Promise.all([
+  getManicuristsOptions(),
+  getServices(),
+  getExtras(),
+]);
 ---
 
 <AdminLayout title="Admin">
@@ -17,7 +26,7 @@ const { avatarURL, username, role } = user;
   <div>
     <Header {avatarURL} {username} {role} />
     <main>
-      <AddBooking />
+      <AddBooking {manicuristsOptions} {services} {extras} />
     </main>
   </div>
 </AdminLayout>

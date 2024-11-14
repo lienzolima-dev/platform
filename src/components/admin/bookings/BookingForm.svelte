@@ -2,6 +2,30 @@
   import BookingData from "./BookingData.svelte";
   import TimesData from "./TimesData.svelte";
   import UserData from "./UserData.svelte";
+  import type { SelectOption } from "../../global/form/types";
+
+  import type {
+    extras as extrasTable,
+    services as servicesTable,
+  } from "../../../db/schema";
+
+  type Props = {
+    manicuristsOptions: SelectOption[];
+    services: (typeof servicesTable.$inferSelect)[];
+    extras: (typeof extrasTable.$inferSelect)[];
+  };
+
+  const { manicuristsOptions, services, extras }: Props = $props();
+
+  const servicesOptions = services.map((service) => ({
+    value: service.id,
+    label: service.name,
+  }));
+
+  const extrasOptions = extras.map((extra) => ({
+    value: extra.id,
+    label: extra.name,
+  }));
 
   let name: string | null = $state("");
   let email: string | null = $state("");
@@ -44,6 +68,9 @@
       bind:selectedServices
       bind:selectedExtras
       bind:totalPrice
+      {manicuristsOptions}
+      {servicesOptions}
+      {extrasOptions}
     />
     <TimesData bind:date bind:startTime bind:endTime />
     <button type="submit">Reservar</button>

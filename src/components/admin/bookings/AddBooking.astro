@@ -1,10 +1,23 @@
 ---
+import type {
+  extras as extrasTable,
+  services as servicesTable,
+} from "../../../db/schema";
+import type { SelectOption } from "../../global/form/types";
 import BookingForm from "./BookingForm.svelte";
+
+type Props = {
+  manicuristsOptions: SelectOption[];
+  services: (typeof servicesTable.$inferSelect)[];
+  extras: (typeof extrasTable.$inferSelect)[];
+};
+
+const { manicuristsOptions, services, extras } = Astro.props;
 ---
 
 <section>
   <h1>Añadir Reserva</h1>
-  <BookingForm client:load />
+  <BookingForm {manicuristsOptions} {services} {extras} client:load />
 </section>
 
 <style>
