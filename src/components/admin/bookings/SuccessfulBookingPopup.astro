@@ -1,27 +1,63 @@
 ---
 import Dialog from "../../../components/global/dialog/Dialog.astro";
-import DialogOpenButton from "../../../components/global/dialog/DialogOpenButton.astro";
 ---
 
-<Dialog id="successful-booking-popup">
-  <div>
-    <h2>La reserva ha side registrada</h2>
-    <p>
-      La reserva ha sido registrada con éxito.
-      <DialogOpenButton id="successful-booking-popup" />
-    </p>
-  </div>
-</Dialog>
+<successful-booking-popup>
+  <Dialog id="successful-booking-popup">
+    <div>
+      <h2>La reserva ha sido registrada</h2>
+      <p>
+        La reserva ha sido registrada con éxito. Se ha enviado un correo de
+        confirmación al cliente.
+      </p>
+      <button class="accept-button">Aceptar</button>
+    </div>
+  </Dialog>
+</successful-booking-popup>
+
+<script>
+  import { closeDialog } from "../../global/dialog/utils";
+
+  class SuccessfulBookingPopup extends HTMLElement {
+    connectedCallback() {
+      this.querySelector(".accept-button")?.addEventListener(
+        "click",
+        (e: Event) => {
+          e.preventDefault();
+          closeDialog("successful-booking-popup");
+        }
+      );
+    }
+  }
+
+  customElements.define("successful-booking-popup", SuccessfulBookingPopup);
+</script>
 
 <style>
+  div {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    gap: 1rem;
+    width: 80%;
+  }
+
   h2 {
     text-align: center;
     font-size: 1.5rem;
-    margin-bottom: 1rem;
   }
 
   p {
     text-align: center;
     font-size: 1rem;
+  }
+
+  button {
+    display: block;
+    background-color: #47a04c;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
   }
 </style>

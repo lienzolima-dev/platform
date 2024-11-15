@@ -73,8 +73,6 @@
 
     const { error } = await actions.db.bookings.add({ ...dataToSend });
 
-    // if (!error) location.reload(); // UNCOMMENT BEFORE PR REVIEW TO RELOAD PAGE AFTER SUCCESSFUL BOOKING
-
     errorMessage = "";
     if (error) {
       if (isInputError(error)) {
@@ -99,23 +97,6 @@
   });
 </script>
 
-<!-- <pre>{JSON.stringify(
-    {
-      name,
-      email,
-      phone,
-      selectedManicurist,
-      selectedPayingState,
-      totalPrice,
-      selectedServices,
-      selectedExtras,
-      date,
-      startTime,
-      endTime,
-    },
-    null,
-    2
-  )}</pre> -->
 <div class="booking-form-container">
   <form onsubmit={handleSubmit}>
     <UserData bind:name bind:email bind:phone />

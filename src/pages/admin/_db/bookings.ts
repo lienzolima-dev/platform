@@ -26,20 +26,22 @@ function formatBookingData(booking: {
   paymentStatus: string;
 }): Booking {
   const startTime = booking.startTime
-    ? new Date(booking.startTime).toLocaleTimeString("es-ES", {
+    ? new Date(booking.startTime).toLocaleTimeString("es-PE", {
         hour: "2-digit",
         minute: "2-digit",
+        hour12: true,
       })
     : "";
   const endTime = booking.endTime
-    ? new Date(booking.endTime).toLocaleTimeString("es-ES", {
+    ? new Date(booking.endTime).toLocaleTimeString("es-PE", {
         hour: "2-digit",
         minute: "2-digit",
+        hour12: true,
       })
     : "";
 
   const date = booking.startTime
-    ? new Date(booking.startTime).toLocaleDateString("es-ES", {
+    ? new Date(booking.startTime).toLocaleDateString("es-PE", {
         day: "numeric",
         month: "long",
       })

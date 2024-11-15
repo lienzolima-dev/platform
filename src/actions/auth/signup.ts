@@ -77,14 +77,12 @@ export const signup = defineAction({
 
       // Add user to database
       if (!existingUser) {
-        console.log("INSERTING");
         await db.insert(users).values({
           id: ulid(),
           avatarURL: null,
           ...userData,
         });
       } else {
-        console.log("UPDATING");
         await db
           .update(users)
           .set({

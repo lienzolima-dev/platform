@@ -30,9 +30,13 @@
   let currentBookings: CurrentBooking[] | null = $state(null);
 
   function formatTimeFromDate(date: Date) {
-    const hours = date.getHours();
-    const minutes = date.getMinutes().toString().padStart(2, "0");
-    return `${hours}:${minutes}`;
+    const timeString = date.toLocaleTimeString("es-PE", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+
+    return timeString;
   }
 
   function getStateFromPaymentStatus(status: string) {

@@ -10,6 +10,7 @@ import {
 } from "../../../db/schema";
 import { paymentStatuses } from "../../../db/schemas/bookings";
 import { ulid } from "ulid";
+import { resend } from "../../../resend/client";
 
 function isSameDay(dateString1: string, dateString2: string) {
   const date1 = new Date(dateString1);
@@ -114,8 +115,6 @@ export const add = defineAction({
       endTime: endTimeString,
     } = input;
 
-    console.log(input);
-
     const startTimeObj = getTimeObjet(startTimeString);
     const endTimeObj = getTimeObjet(endTimeString);
 
@@ -158,8 +157,19 @@ export const add = defineAction({
           });
         }
       }
+
+      // TODO: Improve email template
+      resend.emails.send({
+        from: "noreply@lienzolima.com",
+        to: [input.email],
+        subject: "Lienzo Lima - Reserva registrada",
+        html: `<p>Hola ${input.name}, Se ha registrado tu reserva en Lienzo Lima</p>
+               <p>Fecha: ${date.toLocaleDateString("es-PE")}</p>
+               <p>Hora: ${startTime.toLocaleTimeString("es-PE", { hour: "2-digit", minute: "2-digit" })} - ${endTime.toLocaleTimeString("es-PE", { hour: "2-digit", minute: "2-digit" })}</p>
+               <p>Precio total: S/. ${totalPrice}</p>`,
+      });
     } catch (e) {
-      console.log(e);
+      console.error("[ERROR]: ", e);
       if (e instanceof ActionError) {
         throw e;
       }
@@ -169,7 +179,5 @@ export const add = defineAction({
         message: "Error al añadir reserva",
       });
     }
-
-    console.log("THIS IS ADD BOOKING");
   },
 });
