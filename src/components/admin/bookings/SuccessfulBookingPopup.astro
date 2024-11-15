@@ -1,0 +1,27 @@
+---
+import Dialog from "../../../components/global/dialog/Dialog.astro";
+import DialogOpenButton from "../../../components/global/dialog/DialogOpenButton.astro";
+---
+
+<Dialog id="successful-booking-popup">
+  <div>
+    <h2>La reserva ha side registrada</h2>
+    <p>
+      La reserva ha sido registrada con éxito.
+      <DialogOpenButton id="successful-booking-popup" />
+    </p>
+  </div>
+</Dialog>
+
+<style>
+  h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    text-align: center;
+    font-size: 1rem;
+  }
+</style>

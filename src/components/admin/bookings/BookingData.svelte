@@ -2,10 +2,11 @@
   import SimpleSelect from "./SimpleSelect.svelte";
   import StackableSelect from "./StackableSelect.svelte";
   import type { SelectOption } from "../../global/form/types";
+  import type { paymentStatuses } from "../../../db/schemas/bookings";
 
   type Props = {
     selectedManicurist: string;
-    selectedPayingState: string;
+    selectedPayingState: (typeof paymentStatuses)[number] | "";
     selectedServices: string[];
     selectedExtras: string[];
     totalPrice: number | null;
@@ -25,10 +26,13 @@
     extrasOptions,
   }: Props = $props();
 
-  let payingStates = [
+  let payingStates: {
+    value: (typeof paymentStatuses)[number];
+    label: string;
+  }[] = [
     { value: "full", label: "Pago Completo" },
     { value: "advance", label: "Adelanto" },
-    { value: "Partial", label: "Pago Parcial" },
+    { value: "partial", label: "Pago Parcial" },
     { value: "none", label: "No Pago" },
   ];
 </script>

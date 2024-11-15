@@ -6,6 +6,7 @@ import AddBooking from "../../components/admin/bookings/AddBooking.astro";
 import { getManicuristsOptions } from "./_db/users";
 import { getServices, getServicesOptions } from "./_db/services";
 import { getExtras, getExtrasOptions } from "./_db/extras";
+import SuccessfulBookingPopup from "../../components/admin/bookings/SuccessfulBookingPopup.astro";
 
 const user = Astro.locals.user;
 
@@ -27,6 +28,7 @@ const [manicuristsOptions, services, extras] = await Promise.all([
     <Header {avatarURL} {username} {role} />
     <main>
       <AddBooking {manicuristsOptions} {services} {extras} />
+      <SuccessfulBookingPopup />
     </main>
   </div>
 </AdminLayout>

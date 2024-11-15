@@ -8,6 +8,9 @@
     extras as extrasTable,
     services as servicesTable,
   } from "../../../db/schema";
+  import { actions, isInputError } from "astro:actions";
+  import { openDialog, type DialogEvent } from "../../global/dialog/utils";
+  import type { paymentStatuses } from "../../../db/schemas/bookings";
 
   type Props = {
     manicuristsOptions: SelectOption[];
@@ -27,12 +30,12 @@
     label: extra.name,
   }));
 
-  let name: string | null = $state("");
-  let email: string | null = $state("");
-  let phone: string | null = $state("");
+  let name: string = $state("");
+  let email: string = $state("");
+  let phone: string = $state("");
 
   let selectedManicurist = $state("");
-  let selectedPayingState = $state("");
+  let selectedPayingState: (typeof paymentStatuses)[number] | "" = $state("");
   let selectedServices: string[] = $state([""]);
   let selectedExtras: string[] = $state([""]);
   let totalPrice: number | null = $state(null);
@@ -40,6 +43,60 @@
   let date = $state(new Date());
   let startTime = $state("");
   let endTime = $state("");
+
+  let errorMessage: string = $state("");
+
+  async function handleSubmit(e: Event) {
+    e.preventDefault();
+    if (!totalPrice) {
+      errorMessage = "Seleccione un servicio";
+      return;
+    }
+    if (selectedPayingState === "") {
+      errorMessage = "Seleccione un estado de pago";
+      return;
+    }
+
+    const dataToSend = {
+      name,
+      email,
+      phone,
+      manicuristId: selectedManicurist,
+      paymentStatus: selectedPayingState,
+      services: selectedServices,
+      extras: selectedExtras,
+      totalPrice,
+      date: date.toISOString(),
+      startTime,
+      endTime,
+    };
+
+    const { error } = await actions.db.bookings.add({ ...dataToSend });
+
+    // if (!error) location.reload(); // UNCOMMENT BEFORE PR REVIEW TO RELOAD PAGE AFTER SUCCESSFUL BOOKING
+
+    errorMessage = "";
+    if (error) {
+      if (isInputError(error)) {
+        errorMessage = error.issues[0].message;
+        return;
+      }
+
+      errorMessage = error.message;
+      return;
+    }
+
+    openDialog("successful-booking-popup");
+  }
+
+  $effect(() => {
+    // Reload page after successful booking
+    document.addEventListener("dialog-close", (event: DialogEvent) => {
+      if (event.detail.id === "successful-booking-popup") {
+        location.reload();
+      }
+    });
+  });
 </script>
 
 <!-- <pre>{JSON.stringify(
@@ -60,7 +117,7 @@
     2
   )}</pre> -->
 <div class="booking-form-container">
-  <form>
+  <form onsubmit={handleSubmit}>
     <UserData bind:name bind:email bind:phone />
     <BookingData
       bind:selectedManicurist
@@ -73,6 +130,9 @@
       {extrasOptions}
     />
     <TimesData bind:date bind:startTime bind:endTime />
+    {#if errorMessage !== ""}
+      <div class="error-content">Ha ocurrido un error: {errorMessage}</div>
+    {/if}
     <button type="submit">Reservar</button>
   </form>
 </div>
@@ -97,5 +157,17 @@
     border: none;
     border-radius: 100px;
     cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #333;
+  }
+
+  .error-content {
+    padding: 1rem;
+    width: 100%;
+    background-color: rgb(255, 183, 183);
+    border-radius: 0.5rem;
+    text-align: center;
   }
 </style>

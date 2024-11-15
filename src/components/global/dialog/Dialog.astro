@@ -33,13 +33,6 @@ const { id, manualClose = false } = Astro.props;
 
   type DialogEvent = CustomEvent<{ id: string }>;
 
-  declare global {
-    interface DocumentEventMap {
-      "dialog-open": DialogEvent;
-      "dialog-close": DialogEvent;
-    }
-  }
-
   class DialogComponent extends HTMLElement {
     connectedCallback() {
       try {
