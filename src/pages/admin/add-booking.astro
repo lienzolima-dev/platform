@@ -2,11 +2,11 @@
 import SideBar from "../../components/admin/SideBar.astro";
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import Header from "../../components/admin/Header.astro";
-import AddBookingContent from "../../components/admin/bookings/AddBookingContent.astro";
+import AddBookingContent from "../../components/admin/addBooking/AddBookingContent.astro";
 import { getManicuristsOptions } from "./_db/users";
 import { getServices } from "./_db/services";
 import { getExtras } from "./_db/extras";
-import SuccessfulBookingPopup from "../../components/admin/bookings/SuccessfulBookingPopup.astro";
+import SuccessfulBookingPopup from "../../components/admin/addBooking/SuccessfulBookingPopup.astro";
 
 const user = Astro.locals.user;
 
