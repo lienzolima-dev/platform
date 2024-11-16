@@ -2,10 +2,10 @@
 import SideBar from "../../components/admin/SideBar.astro";
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import Header from "../../components/admin/Header.astro";
-import AddBooking from "../../components/admin/bookings/AddBooking.astro";
+import AddBookingContent from "../../components/admin/bookings/AddBookingContent.astro";
 import { getManicuristsOptions } from "./_db/users";
-import { getServices, getServicesOptions } from "./_db/services";
-import { getExtras, getExtrasOptions } from "./_db/extras";
+import { getServices } from "./_db/services";
+import { getExtras } from "./_db/extras";
 import SuccessfulBookingPopup from "../../components/admin/bookings/SuccessfulBookingPopup.astro";
 
 const user = Astro.locals.user;
@@ -27,7 +27,7 @@ const [manicuristsOptions, services, extras] = await Promise.all([
   <div>
     <Header {avatarURL} {username} {role} />
     <main>
-      <AddBooking {manicuristsOptions} {services} {extras} />
+      <AddBookingContent {manicuristsOptions} {services} {extras} />
       <SuccessfulBookingPopup />
     </main>
   </div>
