@@ -13,6 +13,8 @@ const { bookings } = Astro.props;
     bookings.map((booking) => (
       <div class="card">
         <h3>{booking.username}</h3>
+        {booking.phone && <span>Teléfono: {booking.phone}</span>}
+        {booking.email && <span>Correo: {booking.email}</span>}
         <span>
           Horario: {booking.startTime} - {booking.endTime}
         </span>
@@ -67,8 +69,7 @@ const { bookings } = Astro.props;
   }
 
   .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 15px #00000018;
   }
 
   .card h3 {

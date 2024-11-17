@@ -14,6 +14,8 @@ export type Booking = {
   endTime: string;
   date: Date;
   username: string;
+  email: string | null;
+  phone: string | null;
   paymentStatus: string;
   advanceAmount: number;
   totalPrice: number;

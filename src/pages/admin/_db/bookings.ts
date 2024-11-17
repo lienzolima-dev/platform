@@ -19,7 +19,7 @@ function formatPaymentStatus(paymentStatus: string): string {
 
 export async function getAllBookings(): Promise<Booking[]> {
   const bookings = await db.query.bookings.findMany({
-    orderBy: (bookings, { asc }) => [asc(bookings.startTime)],
+    orderBy: (bookings, { desc }) => [desc(bookings.startTime)],
     with: {
       bookingsExtrasDetails: {
         with: {
@@ -42,6 +42,8 @@ export async function getAllBookings(): Promise<Booking[]> {
       endTime: formatDateString(booking.endTime),
       date: new Date(booking.startTime),
       username: booking.name,
+      phone: booking.phone,
+      email: booking.email,
       paymentStatus: formatPaymentStatus(booking.paymentStatus),
       services: booking.bookingsServicesDetails.map(
         (detail) => detail.services,
@@ -60,7 +62,7 @@ export async function getUpcomingBookings(): Promise<Booking[]> {
   const now = new Date();
 
   const bookings = await db.query.bookings.findMany({
-    orderBy: (bookings, { asc }) => [asc(bookings.startTime)],
+    orderBy: (bookings, { desc }) => [desc(bookings.startTime)],
     where: (bookings, { gte }) => gte(bookings.startTime, now.toISOString()),
     with: {
       bookingsExtrasDetails: {
@@ -84,6 +86,8 @@ export async function getUpcomingBookings(): Promise<Booking[]> {
       endTime: formatDateString(booking.endTime),
       date: new Date(booking.startTime),
       username: booking.name,
+      email: booking.email,
+      phone: booking.phone,
       paymentStatus: formatPaymentStatus(booking.paymentStatus),
       services: booking.bookingsServicesDetails.map(
         (detail) => detail.services,
@@ -95,6 +99,5 @@ export async function getUpcomingBookings(): Promise<Booking[]> {
     };
   });
 
-  console.log(JSON.stringify(formattedBookings, null, 2));
   return formattedBookings;
 }
