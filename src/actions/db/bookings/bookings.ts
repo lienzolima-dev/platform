@@ -85,6 +85,7 @@ export const add = defineAction({
       .min(1, "Debe seleccionar al menos un servicio"),
     extras: z.array(z.string()).optional(),
     totalPrice: z.number().min(0, "El precio total no es válido"),
+    advanceAmount: z.number().optional(),
     date: z.string().refine((dateString) => {
       return !Number.isNaN(Date.parse(dateString));
     }, "La fecha no es válida"),
@@ -111,9 +112,27 @@ export const add = defineAction({
       services,
       extras,
       totalPrice,
+      advanceAmount,
       startTime: startTimeString,
       endTime: endTimeString,
     } = input;
+
+    if (paymentStatus === "advance" || paymentStatus === "partial") {
+      if (!advanceAmount) {
+        throw new ActionError({
+          code: "BAD_REQUEST",
+          message: "Debe ingresar un monto de adelanto",
+        });
+      }
+    }
+
+    if (advanceAmount && advanceAmount >= totalPrice) {
+      throw new ActionError({
+        code: "BAD_REQUEST",
+        message:
+          "El monto de adelanto no puede ser mayor o igual al precio total",
+      });
+    }
 
     const startTimeObj = getTimeObjet(startTimeString);
     const endTimeObj = getTimeObjet(endTimeString);
@@ -137,12 +156,16 @@ export const add = defineAction({
         idManicurist: manicuristId,
         paymentStatus,
         totalPrice,
+        advanceAmount,
         startTime: startTime.toISOString(),
         endTime: endTime.toISOString(),
       });
 
+      const uniqueServices = Array.from(new Set(services));
+      const uniqueExtras = extras ? Array.from(new Set(extras)) : [];
+
       // Add relation with services and extras
-      for (const service of services) {
+      for (const service of uniqueServices) {
         await db.insert(bookingsServicesDetails).values({
           idBooking: newId,
           idService: service,
@@ -150,7 +173,7 @@ export const add = defineAction({
       }
 
       if (extras) {
-        for (const extra of extras) {
+        for (const extra of uniqueExtras) {
           await db.insert(bookingsExtrasDetails).values({
             idBooking: newId,
             idExtra: extra,

@@ -1,3 +1,4 @@
+import type { extras, services } from "../../../db/schema";
 import type { userRoles } from "../../../db/schemas/users";
 
 export type Task = {
@@ -8,11 +9,15 @@ export type Task = {
 };
 
 export type Booking = {
+  id: string;
   startTime: string;
   endTime: string;
-  date: string;
+  date: Date;
   username: string;
   paymentStatus: string;
+  services: (typeof services.$inferSelect)[];
+  extras: (typeof extras.$inferSelect)[];
+  manicurist: string;
 };
 
 export type CollaboratorsTableData = {

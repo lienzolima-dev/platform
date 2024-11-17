@@ -10,6 +10,7 @@
     selectedServices: string[];
     selectedExtras: string[];
     totalPrice: number | null;
+    advanceAmount: number | null;
     manicuristsOptions: SelectOption[];
     servicesOptions: SelectOption[];
     extrasOptions: SelectOption[];
@@ -21,6 +22,7 @@
     selectedServices = $bindable([""]),
     selectedExtras = $bindable([""]),
     totalPrice = $bindable(null),
+    advanceAmount = $bindable(null),
     manicuristsOptions,
     servicesOptions,
     extrasOptions,
@@ -35,6 +37,12 @@
     { value: "partial", label: "Pago Parcial" },
     { value: "none", label: "No Pago" },
   ];
+
+  function isPartialPayment() {
+    return (
+      selectedPayingState === "partial" || selectedPayingState === "advance"
+    );
+  }
 </script>
 
 <section>
@@ -73,12 +81,21 @@
     <div class="input-container">
       <label for="paying-state">Estado del Pago:</label>
 
-      <SimpleSelect
-        options={payingStates}
-        noOptionText="Selecciona un estado"
-        bind:value={selectedPayingState}
-        required
-      />
+      <div class="flex">
+        <SimpleSelect
+          options={payingStates}
+          noOptionText="Selecciona un estado"
+          bind:value={selectedPayingState}
+          required
+        />
+        <input
+          type="number"
+          required={isPartialPayment()}
+          disabled={!isPartialPayment()}
+          bind:value={advanceAmount}
+          placeholder="Ingrese el monto"
+        />
+      </div>
     </div>
 
     <div class="input-container">
@@ -120,5 +137,10 @@
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+  }
+
+  .flex {
+    display: flex;
+    gap: 0.5rem;
   }
 </style>

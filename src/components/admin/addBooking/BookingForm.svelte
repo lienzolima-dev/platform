@@ -39,6 +39,7 @@
   let selectedServices: string[] = $state([""]);
   let selectedExtras: string[] = $state([""]);
   let totalPrice: number | null = $state(null);
+  let advanceAmount: number | null = $state(null);
 
   let date = $state(new Date());
   let startTime = $state("");
@@ -49,9 +50,14 @@
   async function handleSubmit(e: Event) {
     e.preventDefault();
     if (!totalPrice) {
-      errorMessage = "Seleccione un servicio";
+      errorMessage = "Ingrese un precio total";
       return;
     }
+
+    if (!advanceAmount) {
+      advanceAmount = 0;
+    }
+
     if (selectedPayingState === "") {
       errorMessage = "Seleccione un estado de pago";
       return;
@@ -66,6 +72,7 @@
       services: selectedServices,
       extras: selectedExtras,
       totalPrice,
+      advanceAmount,
       date: date.toISOString(),
       startTime,
       endTime,
@@ -106,6 +113,7 @@
       bind:selectedServices
       bind:selectedExtras
       bind:totalPrice
+      bind:advanceAmount
       {manicuristsOptions}
       {servicesOptions}
       {extrasOptions}

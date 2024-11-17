@@ -1,5 +1,7 @@
+import { relations } from "drizzle-orm";
 import { text, sqliteTable, real } from "drizzle-orm/sqlite-core";
 import { ulid } from "ulid";
+import { bookingsServicesDetails } from "./bookingsServicesDetails";
 
 export const services = sqliteTable("services", {
   id: text("service_id").primaryKey().$defaultFn(ulid).notNull(),
@@ -9,3 +11,7 @@ export const services = sqliteTable("services", {
   durationHours: real("duration_hours").notNull(),
   category: text("category").notNull(),
 });
+
+export const servicesRelations = relations(services, ({ many }) => ({
+  bookingsServicesDetails: many(bookingsServicesDetails),
+}));
