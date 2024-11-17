@@ -1,5 +1,104 @@
 ---
-import { getUpcomingBookings } from "../../../pages/admin/_db/bookings";
+import type { Booking } from "../../../pages/admin/_db/types";
+
+type Props = {
+  bookings: Booking[];
+};
+
+const { bookings } = Astro.props;
 ---
 
-<h1>HOLA</h1>
+<div class="cards-list">
+  {
+    bookings.map((booking) => (
+      <div class="card">
+        <h3>{booking.username}</h3>
+        <span>
+          Horario: {booking.startTime} - {booking.endTime}
+        </span>
+        <span>
+          {booking.date.toLocaleDateString("es-PE", {
+            day: "numeric",
+            month: "long",
+          })}
+        </span>
+        <span class="separator">Manicurista</span>
+        <span>{booking.manicurist}</span>
+        <span class="separator">Servicios:</span>
+        <div class="services-list">
+          {booking.services.map((service) => (
+            <span>{service.name}</span>
+          ))}
+        </div>
+        <span class="separator">Extras</span>
+        <div class="services-list">
+          {booking.extras.map((extra) => (
+            <span>{extra.name}</span>
+          ))}
+        </div>
+        <span class="separator">Adelanto</span>
+        <span>S/ {booking.advanceAmount}</span>
+        <span class="separator">Total</span>
+        <span>S/ {booking.totalPrice}</span>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .cards-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+  }
+
+  .card h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333333;
+  }
+
+  .card span {
+    font-size: 0.9rem;
+    color: #666666;
+  }
+
+  .card .separator {
+    font-weight: bold;
+    margin-top: 0.25rem;
+    color: #444444;
+  }
+
+  .card .services-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .services-list span {
+    font-size: 0.85rem;
+    background: #f1f1f1;
+    padding: 0.3rem 0.6rem;
+    border-radius: 5px;
+    color: #555555;
+  }
+</style>

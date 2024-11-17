@@ -3,6 +3,7 @@ import SideBar from "../../components/admin/SideBar.astro";
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import Header from "../../components/admin/Header.astro";
 import BookingsList from "../../components/admin/bookings/BookingsList.astro";
+import { getAllBookings } from "./_db/bookings";
 
 const user = Astro.locals.user;
 
@@ -10,6 +11,8 @@ const user = Astro.locals.user;
 if (!user || user.role !== "admin") return Astro.redirect("/home", 302);
 
 const { avatarURL, username, role } = user;
+
+const bookings = await getAllBookings();
 ---
 
 <AdminLayout title="Admin">
@@ -18,7 +21,7 @@ const { avatarURL, username, role } = user;
     <Header {avatarURL} {username} {role} />
     <main>
       <h1>Reservas</h1>
-      <BookingsList />
+      <BookingsList {bookings} />
     </main>
   </div>
 </AdminLayout>

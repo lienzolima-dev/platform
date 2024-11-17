@@ -15,6 +15,8 @@ export type Booking = {
   date: Date;
   username: string;
   paymentStatus: string;
+  advanceAmount: number;
+  totalPrice: number;
   services: (typeof services.$inferSelect)[];
   extras: (typeof extras.$inferSelect)[];
   manicurist: string;

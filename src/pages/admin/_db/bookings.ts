@@ -46,6 +46,8 @@ export async function getAllBookings(): Promise<Booking[]> {
       services: booking.bookingsServicesDetails.map(
         (detail) => detail.services,
       ),
+      totalPrice: booking.totalPrice,
+      advanceAmount: booking.advanceAmount,
       extras: booking.bookingsExtrasDetails.map((detail) => detail.extras),
       manicurist: booking.manicurist.username,
     };
@@ -86,6 +88,8 @@ export async function getUpcomingBookings(): Promise<Booking[]> {
       services: booking.bookingsServicesDetails.map(
         (detail) => detail.services,
       ),
+      totalPrice: booking.totalPrice,
+      advanceAmount: booking.advanceAmount,
       extras: booking.bookingsExtrasDetails.map((detail) => detail.extras),
       manicurist: booking.manicurist.username,
     };
