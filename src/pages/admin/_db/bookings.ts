@@ -1,95 +1,103 @@
 import { db } from "../../../db/db";
-import { bookings } from "../../../db/schemas/bookings";
 import type { Booking } from "./types";
 
-// async function getCurrentDateTimeFromAPI(): Promise<Date> {
-//   try {
-//     const response = await fetch(
-//       "https://timeapi.io/api/Time/current/zone?timeZone=America/Lima",
-//     );
-//     const data = await response.json();
-//     const currentTime = new Date(data.dateTime);
-//     return currentTime;
-//   } catch (error) {
-//     console.error(
-//       "Error fetching time from TimeAPI, using server time as fallback.",
-//       error,
-//     );
-//     return new Date();
-//   }
-// }
-
-function formatBookingData(booking: {
-  startTime: string;
-  endTime: string;
-  name: string;
-  paymentStatus: string;
-}): Booking {
-  const startTime = booking.startTime
-    ? new Date(booking.startTime).toLocaleTimeString("es-ES", {
-        hour: "2-digit",
-        minute: "2-digit",
-      })
-    : "";
-  const endTime = booking.endTime
-    ? new Date(booking.endTime).toLocaleTimeString("es-ES", {
-        hour: "2-digit",
-        minute: "2-digit",
-      })
-    : "";
-
-  const date = booking.startTime
-    ? new Date(booking.startTime).toLocaleDateString("es-ES", {
-        day: "numeric",
-        month: "long",
-      })
-    : "";
-
-  return {
-    startTime,
-    endTime,
-    date,
-    username: booking.name,
-    paymentStatus: formatPaymentStatus(booking.paymentStatus),
-  };
+function formatDateString(dateString: string): string {
+  return new Date(dateString).toLocaleTimeString("es-PE", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
 }
 
 function formatPaymentStatus(paymentStatus: string): string {
-  switch (paymentStatus) {
-    case "advance":
-      return "Adelanto";
-    case "full":
-      return "Pago completo";
-    case "partial":
-      return "Pago Parcial";
-    case "none":
-      return "Sin Adelanto";
-    default:
-      return paymentStatus;
-  }
+  if (paymentStatus === "advance") return "Adelanto";
+  if (paymentStatus === "full") return "Pago completo";
+  if (paymentStatus === "partial") return "Pago Parcial";
+  if (paymentStatus === "none") return "Sin Adelanto";
+  return paymentStatus;
 }
 
-export const getAllBookings = async (): Promise<Booking[]> => {
+export async function getAllBookings(): Promise<Booking[]> {
+  const bookings = await db.query.bookings.findMany({
+    orderBy: (bookings, { desc }) => [desc(bookings.startTime)],
+    with: {
+      bookingsExtrasDetails: {
+        with: {
+          extras: true,
+        },
+      },
+      bookingsServicesDetails: {
+        with: {
+          services: true,
+        },
+      },
+      manicurist: true,
+    },
+  });
+
+  const formattedBookings = bookings.map((booking) => {
+    return {
+      id: booking.id,
+      startTime: formatDateString(booking.startTime),
+      endTime: formatDateString(booking.endTime),
+      date: new Date(booking.startTime),
+      username: booking.name,
+      phone: booking.phone,
+      email: booking.email,
+      paymentStatus: formatPaymentStatus(booking.paymentStatus),
+      services: booking.bookingsServicesDetails.map(
+        (detail) => detail.services,
+      ),
+      totalPrice: booking.totalPrice,
+      advanceAmount: booking.advanceAmount,
+      extras: booking.bookingsExtrasDetails.map((detail) => detail.extras),
+      manicurist: booking.manicurist.username,
+    };
+  });
+
+  return formattedBookings;
+}
+
+export async function getUpcomingBookings(): Promise<Booking[]> {
   const now = new Date();
-  now.getTime();
 
-  const bookingsList = await db
-    .select({
-      startTime: bookings.startTime,
-      endTime: bookings.endTime,
-      name: bookings.name,
-      paymentStatus: bookings.paymentStatus,
-    })
-    .from(bookings)
-    .orderBy(bookings.startTime);
+  const bookings = await db.query.bookings.findMany({
+    orderBy: (bookings, { desc }) => [desc(bookings.startTime)],
+    where: (bookings, { gte }) => gte(bookings.startTime, now.toISOString()),
+    with: {
+      bookingsExtrasDetails: {
+        with: {
+          extras: true,
+        },
+      },
+      bookingsServicesDetails: {
+        with: {
+          services: true,
+        },
+      },
+      manicurist: true,
+    },
+  });
 
-  const upcomingBookings = bookingsList
-    .filter((booking) => {
-      const bookingDate = new Date(booking.startTime);
-      return bookingDate > now;
-    })
-    .slice(0, 5)
-    .map(formatBookingData);
+  const formattedBookings = bookings.map((booking) => {
+    return {
+      id: booking.id,
+      startTime: formatDateString(booking.startTime),
+      endTime: formatDateString(booking.endTime),
+      date: new Date(booking.startTime),
+      username: booking.name,
+      email: booking.email,
+      phone: booking.phone,
+      paymentStatus: formatPaymentStatus(booking.paymentStatus),
+      services: booking.bookingsServicesDetails.map(
+        (detail) => detail.services,
+      ),
+      totalPrice: booking.totalPrice,
+      advanceAmount: booking.advanceAmount,
+      extras: booking.bookingsExtrasDetails.map((detail) => detail.extras),
+      manicurist: booking.manicurist.username,
+    };
+  });
 
-  return upcomingBookings;
-};
+  return formattedBookings;
+}

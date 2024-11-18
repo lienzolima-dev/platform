@@ -1,6 +1,8 @@
 <script lang="ts">
+  import type { SelectOption } from "../../global/form/types";
+
   type Props = {
-    options: { value: string; text: string }[];
+    options: SelectOption[];
     noOptionText?: string;
     value: string;
     required?: boolean;
@@ -22,7 +24,7 @@
   {/if}
 
   {#each options as option}
-    <option value={option.value}>{option.text}</option>
+    <option value={option.value}>{option.label}</option>
   {/each}
 </select>
 

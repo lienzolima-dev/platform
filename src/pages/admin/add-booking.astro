@@ -2,8 +2,11 @@
 import SideBar from "../../components/admin/SideBar.astro";
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import Header from "../../components/admin/Header.astro";
-import BookingsList from "../../components/admin/bookings/BookingsList.astro";
-import { getAllBookings } from "./_db/bookings";
+import AddBookingContent from "../../components/admin/addBooking/AddBookingContent.astro";
+import { getManicuristsOptions } from "./_db/users";
+import { getServices } from "./_db/services";
+import { getExtras } from "./_db/extras";
+import SuccessfulBookingPopup from "../../components/admin/addBooking/SuccessfulBookingPopup.astro";
 
 const user = Astro.locals.user;
 
@@ -12,7 +15,11 @@ if (!user || user.role !== "admin") return Astro.redirect("/home", 302);
 
 const { avatarURL, username, role } = user;
 
-const bookings = await getAllBookings();
+const [manicuristsOptions, services, extras] = await Promise.all([
+  getManicuristsOptions(),
+  getServices(),
+  getExtras(),
+]);
 ---
 
 <AdminLayout title="Admin">
@@ -20,8 +27,8 @@ const bookings = await getAllBookings();
   <div>
     <Header {avatarURL} {username} {role} />
     <main>
-      <h1>Reservas</h1>
-      <BookingsList {bookings} />
+      <AddBookingContent {manicuristsOptions} {services} {extras} />
+      <SuccessfulBookingPopup />
     </main>
   </div>
 </AdminLayout>

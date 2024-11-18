@@ -1,8 +1,9 @@
 <script lang="ts">
   import SimpleSelect from "./SimpleSelect.svelte";
+  import type { SelectOption } from "../../global/form/types";
 
   type Props = {
-    options: { value: string; text: string }[];
+    options: SelectOption[];
     noOptionText?: string;
     values?: string[];
     required?: boolean;
