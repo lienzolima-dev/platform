@@ -1,5 +1,7 @@
+import { relations } from "drizzle-orm";
 import { text, sqliteTable, integer } from "drizzle-orm/sqlite-core";
 import { ulid } from "ulid";
+import { bookings } from "./bookings";
 
 export const userRoles = ["user", "admin", "manicurist"] as const;
 
@@ -22,3 +24,7 @@ export const users = sqliteTable("users", {
     .default(false),
   createdAt: text("created_at").notNull().default(new Date().toISOString()),
 });
+
+export const userRelations = relations(users, ({ many }) => ({
+  bookings: many(bookings),
+}));
