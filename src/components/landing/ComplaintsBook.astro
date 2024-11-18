@@ -34,54 +34,57 @@ if (isInputError(result?.error)) {
   <form action={actions.db.complaints.addComplaint} method="POST">
     <div class="form-grid">
       <div class="form-group">
-        <label for="fecha">Fecha de reclamo o queja</label>
         <input type="date" id="date" name="date" required />
+        <label for="date">Fecha de reclamo o queja</label>
       </div>
       <div class="form-group">
-        <label for="fullName">Nombres y Apellidos</label>
         <input type="text" id="fullName" name="fullName" required />
+        <label for="fullName">Nombres y Apellidos</label>
       </div>
       <div class="form-group">
-        <label for="dni">DNI</label>
         <input type="text" id="dni" name="dni" required />
+        <label for="dni">DNI</label>
       </div>
       <div class="form-group">
-        <label for="email">Correo Electrónico</label>
         <input type="email" id="email" name="email" required />
+        <label for="email">Correo Electrónico</label>
       </div>
       <div class="form-group">
-        <label for="phone">Teléfono</label>
         <input type="tel" id="phone" name="phone" required />
+        <label for="phone">Teléfono</label>
       </div>
     </div>
     <div class="form-group">
-      <label>Identificación del servicio adquirido</label>
-      <div class="radio-group">
-        <select id="service" name="service">
-          <option value="" selected>--- Selecciona un servicio ---</option>
-          {
-            serviceOptions.map((option) => (
-              <option value={option}>{option}</option>
-            ))
-          }
-        </select>
-      </div>
+      <select id="service" name="service" required>
+        <option value="" selected>Selecciona un servicio</option>
+        {
+          serviceOptions.map((option) => (
+            <option value={option}>{option}</option>
+          ))
+        }
+      </select>
+      <label class="s-label">Identificación del servicio adquirido</label>
     </div>
     <div class="form-group">
-      <label for="serviceDescription">Descripción</label>
       <textarea
         id="serviceDescription"
         name="serviceDescription"
         rows="4"
         required></textarea>
+      <label for="serviceDescription">Descripción</label>
     </div>
-    <div class="form-group">
-      <label>Detalle de reclamación</label>
+    <div class="rg-group">
+      <label class="rg-label">Detalle de reclamación</label>
       <div class="radio-group">
         {
           complaintOptions.map((option) => (
             <label for={option}>
-              <input type="radio" name="complaintOption" value={option} />
+              <input
+                type="radio"
+                name="complaintOption"
+                value={option}
+                required
+              />
               {complaintOptionsMap[option]}
             </label>
           ))
@@ -89,82 +92,21 @@ if (isInputError(result?.error)) {
       </div>
     </div>
     <div class="form-group">
-      <label for="complaintDescription">Detalle</label>
       <textarea
         id="complaintDescription"
         name="complaintDescription"
         rows="4"
         required></textarea>
+      <label for="complaintDescription">Detalle</label>
     </div>
     <div class="form-group">
-      <label for="adicionalInfo">Información Adicional</label>
       <textarea id="adicionalInfo" name="adicionalInfo" rows="4"></textarea>
+      <label for="adicionalInfo">Información Adicional</label>
     </div>
     <button type="submit" id="complaint-submit-btn" class="btn">Enviar</button>
   </form>
   {errorMessage && <p class="error">{errorMessage}</p>}
 </section>
-
-<script>
-  const form = document.querySelector("form");
-
-  if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
-  form.addEventListener("submit", function (event) {
-    event.preventDefault(); // Para evitar el envío inmediato
-    console.log("Formulario enviado");
-    form.submit(); // Ahora enviamos el formulario de manera manual
-  });
-</script>
-
-<!--
-<script>
-  import { actions, isInputError } from "astro:actions";
-
-  try {
-    const form = document.getElementById("complaint-form");
-    const errorContent = document.getElementById("c-error-content");
-    const submitButton = document.getElementById("complaint-submit-btn");
-
-    if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
-    if (!(submitButton instanceof HTMLButtonElement))
-      throw new Error("Submit button not found");
-
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      const formData = new FormData(form);
-
-      submitButton.disabled = true;
-      const { error } = await actions.db.complaints.addComplaint(formData);
-      submitButton.disabled = false;
-
-      if (!error) {
-        location.reload();
-        return;
-      }
-
-      if (error && errorContent instanceof HTMLElement) {
-        errorContent.innerHTML = "";
-
-        if (isInputError(error)) {
-          const ul = document.createElement("ul");
-
-          error.issues.forEach((err) => {
-            const li = document.createElement("li");
-            li.innerText = err.message;
-            ul.appendChild(li);
-          });
-
-          errorContent.appendChild(ul);
-          return;
-        }
-        errorContent.innerText = error.message;
-      }
-    });
-  } catch (error) {
-    console.error(error);
-  }
-</script>-->
 
 <style>
   .container {
@@ -190,43 +132,72 @@ if (isInputError(result?.error)) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    margin-bottom: 20px;
   }
 
   .form-group {
     display: flex;
+    position: relative;
     flex-direction: column;
+    margin: 0.5rem 0;
   }
 
   .form-group:last-child {
     margin-right: 0;
   }
 
-  .half-width {
-    flex-basis: 48%;
+  .form-group label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    padding: 0 10px;
+    pointer-events: none;
+    transition: 0.3s;
+    background: var(--background);
   }
 
-  label {
+  .rg-label {
     display: block;
-    font-weight: bold;
     margin-bottom: 5px;
     text-align: left;
   }
 
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"],
-  input[type="date"],
-  textarea {
+  .form-group input,
+  .form-group textarea {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 1px solid var(--tertiary-400);
+    border-radius: 10px;
+    background: transparent;
+    outline: none;
   }
 
   textarea {
     resize: none;
+  }
+
+  .form-group input:focus ~ label,
+  .form-group input:valid ~ label,
+  .form-group input.has-content ~ label,
+  .form-group textarea:focus ~ label,
+  .form-group textarea.has-content ~ label,
+  .form-group select:focus ~ label,
+  .form-group select:valid ~ label {
+    top: 0;
+    font-size: 0.8rem;
+    background: var(--background);
+  }
+
+  select {
+    width: 49%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 1px solid var(--tertiary-400);
+    border-radius: 10px;
+    background: transparent;
+    outline: none;
   }
 
   input[type="radio"] {
@@ -246,6 +217,22 @@ if (isInputError(result?.error)) {
     align-items: center;
     font-weight: normal;
     gap: 5px;
+  }
+
+  .radio-group input[type="radio"] {
+    appearance: none; /* Elimina el estilo por defecto */
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--primary-400);
+    border-radius: 20%;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .radio-group input[type="radio"]:checked {
+    background-color: var(--primary-400);
+    border-color: var(--primary-500);
   }
 
   .btn {
@@ -270,5 +257,43 @@ if (isInputError(result?.error)) {
     .form-grid {
       grid-template-columns: 1fr;
     }
+
+    select {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 430px) {
+    .form-group label {
+      top: 0;
+      font-size: 0.8rem;
+    }
+
+    .form-group .s-label {
+      font-size: 0.65rem;
+    }
   }
 </style>
+
+<script>
+  document.querySelectorAll(".form-group input").forEach((input) => {
+    input.addEventListener("input", () => {
+      const inputElement = input as HTMLInputElement;
+      if (inputElement.value) {
+        input.classList.add("has-content");
+      } else {
+        input.classList.remove("has-content");
+      }
+    });
+  });
+  document.querySelectorAll(".form-group textarea").forEach((textarea) => {
+    textarea.addEventListener("input", () => {
+      const textareaElement = textarea as HTMLInputElement;
+      if (textareaElement.value) {
+        textarea.classList.add("has-content");
+      } else {
+        textarea.classList.remove("has-content");
+      }
+    });
+  });
+</script>

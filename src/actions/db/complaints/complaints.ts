@@ -8,24 +8,20 @@ import { complaintOptions } from "../../../db/schemas/complaints";
 export const addComplaint = defineAction({
   accept: "form",
   input: z.object({
-    dni: z
-      .string()
-      .min(8, "El DNI debe tener 8 caracteres")
-      .regex(/^\d{8}$/, "El DNI debe ser un número de 8 dígitos"),
+    dni: z.string().regex(/^\d{8}$/, "El DNI debe ser un número de 8 dígitos"),
     fullName: z
       .string()
       .min(3, "El nombre debe tener al menos 3 caracteres")
-      .refine(
-        (fullName) => /^[a-zA-Z0-9]+([ -][a-zA-Z0-9]+)*$/.test(fullName),
-        {
-          message:
-            "El nombre de usuario solo puede contener letras minúsculas, números y guiones simples, y no puede comenzar ni terminar con un guión.",
-        },
-      ),
+      .refine((fullName) => /^[a-zA-Z]+( [a-zA-Z]+)*$/.test(fullName), {
+        message:
+          "Los nombres y apellidos solo pueden contener letras minúsculas y espacios, y no puede comenzar ni terminar con un espacio.",
+      }),
     email: z
       .string({ message: "El email es requerido" })
       .email("El email no es válido"),
-    phone: z.string().min(3, "El teléfono debe tener al menos 3 caracteres"),
+    phone: z.string().refine((phone) => /^\d{9}$/.test(phone), {
+      message: "El número de teléfono debe contener exactamente 9 dígitos.",
+    }),
     date: z.string(),
     service: z.enum(serviceOptions),
     serviceDescription: z
@@ -38,7 +34,6 @@ export const addComplaint = defineAction({
     adicionalInfo: z.string().nullable(),
   }),
   handler: async (input, _ctx) => {
-    console.log("Datos recibidos:", input);
     const {
       dni,
       fullName,
@@ -51,6 +46,8 @@ export const addComplaint = defineAction({
       complaintDescription,
       adicionalInfo,
     } = input;
+
+    console.log("Datos recibidos:", input);
 
     const complaintToUpdate: typeof complaints.$inferInsert = {
       dni: dni,
