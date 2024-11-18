@@ -4,6 +4,7 @@ import { db } from "../../../db/db";
 import { complaints } from "../../../db/schema";
 import { serviceOptions } from "../../../db/schemas/complaints";
 import { complaintOptions } from "../../../db/schemas/complaints";
+import { DateTime } from "luxon";
 
 export const addComplaint = defineAction({
   accept: "form",
@@ -14,7 +15,7 @@ export const addComplaint = defineAction({
       .min(3, "El nombre debe tener al menos 3 caracteres")
       .refine((fullName) => /^[a-zA-Z]+( [a-zA-Z]+)*$/.test(fullName), {
         message:
-          "Los nombres y apellidos solo pueden contener letras minúsculas y espacios, y no puede comenzar ni terminar con un espacio.",
+          "Los nombres y apellidos solo pueden contener letras mayúsculas, minúsculas y espacios, y no puede comenzar ni terminar con un espacio.",
       }),
     email: z
       .string({ message: "El email es requerido" })
@@ -22,7 +23,21 @@ export const addComplaint = defineAction({
     phone: z.string().refine((phone) => /^\d{9}$/.test(phone), {
       message: "El número de teléfono debe contener exactamente 9 dígitos.",
     }),
-    date: z.string(),
+    date: z.string().refine(
+      (date) => {
+        const todayDate = DateTime.now().setZone("America/Lima");
+        const userDate = DateTime.fromISO(date);
+
+        if (!userDate.isValid) {
+          console.log(userDate);
+          return false;
+        }
+        return userDate <= todayDate;
+      },
+      {
+        message: "La fecha no puede ser posterior a la actual",
+      },
+    ),
     service: z.enum(serviceOptions),
     serviceDescription: z
       .string()

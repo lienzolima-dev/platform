@@ -12,7 +12,6 @@ const complaintOptionsMap: Record<
 };
 
 const result = Astro.getActionResult(actions.db.complaints.addComplaint);
-console.log("Resultado de la acción:", result);
 
 let errorMessage = "";
 
@@ -23,8 +22,9 @@ if (result?.error && !isInputError(result?.error)) {
 
 // Check if the result is an input error
 if (isInputError(result?.error)) {
-  for (const issue of result.error.issues) {
-    errorMessage += `${issue.message} `;
+  const firstIssue = result.error.issues[0];
+  if (firstIssue) {
+    errorMessage = firstIssue.message;
   }
 }
 ---
@@ -103,9 +103,9 @@ if (isInputError(result?.error)) {
       <textarea id="adicionalInfo" name="adicionalInfo" rows="4"></textarea>
       <label for="adicionalInfo">Información Adicional</label>
     </div>
+    {errorMessage && <p class="error">{errorMessage}</p>}
     <button type="submit" id="complaint-submit-btn" class="btn">Enviar</button>
   </form>
-  {errorMessage && <p class="error">{errorMessage}</p>}
 </section>
 
 <style>
@@ -235,6 +235,10 @@ if (isInputError(result?.error)) {
     border-color: var(--primary-500);
   }
 
+  .error {
+    color: red;
+  }
+
   .btn {
     display: block;
     width: 200px;
@@ -250,7 +254,8 @@ if (isInputError(result?.error)) {
   }
 
   .btn:hover {
-    background-color: var(--primary-500);
+    background-color: var(--secondary-400);
+    color: var(--primary-400);
   }
 
   @media (max-width: 768px) {
