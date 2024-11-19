@@ -5,6 +5,7 @@ import { complaints } from "../../../db/schema";
 import { serviceOptions } from "../../../db/schemas/complaints";
 import { complaintOptions } from "../../../db/schemas/complaints";
 import { DateTime } from "luxon";
+import { resend } from "../../../resend/client";
 
 export const addComplaint = defineAction({
   accept: "form",
@@ -80,6 +81,16 @@ export const addComplaint = defineAction({
 
     try {
       await db.insert(complaints).values(complaintToUpdate);
+
+      resend.emails.send({
+        from: "noreply@lienzolima.com",
+        to: [input.email],
+        subject: "Lienzo Lima - Confirmación de registro de reclamo",
+        html: `<p>Estimad@ ${input.fullName},</p>
+               <p>Gracias por comunicarte con Lienzo Lima.</p>
+               <p>Lamentamos el inconveniente.</p>
+               <p>Valoramos tus comentarios, ya que nos ayudan a mejorar continuamente nuestros servicios.</p>`,
+      });
     } catch (e) {
       console.error(e);
       if (e instanceof ActionError) throw e;
