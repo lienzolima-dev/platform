@@ -1,9 +1,15 @@
-export { users } from "./schemas/users";
+export { users, userRelations } from "./schemas/users";
 export { sessions } from "./schemas/sessions";
 export { tasks } from "./schemas/tasks";
-export { bookings } from "./schemas/bookings";
-export { services } from "./schemas/services";
-export { extras } from "./schemas/extras";
-export { bookingsServicesDetails } from "./schemas/bookingsServicesDetails";
-export { bookingsExtrasDetails } from "./schemas/bookingsExtrasDetails";
+export { bookings, bookingsRelations } from "./schemas/bookings";
+export { services, servicesRelations } from "./schemas/services";
+export { extras, extrasRelations } from "./schemas/extras";
+export {
+  bookingsServicesDetails,
+  bookingsServicesDetailsRelations,
+} from "./schemas/bookingsServicesDetails";
+export {
+  bookingsExtrasDetails,
+  bookingsExtrasDetailsRelations,
+} from "./schemas/bookingsExtrasDetails";
 export { complaints } from "./schemas/complaints";

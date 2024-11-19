@@ -1,13 +1,19 @@
 <script lang="ts">
   import SimpleSelect from "./SimpleSelect.svelte";
   import StackableSelect from "./StackableSelect.svelte";
+  import type { SelectOption } from "../../global/form/types";
+  import type { paymentStatuses } from "../../../db/schemas/bookings";
 
   type Props = {
     selectedManicurist: string;
-    selectedPayingState: string;
+    selectedPayingState: (typeof paymentStatuses)[number] | "";
     selectedServices: string[];
     selectedExtras: string[];
     totalPrice: number | null;
+    advanceAmount: number | null;
+    manicuristsOptions: SelectOption[];
+    servicesOptions: SelectOption[];
+    extrasOptions: SelectOption[];
   };
 
   let {
@@ -16,32 +22,27 @@
     selectedServices = $bindable([""]),
     selectedExtras = $bindable([""]),
     totalPrice = $bindable(null),
+    advanceAmount = $bindable(null),
+    manicuristsOptions,
+    servicesOptions,
+    extrasOptions,
   }: Props = $props();
 
-  let manicuristOptions = [
-    { value: "1", text: "Manicurista 1" },
-    { value: "2", text: "Manicurista 2" },
-    { value: "3", text: "Manicurista 3" },
+  let payingStates: {
+    value: (typeof paymentStatuses)[number];
+    label: string;
+  }[] = [
+    { value: "full", label: "Pago Completo" },
+    { value: "advance", label: "Adelanto" },
+    { value: "partial", label: "Pago Parcial" },
+    { value: "none", label: "No Pago" },
   ];
 
-  let payingStates = [
-    { value: "full", text: "Pago Completo" },
-    { value: "advance", text: "Adelanto" },
-    { value: "Partial", text: "Pago Parcial" },
-    { value: "none", text: "No Pago" },
-  ];
-
-  let servicesOptions = [
-    { value: "1", text: "Servicio 1" },
-    { value: "2", text: "Servicio 2" },
-    { value: "3", text: "Servicio 3" },
-  ];
-
-  let extrasOptions = [
-    { value: "1", text: "Adicional 1" },
-    { value: "2", text: "Adicional 2" },
-    { value: "3", text: "Adicional 3" },
-  ];
+  function isPartialPayment() {
+    return (
+      selectedPayingState === "partial" || selectedPayingState === "advance"
+    );
+  }
 </script>
 
 <section>
@@ -70,7 +71,7 @@
     <div class="input-container">
       <label for="manicurist">Manicurista:</label>
       <SimpleSelect
-        options={manicuristOptions}
+        options={manicuristsOptions}
         noOptionText="Selecciona un manicurista"
         bind:value={selectedManicurist}
         required
@@ -80,12 +81,21 @@
     <div class="input-container">
       <label for="paying-state">Estado del Pago:</label>
 
-      <SimpleSelect
-        options={payingStates}
-        noOptionText="Selecciona un estado"
-        bind:value={selectedPayingState}
-        required
-      />
+      <div class="flex">
+        <SimpleSelect
+          options={payingStates}
+          noOptionText="Selecciona un estado"
+          bind:value={selectedPayingState}
+          required
+        />
+        <input
+          type="number"
+          required={isPartialPayment()}
+          disabled={!isPartialPayment()}
+          bind:value={advanceAmount}
+          placeholder="Ingrese el monto"
+        />
+      </div>
     </div>
 
     <div class="input-container">
@@ -127,5 +137,10 @@
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+  }
+
+  .flex {
+    display: flex;
+    gap: 0.5rem;
   }
 </style>

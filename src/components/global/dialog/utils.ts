@@ -1,3 +1,12 @@
+export type DialogEvent = CustomEvent<{ id: string }>;
+
+declare global {
+  interface DocumentEventMap {
+    "dialog-open": DialogEvent;
+    "dialog-close": DialogEvent;
+  }
+}
+
 export function openDialog(dialogId: string) {
   document.dispatchEvent(
     new CustomEvent("dialog-open", {

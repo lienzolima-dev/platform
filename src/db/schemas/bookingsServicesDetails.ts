@@ -1,6 +1,7 @@
 import { text, sqliteTable, primaryKey } from "drizzle-orm/sqlite-core";
 import { services } from "./services";
 import { bookings } from "./bookings";
+import { relations } from "drizzle-orm";
 
 export const bookingsServicesDetails = sqliteTable(
   "bookings_services_details",
@@ -19,4 +20,18 @@ export const bookingsServicesDetails = sqliteTable(
       pk: primaryKey({ columns: [table.idBooking, table.idService] }),
     };
   },
+);
+
+export const bookingsServicesDetailsRelations = relations(
+  bookingsServicesDetails,
+  ({ one }) => ({
+    bookings: one(bookings, {
+      fields: [bookingsServicesDetails.idBooking],
+      references: [bookings.id],
+    }),
+    services: one(services, {
+      fields: [bookingsServicesDetails.idService],
+      references: [services.id],
+    }),
+  }),
 );
