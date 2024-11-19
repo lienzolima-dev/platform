@@ -1,7 +1,7 @@
 import { and, eq, not } from "drizzle-orm";
 import { complaints } from "../../../db/schema";
 import { db } from "../../../db/db";
-import type { ComplaintsTableData } from "./types";
+/*import type { ComplaintsTableData } from "./types";
 
 export async function getComplaintsTableData(): Promise<ComplaintsTableData[]> {
   const complaintsData = await db
@@ -21,4 +21,4 @@ export async function getComplaintsTableData(): Promise<ComplaintsTableData[]> {
     .from(complaints)
     .orderBy(complaints.date);
   return complaintsData;
-}
+}*/
