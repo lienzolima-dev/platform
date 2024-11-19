@@ -1,0 +1,45 @@
+---
+import EditIcon from "../../svgs/admin/IndexContent/EditIcon.astro";
+---
+
+<user-edit-button>
+  <button>
+    <EditIcon color="white" />
+    <span>Editar</span>
+  </button>
+</user-edit-button>
+
+<script>
+  import { openDialog } from "../../global/dialog/utils";
+
+  class UserEditButton extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector("button");
+
+      if (!button) throw "Button not found";
+
+      button.addEventListener("click", async () => {
+        openDialog("editUser");
+      });
+    }
+  }
+
+  customElements.define("user-edit-button", UserEditButton);
+</script>
+
+<style>
+  button {
+    display: flex;
+    align-items: center;
+    background-color: #169db5;
+    gap: 0.25rem;
+    border-radius: 4px;
+    padding: 4px 8px;
+    color: white;
+  }
+
+  button :global(svg) {
+    width: 1rem;
+    height: 1rem;
+  }
+</style>

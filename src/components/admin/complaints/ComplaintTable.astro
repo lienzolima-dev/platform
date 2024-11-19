@@ -2,6 +2,7 @@
 import TableHead from "../../global/table/TableHead.astro";
 import TableRow from "../../global/table/TableRow.astro";
 import Pagination from "../../global/Pagination.astro";
+import ComplaintViewButton from "./ComplaintViewButton.astro";
 
 const columns = [
   "DNI",
@@ -16,7 +17,7 @@ const rowData = [
   "John Doe",
   "doe@doe.com",
   "982345785",
-  "2024-11-13T10:00:00Z",
+  "2024-11-13",
   "Sistemas",
   "softgel",
   "complaint",
@@ -24,7 +25,9 @@ const rowData = [
   "",
 ]; // Mock data
 
-const tableRows = Array.from({ length: 6 }, () => rowData);
+const trimmedRowData = rowData.slice(0, 5);
+
+const tableRows = Array.from({ length: 6 }, () => trimmedRowData);
 ---
 
 <div class="container">
@@ -35,7 +38,7 @@ const tableRows = Array.from({ length: 6 }, () => rowData);
         tableRows.map((rowData) => (
           <TableRow rowData={rowData}>
             <div class="action-button">
-              <button>Ver</button>
+              <ComplaintViewButton />
             </div>
           </TableRow>
         ))
