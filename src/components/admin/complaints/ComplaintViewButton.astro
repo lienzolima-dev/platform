@@ -1,37 +1,34 @@
 ---
-import EditIcon from "../../svgs/admin/IndexContent/EditIcon.astro";
+import ViewIcon from "../../svgs/admin/IndexContent/ViewIcon.astro";
 ---
 
-<user-edit-button>
+<complaint-view-button>
   <button>
-    <EditIcon color="white" />
-    <span>Editar</span>
+    <ViewIcon color={"white"} />
+    <span>Ver detalles</span>
   </button>
-</user-edit-button>
+</complaint-view-button>
 
 <script>
   import { openDialog } from "../../global/dialog/utils";
-
-  class UserEditButton extends HTMLElement {
+  class ComplaintViewButton extends HTMLElement {
     connectedCallback() {
       const button = this.querySelector("button");
 
       if (!button) throw "Button not found";
-
-      button.addEventListener("click", async () => {
-        openDialog("editUser");
+      button.addEventListener("click", () => {
+        openDialog("viewComplaint");
       });
     }
   }
-
-  customElements.define("user-edit-button", UserEditButton);
+  customElements.define("complaint-view-button", ComplaintViewButton);
 </script>
 
 <style>
   button {
     display: flex;
     align-items: center;
-    background-color: #169db5;
+    background-color: #47a04c;
     gap: 0.25rem;
     border-radius: 4px;
     padding: 4px 8px;

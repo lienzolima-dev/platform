@@ -4,6 +4,8 @@ import AdminLayout from "../../layouts/AdminLayout.astro";
 import Header from "../../components/admin/Header.astro";
 import ComplaintHeader from "../../components/admin/complaints/ComplaintHeader.astro";
 import ComplaintTable from "../../components/admin/complaints/ComplaintTable.astro";
+import Dialog from "../../components/global/dialog/Dialog.astro";
+import ComplaintViewDialog from "../../components/admin/complaints/ComplaintViewDialog.astro";
 
 const user = Astro.locals.user;
 
@@ -13,7 +15,7 @@ if (!user || user.role !== "admin") return Astro.redirect("/home", 302);
 const { avatarURL, username, role } = user;
 
 //TODO: Get complaints amount from the database
-const complaintsAmount = 5;
+const complaintsAmount = 6;
 ---
 
 <AdminLayout title="Admin">
@@ -21,6 +23,7 @@ const complaintsAmount = 5;
   <div>
     <Header {avatarURL} {username} {role} />
     <main>
+      <Dialog id="viewComplaint"><ComplaintViewDialog /></Dialog>
       <ComplaintHeader {complaintsAmount} />
       <ComplaintTable />
     </main>
