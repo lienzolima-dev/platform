@@ -2,13 +2,15 @@
 import Navbar from "../components/landing/Navbar.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Footer from "../components/landing/Footer.astro";
-import ComplaintsBook from "../components/landing/ComplaintsBook.astro";
+import ComplaintsBook from "../components/landing/complaintsBook/ComplaintsBook.astro";
+import SuccessfulComplaintPopup from "../components/landing/complaintsBook/SuccessfulComplaintPopup.astro";
 ---
 
 <BaseLayout title="Lienzo Lima">
   <Navbar />
   <main class="wrapper">
     <ComplaintsBook />
+    <SuccessfulComplaintPopup />
   </main>
   <Footer />
 </BaseLayout>

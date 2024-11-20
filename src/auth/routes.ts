@@ -12,6 +12,8 @@ const publicRoutePatterns = [
   /^\/home(\/.*)?$/, // Matches "/home" and any subroutes under it
   /^\/imgs(\/.*)?$/, // Matches "/imgs" and any subroutes under it
   /^\/_image(\/.*)?$/, // Matches "/_image" and any subroutes under it
+  /^\/libro-de-reclamos$/, // Matches "/libro-de-reclamos"
+  /^\/_actions\/db.complaints.addComplaint$/, // Matches "/_actions/db.complaints.addComplaint"
 ];
 
 /**
