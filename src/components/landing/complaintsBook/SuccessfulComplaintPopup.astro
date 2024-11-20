@@ -1,0 +1,63 @@
+---
+import Dialog from "../../../components/global/dialog/Dialog.astro";
+---
+
+<successful-complaint-popup>
+  <Dialog id="successful-complaint-popup">
+    <div>
+      <h2>El reclamo ha sido registrado</h2>
+      <p>
+        El reclamo ha sido registrado con éxito. Se ha enviado un correo de
+        confirmación.
+      </p>
+      <button class="accept-button">Aceptar</button>
+    </div>
+  </Dialog>
+</successful-complaint-popup>
+
+<script>
+  import { closeDialog } from "../../global/dialog/utils";
+
+  class SuccessfulComplaintPopup extends HTMLElement {
+    connectedCallback() {
+      this.querySelector(".accept-button")?.addEventListener(
+        "click",
+        (e: Event) => {
+          e.preventDefault();
+          closeDialog("successful-complaint-popup");
+        }
+      );
+    }
+  }
+
+  customElements.define("successful-complaint-popup", SuccessfulComplaintPopup);
+</script>
+
+<style>
+  div {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    gap: 1rem;
+    width: 80%;
+  }
+
+  h2 {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  p {
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  button {
+    display: block;
+    background-color: var(--primary-400);
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+</style>

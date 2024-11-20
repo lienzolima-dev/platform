@@ -166,6 +166,7 @@ export const add = defineAction({
 
       // Add relation with services and extras
       for (const service of uniqueServices) {
+        if (service === "") continue;
         await db.insert(bookingsServicesDetails).values({
           idBooking: newId,
           idService: service,
@@ -174,6 +175,7 @@ export const add = defineAction({
 
       if (extras) {
         for (const extra of uniqueExtras) {
+          if (extra === "") continue;
           await db.insert(bookingsExtrasDetails).values({
             idBooking: newId,
             idExtra: extra,

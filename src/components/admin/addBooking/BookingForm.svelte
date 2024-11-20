@@ -47,6 +47,13 @@
 
   let errorMessage: string = $state("");
 
+  function validateTimeInputs() {
+    // In some browses the input string could be 12:00:00 instead of 12:00
+    // So we need to remove the seconds
+    startTime = startTime.slice(0, 5);
+    endTime = endTime.slice(0, 5);
+  }
+
   async function handleSubmit(e: Event) {
     e.preventDefault();
     if (!totalPrice) {
@@ -62,6 +69,8 @@
       errorMessage = "Seleccione un estado de pago";
       return;
     }
+
+    validateTimeInputs();
 
     const dataToSend = {
       name,
