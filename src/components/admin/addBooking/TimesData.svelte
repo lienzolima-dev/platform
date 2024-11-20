@@ -113,6 +113,7 @@
         type="time"
         id="start-time"
         name="startTime"
+        step="60"
         required
       />
     </div>
@@ -123,6 +124,7 @@
         type="time"
         id="end-time"
         name="endTime"
+        step="60"
         required
       />
     </div>

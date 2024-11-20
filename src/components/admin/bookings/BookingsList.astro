@@ -32,12 +32,16 @@ const { bookings } = Astro.props;
             <span>{service.name}</span>
           ))}
         </div>
-        <span class="separator">Extras</span>
-        <div class="services-list">
-          {booking.extras.map((extra) => (
-            <span>{extra.name}</span>
-          ))}
-        </div>
+        {booking.extras.length > 0 && (
+          <>
+            <span class="separator">Extras</span>
+            <div class="services-list">
+              {booking.extras.map((extra) => (
+                <span>{extra.name}</span>
+              ))}
+            </div>
+          </>
+        )}
         <span class="separator">Adelanto</span>
         <span>S/ {booking.advanceAmount}</span>
         <span class="separator">Total</span>
