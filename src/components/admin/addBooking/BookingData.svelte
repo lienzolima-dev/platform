@@ -64,7 +64,6 @@
         options={extrasOptions}
         noOptionText="Selecciona un adicional"
         bind:values={selectedExtras}
-        required
       />
     </div>
 
