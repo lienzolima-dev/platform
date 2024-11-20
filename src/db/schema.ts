@@ -12,3 +12,4 @@ export {
   bookingsExtrasDetails,
   bookingsExtrasDetailsRelations,
 } from "./schemas/bookingsExtrasDetails";
+export { complaints } from "./schemas/complaints";
