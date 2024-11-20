@@ -103,8 +103,7 @@ export const addComplaint = defineAction({
         subject: "Lienzo Lima - Confirmación de registro de reclamo",
         html: `<p>Estimad@ ${input.fullName},</p>
                <p>Gracias por comunicarte con Lienzo Lima.</p>
-               <p>Lamentamos el inconveniente.</p>
-               <p>Valoramos tus comentarios, ya que nos ayudan a mejorar continuamente nuestros servicios.</p>`,
+               <p>Lamentamos el inconveniente. Valoramos tus comentarios, ya que nos ayudan a mejorar continuamente nuestros servicios.</p>`,
       });
     } catch (e) {
       console.error("[ERROR]: ", e);

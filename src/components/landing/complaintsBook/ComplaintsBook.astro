@@ -104,7 +104,7 @@ if (isInputError(result?.error)) {
       <textarea id="adicionalInfo" name="adicionalInfo" rows="4"></textarea>
       <label for="adicionalInfo">Información Adicional</label>
     </div>
-    <div id="error-content"></div>
+    <p id="error-content"></p>
     <button type="submit" id="complaint-submit-btn" class="btn">Enviar</button>
   </form>
 </section>
@@ -146,23 +146,33 @@ if (isInputError(result?.error)) {
     if (!(errorContent instanceof HTMLElement))
       throw new Error("Error content not found");
 
+    document
+      .querySelectorAll(
+        ".form-group input, .form-group textarea, .form-group select"
+      )
+      .forEach((input) => {
+        input.addEventListener("input", () => {
+          const errorContent = document.getElementById("error-content");
+          if (errorContent) {
+            errorContent.innerText = "";
+          }
+        });
+      });
+
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
+
+      errorContent.innerText = "";
+
       const formData = new FormData(form);
 
       submitButton.disabled = true;
       const { error } = await actions.db.complaints.addComplaint(formData);
       submitButton.disabled = false;
 
-      errorContent.innerHTML = "";
-
       if (error) {
         if (isInputError(error)) {
-          const ul = document.createElement("ul");
-          const li = document.createElement("li");
-          li.innerText = error.issues[0].message;
-          ul.appendChild(li);
-          errorContent.appendChild(ul);
+          errorContent.innerText = error.issues[0].message;
           return;
         }
         errorContent.innerText = error.message;
