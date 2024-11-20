@@ -1,0 +1,42 @@
+---
+import ViewIcon from "../../svgs/admin/IndexContent/ViewIcon.astro";
+---
+
+<complaint-view-button>
+  <button>
+    <ViewIcon color={"white"} />
+    <span>Ver detalles</span>
+  </button>
+</complaint-view-button>
+
+<script>
+  import { openDialog } from "../../global/dialog/utils";
+  class ComplaintViewButton extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector("button");
+
+      if (!button) throw "Button not found";
+      button.addEventListener("click", () => {
+        openDialog("viewComplaint");
+      });
+    }
+  }
+  customElements.define("complaint-view-button", ComplaintViewButton);
+</script>
+
+<style>
+  button {
+    display: flex;
+    align-items: center;
+    background-color: #47a04c;
+    gap: 0.25rem;
+    border-radius: 4px;
+    padding: 4px 8px;
+    color: white;
+  }
+
+  button :global(svg) {
+    width: 1rem;
+    height: 1rem;
+  }
+</style>

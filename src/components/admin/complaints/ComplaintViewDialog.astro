@@ -1,0 +1,80 @@
+<section class="container">
+  <div class="form-container">
+    <h2>Detalles de reclamo</h2>
+    <div id="view-complaint-form">
+      <input type="hidden" id="complaint-id" name="complaintId" />
+
+      <label for="service"> Servicio: </label>
+      <input type="text" id="service" name="service" placeholder="" disabled />
+
+      <label for="service-description"> Descripción del servicio: </label>
+      <textarea id="service-description" disabled></textarea>
+
+      <label for="complaint-option"> Detalle de reclamación: </label>
+      <input
+        type="text"
+        id="complaint-option"
+        name="complaint-option"
+        placeholder=""
+        disabled
+      />
+
+      <label for="complaint-description"> Descripción del reclamo: </label>
+      <textarea id="complaint-description" disabled></textarea>
+
+      <label for="adicional-info"> Información adicional: </label>
+      <textarea id="adicional-info" disabled></textarea>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { closeDialog } from "../../global/dialog/utils";
+  try {
+    const buttonCancel = document.querySelector("button.cancel");
+    if (!buttonCancel) throw "Button not found";
+    buttonCancel.addEventListener("click", () => closeDialog("viewComplaint"));
+  } catch (e) {
+    console.error("Error:", e);
+  }
+</script>
+
+<style>
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+
+  input {
+    border: 1px solid #ccc;
+    outline: none;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  textarea {
+    border: 1px solid #ccc;
+    outline: none;
+    padding: 0.5rem;
+    height: 70px;
+    margin-bottom: 0.5rem;
+    resize: none;
+  }
+
+  #view-complaint-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 0.5rem;
+  }
+</style>
