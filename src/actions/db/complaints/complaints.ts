@@ -6,6 +6,9 @@ import { serviceOptions } from "../../../db/schemas/complaints";
 import { complaintOptions } from "../../../db/schemas/complaints";
 import { DateTime } from "luxon";
 import { resend } from "../../../resend/client";
+import { createRefillingTokenBucket } from "../../../utils/rate-limit";
+
+const ipBucket = createRefillingTokenBucket(3, 5 * 60);
 
 export const addComplaint = defineAction({
   accept: "form",
@@ -49,7 +52,21 @@ export const addComplaint = defineAction({
       .min(3, "La descripción de reclamación debe tener al menos 3 caracteres"),
     adicionalInfo: z.string().nullable(),
   }),
-  handler: async (input, _ctx) => {
+  handler: async (input, ctx) => {
+    const clientIP = ctx.request.headers.get("X-Forwarded-For");
+
+    if (clientIP) {
+      if (ipBucket.check(clientIP, 1)) {
+        // If there are enough tokens, consume one and proceed
+        ipBucket.consume(clientIP, 1);
+      } else {
+        throw new ActionError({
+          code: "TOO_MANY_REQUESTS",
+          message: "Demasiadas solicitudes, intente nuevamente más tarde",
+        });
+      }
+    }
+
     const {
       dni,
       fullName,
@@ -62,8 +79,6 @@ export const addComplaint = defineAction({
       complaintDescription,
       adicionalInfo,
     } = input;
-
-    console.log("Datos recibidos:", input);
 
     const complaintToUpdate: typeof complaints.$inferInsert = {
       dni: dni,

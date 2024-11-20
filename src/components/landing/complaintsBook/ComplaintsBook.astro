@@ -1,5 +1,6 @@
 ---
 import { serviceOptions } from "../../../db/schemas/complaints";
+// biome-ignore lint/style/useImportType: Bug
 import { complaintOptions } from "../../../db/schemas/complaints";
 import { actions, isInputError } from "astro:actions";
 
@@ -31,7 +32,7 @@ if (isInputError(result?.error)) {
 
 <section class="container">
   <h2 class="title">Libro de Reclamos</h2>
-  <form id="complaint-form" method="POST">
+  <form id="complaint-form">
     <div class="form-grid">
       <div class="form-group">
         <input type="date" id="date" name="date" required />
