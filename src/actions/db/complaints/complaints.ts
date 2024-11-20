@@ -7,6 +7,7 @@ import { complaintOptions } from "../../../db/schemas/complaints";
 import { DateTime } from "luxon";
 import { resend } from "../../../resend/client";
 import { createRefillingTokenBucket } from "../../../utils/rate-limit";
+import { ulid } from "ulid";
 
 const ipBucket = createRefillingTokenBucket(3, 5 * 60);
 
@@ -80,7 +81,10 @@ export const addComplaint = defineAction({
       adicionalInfo,
     } = input;
 
+    const id = ulid();
+
     const complaintToUpdate: typeof complaints.$inferInsert = {
+      id,
       dni: dni,
       fullName: fullName,
       email: email,
@@ -103,7 +107,8 @@ export const addComplaint = defineAction({
         subject: "Lienzo Lima - Confirmación de registro de reclamo",
         html: `<p>Estimad@ ${input.fullName},</p>
                <p>Gracias por comunicarte con Lienzo Lima.</p>
-               <p>Lamentamos el inconveniente. Valoramos tus comentarios, ya que nos ayudan a mejorar continuamente nuestros servicios.</p>`,
+               <p>Lamentamos el inconveniente. Valoramos tus comentarios, ya que nos ayudan a mejorar continuamente nuestros servicios.</p>
+               <p>Hemos recibido tu reclamo con el número de seguimiento ${id} y ya se encuentra en proceso de revisión por nuestro equipo</p> `,
       });
     } catch (e) {
       console.error("[ERROR]: ", e);
