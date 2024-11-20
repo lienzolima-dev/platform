@@ -92,7 +92,7 @@ export const addComplaint = defineAction({
                <p>Valoramos tus comentarios, ya que nos ayudan a mejorar continuamente nuestros servicios.</p>`,
       });
     } catch (e) {
-      console.error(e);
+      console.error("[ERROR]: ", e);
       if (e instanceof ActionError) throw e;
 
       throw new ActionError({

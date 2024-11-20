@@ -31,7 +31,7 @@ if (isInputError(result?.error)) {
 
 <section class="container">
   <h2 class="title">Libro de Reclamos</h2>
-  <form action={actions.db.complaints.addComplaint} method="POST">
+  <form id="complaint-form" method="POST">
     <div class="form-grid">
       <div class="form-group">
         <input type="date" id="date" name="date" required />
@@ -103,10 +103,82 @@ if (isInputError(result?.error)) {
       <textarea id="adicionalInfo" name="adicionalInfo" rows="4"></textarea>
       <label for="adicionalInfo">Información Adicional</label>
     </div>
-    {errorMessage && <p class="error">{errorMessage}</p>}
+    <div id="error-content"></div>
     <button type="submit" id="complaint-submit-btn" class="btn">Enviar</button>
   </form>
 </section>
+
+<script>
+  import { actions, isInputError } from "astro:actions";
+  import { openDialog, type DialogEvent } from "../../global/dialog/utils";
+
+  document.querySelectorAll(".form-group input").forEach((input) => {
+    input.addEventListener("input", () => {
+      const inputElement = input as HTMLInputElement;
+      if (inputElement.value) {
+        input.classList.add("has-content");
+      } else {
+        input.classList.remove("has-content");
+      }
+    });
+  });
+
+  document.querySelectorAll(".form-group textarea").forEach((textarea) => {
+    textarea.addEventListener("input", () => {
+      const textareaElement = textarea as HTMLInputElement;
+      if (textareaElement.value) {
+        textarea.classList.add("has-content");
+      } else {
+        textarea.classList.remove("has-content");
+      }
+    });
+  });
+
+  try {
+    const form = document.getElementById("complaint-form");
+    const errorContent = document.getElementById("error-content");
+    const submitButton = document.getElementById("complaint-submit-btn");
+
+    if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
+    if (!(submitButton instanceof HTMLButtonElement))
+      throw new Error("Submit button not found");
+    if (!(errorContent instanceof HTMLElement))
+      throw new Error("Error content not found");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(form);
+
+      submitButton.disabled = true;
+      const { error } = await actions.db.complaints.addComplaint(formData);
+      submitButton.disabled = false;
+
+      errorContent.innerHTML = "";
+
+      if (error) {
+        if (isInputError(error)) {
+          const ul = document.createElement("ul");
+          const li = document.createElement("li");
+          li.innerText = error.issues[0].message;
+          ul.appendChild(li);
+          errorContent.appendChild(ul);
+          return;
+        }
+        errorContent.innerText = error.message;
+        return;
+      }
+      openDialog("successful-complaint-popup");
+    });
+
+    document.addEventListener("dialog-close", (event) => {
+      if ((event as DialogEvent).detail.id === "successful-complaint-popup") {
+        location.reload();
+      }
+    });
+  } catch (error) {
+    console.error("[ERROR]: ", error);
+  }
+</script>
 
 <style>
   .container {
@@ -145,9 +217,22 @@ if (isInputError(result?.error)) {
     margin-right: 0;
   }
 
-  .form-group label {
+  .form-group input ~ label,
+  .form-group .s-label {
     position: absolute;
     top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    padding: 0 10px;
+    pointer-events: none;
+    transition: 0.3s;
+    background: var(--background);
+  }
+
+  .form-group textarea ~ label {
+    position: absolute;
+    top: 20%;
     left: 5px;
     transform: translateY(-50%);
     font-size: 1rem;
@@ -220,7 +305,7 @@ if (isInputError(result?.error)) {
   }
 
   .radio-group input[type="radio"] {
-    appearance: none; /* Elimina el estilo por defecto */
+    appearance: none;
     width: 16px;
     height: 16px;
     border: 2px solid var(--primary-400);
@@ -235,7 +320,7 @@ if (isInputError(result?.error)) {
     border-color: var(--primary-500);
   }
 
-  .error {
+  #error-content {
     color: red;
   }
 
@@ -269,36 +354,15 @@ if (isInputError(result?.error)) {
   }
 
   @media (max-width: 430px) {
-    .form-group label {
+    .form-group input ~ label,
+    .form-group .s-label,
+    .form-group textarea ~ label {
       top: 0;
       font-size: 0.8rem;
     }
 
     .form-group .s-label {
-      font-size: 0.65rem;
+      font-size: 0.7rem;
     }
   }
 </style>
-
-<script>
-  document.querySelectorAll(".form-group input").forEach((input) => {
-    input.addEventListener("input", () => {
-      const inputElement = input as HTMLInputElement;
-      if (inputElement.value) {
-        input.classList.add("has-content");
-      } else {
-        input.classList.remove("has-content");
-      }
-    });
-  });
-  document.querySelectorAll(".form-group textarea").forEach((textarea) => {
-    textarea.addEventListener("input", () => {
-      const textareaElement = textarea as HTMLInputElement;
-      if (textareaElement.value) {
-        textarea.classList.add("has-content");
-      } else {
-        textarea.classList.remove("has-content");
-      }
-    });
-  });
-</script>
