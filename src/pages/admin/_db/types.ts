@@ -39,3 +39,17 @@ export type UsersTableData = {
   role: (typeof userRoles)[number];
   phone: string | null;
 };
+
+export type ComplaintsTableData = {
+  id: string,
+  dni: string,
+  fullName: string,
+  email: string,
+  phone: string,
+  date: string,
+  service: string,
+  serviceDescription: string,
+  complaintOption: string,
+  complaintDescription: string,
+  adicionalInfo: string | null,
+};

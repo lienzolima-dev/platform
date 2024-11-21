@@ -3,6 +3,13 @@ import TableHead from "../../global/table/TableHead.astro";
 import TableRow from "../../global/table/TableRow.astro";
 import Pagination from "../../global/Pagination.astro";
 import ComplaintViewButton from "./ComplaintViewButton.astro";
+import type { ComplaintsTableData } from "../../../pages/admin/_db/types";
+
+type Props = {
+  complaints: ComplaintsTableData[];
+};
+
+const { complaints } = Astro.props;
 
 const columns = [
   "DNI",
@@ -12,22 +19,16 @@ const columns = [
   "Fecha",
   "Acciones",
 ]; // Mock data
-const rowData = [
-  "74633333",
-  "John Doe",
-  "doe@doe.com",
-  "982345785",
-  "2024-11-13",
-  "Sistemas",
-  "softgel",
-  "complaint",
-  "No duró el servicio",
-  "",
-]; // Mock data
 
-const trimmedRowData = rowData.slice(0, 5);
+const rowData = complaints.reduce(
+  (acc: Record<string, (string | null)[]>, complaint) => {
+    const { id, dni, fullName, email, phone, date } = complaint;
+    acc[id] = [dni, fullName, email, phone, date];
+    return acc;
+  },
+  {}
+);
 
-const tableRows = Array.from({ length: 6 }, () => trimmedRowData);
 ---
 
 <div class="container">
@@ -35,10 +36,10 @@ const tableRows = Array.from({ length: 6 }, () => trimmedRowData);
     <TableHead columnsNames={columns} />
     <tbody>
       {
-        tableRows.map((rowData) => (
-          <TableRow rowData={rowData}>
+        complaints.map((complaint) => (
+          <TableRow rowData={rowData[complaint.id]}>
             <div class="action-button">
-              <ComplaintViewButton />
+              <ComplaintViewButton {complaint}/>
             </div>
           </TableRow>
         ))
