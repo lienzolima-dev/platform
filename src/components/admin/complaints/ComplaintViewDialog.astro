@@ -1,43 +1,33 @@
 <section class="container">
   <div class="form-container">
     <h2>Detalles de reclamo</h2>
-    <div id="view-complaint-form">
+    <form id="view-complaint-form">
       <input type="hidden" id="complaint-id" name="complaintId" />
 
       <label for="service"> Servicio: </label>
       <input type="text" id="service" name="service" placeholder="" disabled />
 
       <label for="service-description"> Descripción del servicio: </label>
-      <textarea id="service-description" disabled></textarea>
+      <textarea id="service-description" name="serviceDescription" disabled
+      ></textarea>
 
       <label for="complaint-option"> Detalle de reclamación: </label>
       <input
         type="text"
         id="complaint-option"
-        name="complaint-option"
-        placeholder=""
+        name="complaintOption"
+        value=""
         disabled
       />
 
       <label for="complaint-description"> Descripción del reclamo: </label>
-      <textarea id="complaint-description" disabled></textarea>
+      <textarea id="complaintDescription" disabled></textarea>
 
       <label for="adicional-info"> Información adicional: </label>
-      <textarea id="adicional-info" disabled></textarea>
-    </div>
+      <textarea id="adicionalInfo" disabled></textarea>
+    </form>
   </div>
 </section>
-
-<script>
-  import { closeDialog } from "../../global/dialog/utils";
-  try {
-    const buttonCancel = document.querySelector("button.cancel");
-    if (!buttonCancel) throw "Button not found";
-    buttonCancel.addEventListener("click", () => closeDialog("viewComplaint"));
-  } catch (e) {
-    console.error("Error:", e);
-  }
-</script>
 
 <style>
   h2 {

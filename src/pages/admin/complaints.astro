@@ -6,6 +6,7 @@ import ComplaintHeader from "../../components/admin/complaints/ComplaintHeader.a
 import ComplaintTable from "../../components/admin/complaints/ComplaintTable.astro";
 import Dialog from "../../components/global/dialog/Dialog.astro";
 import ComplaintViewDialog from "../../components/admin/complaints/ComplaintViewDialog.astro";
+import { getComplaintsTableData } from "./_db/complaints";
 
 const user = Astro.locals.user;
 
@@ -15,7 +16,7 @@ if (!user || user.role !== "admin") return Astro.redirect("/home", 302);
 const { avatarURL, username, role } = user;
 
 //TODO: Get complaints amount from the database
-const complaintsAmount = 6;
+const complaints = await getComplaintsTableData();
 ---
 
 <AdminLayout title="Admin">
@@ -24,8 +25,8 @@ const complaintsAmount = 6;
     <Header {avatarURL} {username} {role} />
     <main>
       <Dialog id="viewComplaint"><ComplaintViewDialog /></Dialog>
-      <ComplaintHeader {complaintsAmount} />
-      <ComplaintTable />
+      <ComplaintHeader complaintsAmount={complaints.length} />
+      <ComplaintTable {complaints} />
     </main>
   </div>
 </AdminLayout>

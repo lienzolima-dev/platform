@@ -1,8 +1,15 @@
 ---
 import ViewIcon from "../../svgs/admin/IndexContent/ViewIcon.astro";
+import type { ComplaintsTableData } from "../../../pages/admin/_db/types";
+
+type Props = {
+  complaint: ComplaintsTableData;
+};
+
+const { complaint } = Astro.props;
 ---
 
-<complaint-view-button>
+<complaint-view-button data-complaint={JSON.stringify(complaint)}>
   <button>
     <ViewIcon color={"white"} />
     <span>Ver detalles</span>
@@ -10,13 +17,35 @@ import ViewIcon from "../../svgs/admin/IndexContent/ViewIcon.astro";
 </complaint-view-button>
 
 <script>
+  import type { ComplaintsTableData } from "../../../pages/admin/_db/types";
   import { openDialog } from "../../global/dialog/utils";
+
+  const complaintOptionsMap = {
+    claim: "Reclamo",
+    complaint: "Queja",
+  };
+
   class ComplaintViewButton extends HTMLElement {
     connectedCallback() {
       const button = this.querySelector("button");
+      const form = document.getElementById("view-complaint-form");
 
       if (!button) throw "Button not found";
-      button.addEventListener("click", () => {
+      if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
+
+      const complaint: ComplaintsTableData = JSON.parse(
+        this.dataset.complaint || "{}"
+      );
+
+      button.addEventListener("click", async () => {
+        form.service.value = complaint.service;
+        form.serviceDescription.value = complaint.serviceDescription;
+        form.complaintOption.value =
+          complaintOptionsMap[complaint.complaintOption] ||
+          complaint.complaintOption;
+        form.complaintDescription.value = complaint.complaintDescription;
+        form.adicionalInfo.value = complaint.adicionalInfo;
+
         openDialog("viewComplaint");
       });
     }
