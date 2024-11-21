@@ -1,4 +1,8 @@
 import type { extras, services } from "../../../db/schema";
+import type {
+  complaintOptions,
+  serviceOptions,
+} from "../../../db/schemas/complaints";
 import type { userRoles } from "../../../db/schemas/users";
 
 export type Task = {
@@ -47,9 +51,9 @@ export type ComplaintsTableData = {
   email: string;
   phone: string;
   date: string;
-  service: string;
+  service: (typeof serviceOptions)[number];
   serviceDescription: string;
-  complaintOption: string;
+  complaintOption: (typeof complaintOptions)[number];
   complaintDescription: string;
   adicionalInfo: string | null;
 };
