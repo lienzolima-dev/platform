@@ -73,6 +73,7 @@ const navList = [
           <button class="user-icon">
             <div class="avatar-circle">
               <img src={avatarURL} alt="User Avatar" class="avatar-img" />
+              <p class="avatar-username">{user?.username}</p>
             </div>
           </button>
           <div class="dropdown-content">
@@ -205,14 +206,16 @@ const navList = [
     background: none;
     border: none;
     cursor: pointer;
+    padding: 0;
   }
 
   .avatar-circle {
-    width: 40px;
-    height: 40px;
+    width: auto;
+    padding: 8px 8px;
     background-color: var(--secondary-400);
-    border-radius: 50%;
+    border-radius: 20px;
     display: flex;
+    gap: 0.5rem;
     align-items: center;
     justify-content: center;
   }
