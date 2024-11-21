@@ -28,7 +28,6 @@ const rowData = complaints.reduce(
   },
   {}
 );
-
 ---
 
 <div class="container">
@@ -39,7 +38,7 @@ const rowData = complaints.reduce(
         complaints.map((complaint) => (
           <TableRow rowData={rowData[complaint.id]}>
             <div class="action-button">
-              <ComplaintViewButton {complaint}/>
+              <ComplaintViewButton {complaint} />
             </div>
           </TableRow>
         ))

@@ -41,7 +41,9 @@ const { complaint } = Astro.props;
         form.service.value = complaint.service;
         form.serviceDescription.value = complaint.serviceDescription;
         form.complaintOption.value =
-        complaintOptionsMap[complaint.complaintOption as keyof typeof complaintOptionsMap] || complaint.complaintOption;
+          complaintOptionsMap[
+            complaint.complaintOption as keyof typeof complaintOptionsMap
+          ] || complaint.complaintOption;
         form.complaintDescription.value = complaint.complaintDescription;
         form.adicionalInfo.value = complaint.adicionalInfo;
 

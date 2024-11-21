@@ -41,15 +41,15 @@ export type UsersTableData = {
 };
 
 export type ComplaintsTableData = {
-  id: string,
-  dni: string,
-  fullName: string,
-  email: string,
-  phone: string,
-  date: string,
-  service: string,
-  serviceDescription: string,
-  complaintOption: string,
-  complaintDescription: string,
-  adicionalInfo: string | null,
+  id: string;
+  dni: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  date: string;
+  service: string;
+  serviceDescription: string;
+  complaintOption: string;
+  complaintDescription: string;
+  adicionalInfo: string | null;
 };
