@@ -3,7 +3,7 @@ import TableHead from "../../../global/table/TableHead.astro";
 import TableRow from "../../../global/table/TableRow.astro";
 import CollaboratorEditButton from "./CollaboratorEditButton.astro";
 import CollaboratorDeleteButton from "./CollaboratorDeleteButton.astro";
-import Pagination from "../../../global/Pagination.astro";
+// import Pagination from "../../../global/Pagination.astro";
 import type { CollaboratorsTableData } from "../../../../pages/admin/_db/types";
 import type { TableLabel } from "../../../global/table/types";
 
@@ -51,7 +51,7 @@ const noResults = collaborators.length === 0;
       }
     </tbody>
   </table>
-  <Pagination currentPage={1} totalPages={2} />
+  <!-- <Pagination currentPage={1} totalPages={2} /> -->
 </div>
 
 <style>

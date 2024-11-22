@@ -10,8 +10,9 @@ import { getComplaintsTableData } from "./_db/complaints";
 
 const user = Astro.locals.user;
 
-// If the user is not an admin, redirect to the home page
-if (!user || user.role !== "admin") return Astro.redirect("/home", 302);
+// If the user is not an admin or a manicurist, redirect to the home page
+if (!user || (user.role !== "admin" && user.role !== "manicurist"))
+  return Astro.redirect("/home", 302);
 
 const { avatarURL, username, role } = user;
 

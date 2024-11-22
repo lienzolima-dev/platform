@@ -5,7 +5,8 @@ import LogoWhite from "../svgs/LogoWhite.astro";
 // TODO: Get this from top-level Astro component
 const user = Astro.locals.user;
 const isLoggedIn = user !== undefined;
-const isAdmin = user?.role === "admin";
+const isAdminOrManicurist =
+  user?.role === "admin" || user?.role === "manicurist";
 const avatarURL = user?.avatarURL || "/imgs/default-pfp.png";
 
 function isActive(link: string) {
@@ -77,7 +78,7 @@ const navList = [
             </div>
           </button>
           <div class="dropdown-content">
-            {isAdmin && <a href="/admin">Panel de administrador</a>}
+            {isAdminOrManicurist && <a href="/admin">Panel de administrador</a>}
             <a href="/logout">Cerrar sesión</a>
           </div>
         </div>
