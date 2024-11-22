@@ -1,7 +1,7 @@
 ---
 import TableHead from "../../global/table/TableHead.astro";
 import TableRow from "../../global/table/TableRow.astro";
-import Pagination from "../../global/Pagination.astro";
+// import Pagination from "../../global/Pagination.astro";
 import ComplaintViewButton from "./ComplaintViewButton.astro";
 import type { ComplaintsTableData } from "../../../pages/admin/_db/types";
 
@@ -45,7 +45,7 @@ const rowData = complaints.reduce(
       }
     </tbody>
   </table>
-  <Pagination currentPage={1} totalPages={2} />
+  <!-- <Pagination currentPage={1} totalPages={2} /> -->
 </div>
 
 <style>
