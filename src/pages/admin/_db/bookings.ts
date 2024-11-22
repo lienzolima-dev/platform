@@ -60,10 +60,16 @@ export async function getAllBookings(): Promise<Booking[]> {
 
 export async function getUpcomingBookings(): Promise<Booking[]> {
   const now = new Date();
+  const todayStart = new Date(now.setHours(0, 0, 0, 0));
+  const todayEnd = new Date(now.setHours(23, 59, 59, 999));
 
   const bookings = await db.query.bookings.findMany({
     orderBy: (bookings, { desc }) => [desc(bookings.startTime)],
-    where: (bookings, { gte }) => gte(bookings.startTime, now.toISOString()),
+    where: (bookings, { gte, lte, and }) =>
+      and(
+        gte(bookings.startTime, todayStart.toISOString()),
+        lte(bookings.startTime, todayEnd.toISOString()),
+      ),
     with: {
       bookingsExtrasDetails: {
         with: {
