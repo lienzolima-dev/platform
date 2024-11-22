@@ -48,5 +48,5 @@ export async function getTasks(): Promise<Task[]> {
     .where(eq(tasks.status, "pending"))
     .orderBy(desc(tasks.createdAt));
 
-  return tasksList.map(formatTasksData).slice(0, 5);
+  return tasksList.map(formatTasksData);
 }
