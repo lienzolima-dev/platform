@@ -13,10 +13,12 @@ import { seedBookingsServicesDetails } from "./utils/seedBookingsServicesDetails
 import { bookingsServicesDetailsToSeed } from "./data";
 import { seedBookingsExtrasDetails } from "./utils/seedBookingsExtrasDetails";
 import { bookingsExtrasDetailsToSeed } from "./data";
+import { usersToSeed } from "./data";
 
 async function seed() {
   await seedUser(adminsToSeed);
   await seedUser(manicuristsToSeed);
+  await seedUser(usersToSeed);
   await seedTask(tasksToSeed);
   await seedServices(servicesToSeed);
   await seedExtras(extrasToSeed);
