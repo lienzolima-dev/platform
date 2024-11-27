@@ -1,43 +1,12 @@
 ---
-import Dialog from "../components/global/dialog/Dialog.astro";
-import DialogOpenButton from "../components/global/dialog/DialogOpenButton.astro";
-import { ipBucket } from "../utils/rate-limit";
-import { ulid } from "ulid";
+import { getPaginatedUsersTableData } from "./admin/_db/users";
 
-let tooManyRequests = false;
-
-// Example check and consume usage:
-const clientIP = "192.168.1.1";
-if (ipBucket.check(clientIP, 1)) {
-  ipBucket.consume(clientIP, 1);
-} else {
-  console.log(`[LOG]: Too many requests from ${clientIP}`);
-  tooManyRequests = true;
-}
-
-const newDate = new Date();
-console.log(newDate);
-
-console.log(ulid());
-
-/*const newDate = new Date("2024-11-08T04:59:06.944Z");
-console.log(newDate.getHours());
-console.log(newDate.getMinutes());
-const aDate = new Date();
-
-aDate.setHours(23, 59);
-console.log("aDate: ", aDate.getHours());
-console.log("aDate: ", aDate.getMinutes());
-console.log("aDate: ", aDate.toISOString());*/
+const usersDataPaginated = await getPaginatedUsersTableData({
+  page: 1,
+  pageSize: 10,
+  nameOrEmail: "gaby",
+});
 ---
 
-<h1>HOLA</h1>
-<Dialog id="dialog-1">
-  <h2>Dialog 1</h2>
-  <p>This is a dialog component</p>
-</Dialog>
-
-<DialogOpenButton id="dialog-1" />
-
-{JSON.stringify(newDate)}
-{tooManyRequests && <p>Too many requests</p>}
+<h1>Sample:</h1>
+<pre>{JSON.stringify(usersDataPaginated)}</pre>

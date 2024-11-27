@@ -1,6 +1,6 @@
 type GetPaginationButtons = (options: {
   totalPages: number;
-  defaultButtonsAmount: number;
+  buttonsAmount: number;
   currentPage: number;
 }) => number[];
 
@@ -17,12 +17,11 @@ type GetPaginationButtons = (options: {
  */
 export const getPaginationButtons: GetPaginationButtons = ({
   totalPages,
-  defaultButtonsAmount,
+  buttonsAmount,
   currentPage,
 }) => {
-  let max =
-    totalPages > defaultButtonsAmount ? defaultButtonsAmount : totalPages;
-  if (totalPages <= defaultButtonsAmount) max = totalPages;
+  let max = totalPages > buttonsAmount ? buttonsAmount : totalPages;
+  if (totalPages <= buttonsAmount) max = totalPages;
 
   const half = Math.floor(max / 2);
   let to = max;
