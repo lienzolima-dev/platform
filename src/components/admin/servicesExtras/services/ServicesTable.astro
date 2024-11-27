@@ -1,0 +1,28 @@
+---
+import TableHead from "../../../global/table/TableHead.astro";
+import TableRow from "../../../global/table/TableRow.astro";
+import ServicesEditButton from "./ServicesEditButton.astro";
+import ServicesDeleteButton from "./ServicesDeleteButton.astro";
+// import Pagination from "../../../global/Pagination.astro";
+//import type { CollaboratorsTableData } from "../../../../pages/admin/_db/types";
+import type { TableLabel } from "../../../global/table/types";
+
+/*type Props = {
+  collaborators: CollaboratorsTableData[];
+};
+
+const { collaborators } = Astro.props;*/
+
+const columns = ["Nombre", "Precio", "Descripción", "Horas", "Acciones"];
+/*
+const rowData = collaborators.reduce(
+  (acc: Record<string, (string | TableLabel | null)[]>, collaborator) => {
+    const { id, name, email, role, phone } = collaborator;
+    acc[id] = [name, email, role, phone];
+    return acc;
+  },
+  {}
+);
+
+const noResults = collaborators.length === 0;*/
+---

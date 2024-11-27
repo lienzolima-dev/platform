@@ -2,7 +2,7 @@
 import IconUser from "../svgs/IconUser.astro";
 import Logo from "../svgs/Logo.astro";
 import IconBooking from "../svgs/IconBooking.astro";
-// import IconServices from "../svgs/IconServices.astro";
+import IconServices from "../svgs/IconServices.astro";
 // import IconPromo from "../svgs/IconPromo.astro";
 // import IconData from "../svgs/IconData.astro";
 import IconComplaint from "../svgs/IconComplaint.astro";
@@ -33,17 +33,17 @@ const links = [
     href: "/admin/add-booking", //Change paths
     iconColor: "#e35a84",
   },
-  // {
-  //   label: "Servicios",
-  //   icon: IconServices,
-  //   href: "/admin/manage/users", //Change paths
-  //   iconColor: "#e35a84",
-  // },
   {
     label: "Reservas",
     icon: IconBooking,
     href: "/admin/bookings", //Change paths
     iconColor: "#ff6f2a",
+  },
+  {
+    label: "Servicios",
+    icon: IconServices,
+    href: "/admin/manage/users", //Change paths
+    iconColor: "#e35a84",
   },
   // {
   //   label: "Visualización de datos",
