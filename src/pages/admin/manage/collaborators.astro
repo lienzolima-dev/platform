@@ -26,14 +26,16 @@ const { searchParams } = new URL(Astro.request.url);
 const searchParam = (searchParams.get("search") || "").toLowerCase();
 const pageParam = Number.parseInt(searchParams.get("page") || "1");
 
-const { data: collaborators, count: totalCollaborators } =
-  await getPaginatedCollaborators({
-    page: pageParam,
-    pageSize: 10,
-    nameOrEmail: searchParam,
-  });
-
-const totalPages = Math.ceil(totalCollaborators / 10);
+const pageSize = 10;
+const {
+  data: collaborators,
+  count: totalCollaborators,
+  totalPages,
+} = await getPaginatedCollaborators({
+  page: pageParam,
+  pageSize,
+  nameOrEmail: searchParam,
+});
 ---
 
 <AdminLayout title="Admin">

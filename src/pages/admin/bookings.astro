@@ -3,7 +3,8 @@ import SideBar from "../../components/admin/SideBar.astro";
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import Header from "../../components/admin/Header.astro";
 import BookingsList from "../../components/admin/bookings/BookingsList.astro";
-import { getAllBookings } from "./_db/bookings";
+import { getPaginatedBookings } from "./_db/bookings";
+import Pagination from "../../components/global/Pagination.astro";
 
 const user = Astro.locals.user;
 
@@ -13,7 +14,14 @@ if (!user || (user.role !== "admin" && user.role !== "manicurist"))
 
 const { avatarURL, username, role } = user;
 
-const bookings = await getAllBookings();
+const { searchParams } = new URL(Astro.request.url);
+const pageParam = Number.parseInt(searchParams.get("page") || "1");
+
+const pageSize = 8;
+const { data: bookings, totalPages } = await getPaginatedBookings({
+  page: pageParam,
+  pageSize,
+});
 ---
 
 <AdminLayout title="Admin">
@@ -23,6 +31,7 @@ const bookings = await getAllBookings();
     <main>
       <h1>Reservas</h1>
       <BookingsList {bookings} />
+      <Pagination currentPage={pageParam} {totalPages} buttonsAmount={5} />
     </main>
   </div>
 </AdminLayout>

@@ -1,4 +1,4 @@
-import { and, count, eq, like, not, or } from "drizzle-orm";
+import { and, asc, count, desc, eq, like, not, or } from "drizzle-orm";
 import { users } from "../../../db/schema";
 import { db } from "../../../db/db";
 import type { CollaboratorsTableData } from "./types";
@@ -27,7 +27,7 @@ export async function getCollaboratorsTableData({
       phone: users.phone,
     })
     .from(users)
-    .orderBy(users.createdAt)
+    .orderBy(desc(users.username))
     .$dynamic();
 
   if (nameOrEmail) {
@@ -85,19 +85,22 @@ export async function getPaginatedCollaborators({
 }): Promise<{
   data: CollaboratorsTableData[];
   count: number;
+  totalPages: number;
 }> {
   const offset = (page - 1) * pageSize;
 
-  const collaborators = await getCollaboratorsTableData({
-    offset,
-    limit: pageSize,
-    nameOrEmail,
-  });
-
-  const collaboratorsCount = await getCollaboratorsCount({ nameOrEmail });
+  const [collaborators, collaboratorsCount] = await Promise.all([
+    getCollaboratorsTableData({
+      offset,
+      limit: pageSize,
+      nameOrEmail,
+    }),
+    getCollaboratorsCount({ nameOrEmail }),
+  ]);
 
   return {
     data: collaborators,
     count: collaboratorsCount,
+    totalPages: Math.ceil(collaboratorsCount / pageSize),
   };
 }

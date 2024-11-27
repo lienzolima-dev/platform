@@ -1,4 +1,4 @@
-import { and, count, desc, eq, like, not, or } from "drizzle-orm";
+import { and, asc, count, desc, eq, like, not, or } from "drizzle-orm";
 import { users } from "../../../db/schema";
 import { db } from "../../../db/db";
 import type { UsersTableData } from "./types";
@@ -89,24 +89,27 @@ export async function getPaginatedUsers({
 }): Promise<{
   data: UsersTableData[];
   count: number;
+  totalPages: number;
 }> {
   const offset = (page - 1) * pageSize;
 
-  const usersData = await getUsersTableData({
-    role: "user",
-    offset,
-    limit: pageSize,
-    nameOrEmail,
-  });
-
-  const usersCount = await getUsersCount({
-    role: "user",
-    nameOrEmail,
-  });
+  const [usersData, usersCount] = await Promise.all([
+    getUsersTableData({
+      role: "user",
+      offset,
+      limit: pageSize,
+      nameOrEmail,
+    }),
+    getUsersCount({
+      role: "user",
+      nameOrEmail,
+    }),
+  ]);
 
   return {
     data: usersData,
     count: usersCount,
+    totalPages: Math.ceil(usersCount / pageSize),
   };
 }
 
