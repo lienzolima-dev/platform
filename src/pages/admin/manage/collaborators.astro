@@ -7,8 +7,12 @@ import CollaboratorTable from "../../../components/admin/manage/colaborators/Col
 import CollaboratorEditForm from "../../../components/admin/manage/colaborators/CollaboratorEditForm.astro";
 import Dialog from "../../../components/global/dialog/Dialog.astro";
 import CollaboratorDeleteForm from "../../../components/admin/manage/colaborators/CollaboratorDeleteForm.astro";
-import { getCollaboratorsTableData } from "../_db/collaborators";
+import {
+  getCollaboratorsTableData,
+  getPaginatedCollaborators,
+} from "../_db/collaborators";
 import CollaboratorAddForm from "../../../components/admin/manage/colaborators/CollaboratorAddForm.astro";
+import Pagination from "../../../components/global/Pagination.astro";
 
 const user = Astro.locals.user;
 
@@ -18,17 +22,20 @@ if (!user || (user.role !== "admin" && user.role !== "manicurist"))
 
 const { avatarURL, username, role } = user;
 
-const collaborators = await getCollaboratorsTableData();
-
 const { searchParams } = new URL(Astro.request.url);
-const searchQuery = (searchParams.get("search") || "").toLowerCase();
-const filteredCollaborators = searchQuery
-  ? collaborators.filter(
-      (collaborator) =>
-        collaborator.name.toLowerCase().includes(searchQuery) ||
-        collaborator.email.toLowerCase().includes(searchQuery)
-    )
-  : collaborators;
+const searchParam = (searchParams.get("search") || "").toLowerCase();
+const pageParam = Number.parseInt(searchParams.get("page") || "1");
+
+const pageSize = 10;
+const {
+  data: collaborators,
+  count: totalCollaborators,
+  totalPages,
+} = await getPaginatedCollaborators({
+  page: pageParam,
+  pageSize,
+  nameOrEmail: searchParam,
+});
 ---
 
 <AdminLayout title="Admin">
@@ -39,8 +46,9 @@ const filteredCollaborators = searchQuery
       <Dialog id="editCollaborator"><CollaboratorEditForm /></Dialog>
       <Dialog id="deleteCollaborator"><CollaboratorDeleteForm /></Dialog>
       <Dialog id="addCollaborator"><CollaboratorAddForm /></Dialog>
-      <CollaboratorsHeader collabsAmount={filteredCollaborators.length} />
-      <CollaboratorTable collaborators={filteredCollaborators} />
+      <CollaboratorsHeader collabsAmount={totalCollaborators} />
+      <CollaboratorTable {collaborators} />
+      <Pagination currentPage={pageParam} {totalPages} buttonsAmount={5} />
     </main>
   </div>
 </AdminLayout>

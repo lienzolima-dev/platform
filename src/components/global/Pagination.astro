@@ -1,31 +1,42 @@
 ---
 import { getPaginationButtons } from "./pagination";
 import ThinArrowIcon from "../svgs/ThinArrow.astro";
+import { updateRoute } from "../../utils/filter";
 
 type Props = {
   currentPage: number;
   totalPages: number;
+  buttonsAmount?: number;
 };
 
-const { currentPage, totalPages } = Astro.props;
+const { currentPage, totalPages, buttonsAmount } = Astro.props;
 
-const defaultButtonsAmount = 2;
 const url = Astro.url;
 const previousPage = currentPage > 1 ? currentPage - 1 : 1;
 const nextPage = currentPage < totalPages ? currentPage + 1 : totalPages;
 
 const paginationButtons = getPaginationButtons({
   totalPages,
-  defaultButtonsAmount,
+  buttonsAmount: buttonsAmount || 5,
   currentPage,
 });
+
+const previousLink =
+  currentPage <= 1
+    ? "javascript:void(0)"
+    : updateRoute(url, { page: previousPage.toString() });
+
+const nextLink =
+  currentPage >= totalPages
+    ? "javascript:void(0)"
+    : updateRoute(url, { page: nextPage.toString() });
 ---
 
 <section>
   <a
     class="prev"
     class:list={[{ disabled: currentPage <= 1 }]}
-    href={url.pathname + "?page=" + previousPage}
+    href={previousLink}
   >
     <ThinArrowIcon direction="left" color="black" />
     <span>Previous</span>
@@ -38,7 +49,7 @@ const paginationButtons = getPaginationButtons({
             btn: true,
             selected: buttonNumber === currentPage,
           }}
-          href={url.pathname + "?page=" + buttonNumber}
+          href={updateRoute(url, { page: buttonNumber.toString() })}
         >
           {buttonNumber}
         </a>
@@ -48,7 +59,7 @@ const paginationButtons = getPaginationButtons({
   <a
     class="next"
     class:list={[{ disabled: currentPage >= totalPages }]}
-    href={url.pathname + "?page=" + nextPage}
+    href={nextLink}
   >
     <span>Next</span>
     <ThinArrowIcon direction="right" color="black" />
@@ -88,6 +99,11 @@ const paginationButtons = getPaginationButtons({
     gap: 0.5rem;
   }
 
+  .pag-buttons a.selected {
+    background: #2b9398;
+    color: white;
+  }
+
   .pag-buttons a {
     color: black;
     background: #ececec;
@@ -98,10 +114,6 @@ const paginationButtons = getPaginationButtons({
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-
-  .selected {
-    background: black;
   }
 
   span {

@@ -23,6 +23,7 @@ const { collabsAmount } = Astro.props;
 
 <script>
   import { openDialog } from "../../../../components/global/dialog/utils";
+  import { updateRoute } from "../../../../utils/filter";
 
   const addCollaboratorBtn = document.getElementById("add-collaborator-btn");
   const searchCollaboratorBtn = document.getElementById(
@@ -43,9 +44,12 @@ const { collabsAmount } = Astro.props;
     });
 
     const handleSearch = () => {
-      const searchTerm = searchInput.value.trim() ?? "";
-      const searchUrl = `?search=${encodeURIComponent(searchTerm)}`;
-      window.location.href = searchUrl;
+      const url = new URL(window.location.href);
+      const newUrl = updateRoute(url, {
+        search: searchInput.value.trim(),
+        page: "1",
+      });
+      window.location.href = newUrl;
     };
 
     searchCollaboratorBtn.addEventListener("click", handleSearch);
