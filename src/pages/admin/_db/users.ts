@@ -56,17 +56,12 @@ export async function getUsersCount({
 }: {
   role?: (typeof userRoles)[number];
   nameOrEmail?: string;
-}) {
+}): Promise<number> {
   const conditions = [
     and(eq(users.role, role ?? "user"), not(eq(users.status, "deleted"))),
   ];
 
-  let query = db
-    .select({
-      count: count(),
-    })
-    .from(users)
-    .$dynamic();
+  let query = db.select({ count: count() }).from(users).$dynamic();
 
   if (nameOrEmail) {
     conditions.push(
@@ -83,7 +78,7 @@ export async function getUsersCount({
   return usersCount[0].count;
 }
 
-export async function getPaginatedUsersTableData({
+export async function getPaginatedUsers({
   page,
   pageSize,
   nameOrEmail,

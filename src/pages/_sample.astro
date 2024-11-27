@@ -1,7 +1,7 @@
 ---
-import { getPaginatedUsersTableData } from "./admin/_db/users";
+import { getPaginatedUsers } from "./admin/_db/users";
 
-const usersDataPaginated = await getPaginatedUsersTableData({
+const usersDataPaginated = await getPaginatedUsers({
   page: 1,
   pageSize: 10,
   nameOrEmail: "gaby",

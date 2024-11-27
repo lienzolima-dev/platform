@@ -8,7 +8,7 @@ import Dialog from "../../../components/global/dialog/Dialog.astro";
 import UserEditForm from "../../../components/admin/manage/users/UserEditForm.astro";
 import UserDeleteForm from "../../../components/admin/manage/users/UserDeleteForm.astro";
 import Pagination from "../../../components/global/Pagination.astro";
-import { getPaginatedUsersTableData } from "../_db/users";
+import { getPaginatedUsers } from "../_db/users";
 
 const user = Astro.locals.user;
 
@@ -22,7 +22,7 @@ const { searchParams } = new URL(Astro.request.url);
 const searchParam = (searchParams.get("search") || "").toLowerCase();
 const pageParam = Number.parseInt(searchParams.get("page") || "1");
 
-const { data: users, count: totalUsers } = await getPaginatedUsersTableData({
+const { data: users, count: totalUsers } = await getPaginatedUsers({
   page: pageParam,
   pageSize: 10,
   nameOrEmail: searchParam,
