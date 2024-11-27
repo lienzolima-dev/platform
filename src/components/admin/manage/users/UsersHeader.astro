@@ -19,6 +19,8 @@ const { usersAmount } = Astro.props;
 </div>
 
 <script>
+  import { updateRoute } from "../../../../utils/filter";
+
   const searchUserBtn = document.getElementById("search-user-btn");
   const searchInput = document.getElementById("search-input");
   try {
@@ -28,9 +30,12 @@ const { usersAmount } = Astro.props;
       throw new Error("Search input not found");
 
     const handleSearch = () => {
-      const searchTerm = searchInput.value.trim() ?? "";
-      const searchUrl = `?search=${encodeURIComponent(searchTerm)}`;
-      window.location.href = searchUrl;
+      const url = new URL(window.location.href);
+      const newUrl = updateRoute(url, {
+        search: searchInput.value.trim(),
+        page: "1",
+      });
+      window.location.href = newUrl;
     };
 
     searchUserBtn.addEventListener("click", handleSearch);

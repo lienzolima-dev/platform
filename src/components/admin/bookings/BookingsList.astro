@@ -12,17 +12,19 @@ const { bookings } = Astro.props;
   {
     bookings.map((booking) => (
       <div class="card">
-        <h3>{booking.username}</h3>
+        <div class="flex">
+          <h3>{booking.username}</h3>
+          <span>
+            {booking.date.toLocaleDateString("es-PE", {
+              day: "numeric",
+              month: "long",
+            })}
+          </span>
+        </div>
         {booking.phone && <span>Teléfono: {booking.phone}</span>}
         {booking.email && <span>Correo: {booking.email}</span>}
         <span>
           Horario: {booking.startTime} - {booking.endTime}
-        </span>
-        <span>
-          {booking.date.toLocaleDateString("es-PE", {
-            day: "numeric",
-            month: "long",
-          })}
         </span>
         <span class="separator">Manicurista</span>
         <span>{booking.manicurist}</span>
@@ -42,10 +44,14 @@ const { bookings } = Astro.props;
             </div>
           </>
         )}
-        <span class="separator">Adelanto</span>
-        <span>S/ {booking.advanceAmount}</span>
-        <span class="separator">Total</span>
-        <span>S/ {booking.totalPrice}</span>
+        <div class="flex">
+          <span class="separator">Adelanto</span>
+          <span>S/ {booking.advanceAmount}</span>
+        </div>
+        <div class="flex">
+          <span class="separator">Total</span>
+          <span>S/ {booking.totalPrice}</span>
+        </div>
       </div>
     ))
   }
@@ -84,7 +90,7 @@ const { bookings } = Astro.props;
 
   .card span {
     font-size: 0.9rem;
-    color: #666666;
+    color: #3f3f3f;
   }
 
   .card .separator {
@@ -105,5 +111,11 @@ const { bookings } = Astro.props;
     padding: 0.3rem 0.6rem;
     border-radius: 5px;
     color: #555555;
+  }
+
+  .flex {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
   }
 </style>
