@@ -17,7 +17,7 @@ const nextPage = currentPage < totalPages ? currentPage + 1 : totalPages;
 
 const paginationButtons = getPaginationButtons({
   totalPages,
-  buttonsAmount: buttonsAmount || 5,
+  maxBtns: buttonsAmount || 5,
   currentPage,
 });
 
@@ -32,39 +32,43 @@ const nextLink =
     : updateRoute(url, { page: nextPage.toString() });
 ---
 
-<section>
-  <a
-    class="prev"
-    class:list={[{ disabled: currentPage <= 1 }]}
-    href={previousLink}
-  >
-    <ThinArrowIcon direction="left" color="black" />
-    <span>Previous</span>
-  </a>
-  <div class="pag-buttons">
-    {
-      paginationButtons.map((buttonNumber) => (
+{
+  paginationButtons.length > 0 && (
+    <>
+      <section>
         <a
-          class:list={{
-            btn: true,
-            selected: buttonNumber === currentPage,
-          }}
-          href={updateRoute(url, { page: buttonNumber.toString() })}
+          class="prev"
+          class:list={[{ disabled: currentPage <= 1 }]}
+          href={previousLink}
         >
-          {buttonNumber}
+          <ThinArrowIcon direction="left" color="black" />
+          <span>Previous</span>
         </a>
-      ))
-    }
-  </div>
-  <a
-    class="next"
-    class:list={[{ disabled: currentPage >= totalPages }]}
-    href={nextLink}
-  >
-    <span>Next</span>
-    <ThinArrowIcon direction="right" color="black" />
-  </a>
-</section>
+        <div class="pag-buttons">
+          {paginationButtons.map((buttonNumber) => (
+            <a
+              class:list={{
+                btn: true,
+                selected: buttonNumber === currentPage,
+              }}
+              href={updateRoute(url, { page: buttonNumber.toString() })}
+            >
+              {buttonNumber}
+            </a>
+          ))}
+        </div>
+        <a
+          class="next"
+          class:list={[{ disabled: currentPage >= totalPages }]}
+          href={nextLink}
+        >
+          <span>Next</span>
+          <ThinArrowIcon direction="right" color="black" />
+        </a>
+      </section>
+    </>
+  )
+}
 
 <style>
   section {

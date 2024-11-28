@@ -121,9 +121,11 @@ export async function getBookingsCount({
 export async function getPaginatedBookings({
   page,
   pageSize,
+  day,
 }: {
   page: number;
   pageSize: number;
+  day?: Date;
 }): Promise<{
   data: Booking[];
   count: number;
@@ -132,8 +134,8 @@ export async function getPaginatedBookings({
   const offset = (page - 1) * pageSize;
 
   const [bookings, bookingCount] = await Promise.all([
-    getBookings({ offset, limit: pageSize }),
-    getBookingsCount({}),
+    getBookings({ offset, limit: pageSize, day }),
+    getBookingsCount({ day }),
   ]);
 
   return {

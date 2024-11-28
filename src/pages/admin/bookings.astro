@@ -3,6 +3,7 @@ import SideBar from "../../components/admin/SideBar.astro";
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import Header from "../../components/admin/Header.astro";
 import BookingsList from "../../components/admin/bookings/BookingsList.astro";
+import BookingsHeader from "../../components/admin/bookings/BookingsHeader.astro";
 import { getPaginatedBookings } from "./_db/bookings";
 import Pagination from "../../components/global/Pagination.astro";
 
@@ -16,11 +17,13 @@ const { avatarURL, username, role } = user;
 
 const { searchParams } = new URL(Astro.request.url);
 const pageParam = Number.parseInt(searchParams.get("page") || "1");
+const dateParam = searchParams.get("date") || "";
 
 const pageSize = 8;
 const { data: bookings, totalPages } = await getPaginatedBookings({
   page: pageParam,
   pageSize,
+  day: dateParam ? new Date(dateParam) : undefined,
 });
 ---
 
@@ -29,7 +32,7 @@ const { data: bookings, totalPages } = await getPaginatedBookings({
   <div>
     <Header {avatarURL} {username} {role} />
     <main>
-      <h1>Reservas</h1>
+      <BookingsHeader {dateParam} />
       <BookingsList {bookings} />
       <Pagination currentPage={pageParam} {totalPages} buttonsAmount={5} />
     </main>
