@@ -57,3 +57,13 @@ export type ComplaintsTableData = {
   complaintDescription: string;
   adicionalInfo: string | null;
 };
+
+export type ServicesTableData = {
+  id: string;
+  name: string;
+  price: number;
+  description: string | null;
+  durationHours: number;
+  category: string;
+  formattedDuration?: string;
+};

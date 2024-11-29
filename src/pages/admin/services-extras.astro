@@ -1,0 +1,66 @@
+---
+import SideBar from "../../components/admin/SideBar.astro";
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import Header from "../../components/admin/Header.astro";
+import ServicesHeader from "../../components/admin/servicesExtras/services/ServicesHeader.astro";
+import ServicesTable from "../../components/admin/servicesExtras/services/ServicesTable.astro";
+import Dialog from "../../components/global/dialog/Dialog.astro";
+import ServicesAddForm from "../../components/admin/servicesExtras/services/ServicesAddForm.astro";
+import ServicesEditForm from "../../components/admin/servicesExtras/services/ServicesEditForm.astro";
+import ServicesDeleteForm from "../../components/admin/servicesExtras/services/ServicesDeleteForm.astro";
+import { getPaginatedServices } from "./_db/services";
+import Pagination from "../../components/global/Pagination.astro";
+import Services from "../../components/landing/servicesMenu/Services.astro";
+
+const user = Astro.locals.user;
+
+// If the user is not an admin or a manicurist, redirect to the home page
+if (!user || (user.role !== "admin" && user.role !== "manicurist"))
+  return Astro.redirect("/home", 302);
+
+const { avatarURL, username, role } = user;
+
+const { searchParams } = new URL(Astro.request.url);
+const searchParam = (searchParams.get("search") || "").toLowerCase();
+const pageParam = Number.parseInt(searchParams.get("page") || "1");
+
+const pageSize = 10;
+const {
+  services: services,
+  count: totalServices,
+  totalPages,
+} = await getPaginatedServices({
+  page: pageParam,
+  pageSize,
+  name: searchParam,
+});
+---
+
+<AdminLayout title="Admin">
+  <SideBar />
+  <div>
+    <Header {avatarURL} {username} {role} />
+    <main>
+      <Dialog id="addService"><ServicesAddForm /></Dialog>
+      <Dialog id="editService"><ServicesEditForm /></Dialog>
+      <Dialog id="deleteService"><ServicesDeleteForm /></Dialog>
+      <ServicesHeader servicesAmount={totalServices} />
+      <ServicesTable {services} />
+      <Pagination currentPage={pageParam} {totalPages} buttonsAmount={5} />
+    </main>
+  </div>
+</AdminLayout>
+
+<style>
+  main {
+    padding-top: var(--section-spacing);
+    padding-inline: var(--section-spacing);
+    padding-bottom: var(--section-spacing);
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+</style>

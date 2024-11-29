@@ -18,7 +18,7 @@ const { avatarURL, username, role } = user;
 
 const [manicuristsOptions, services, extras] = await Promise.all([
   getManicuristsOptions(),
-  getServices(),
+  getServices({}),
   getExtras(),
 ]);
 ---

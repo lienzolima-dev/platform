@@ -23,16 +23,14 @@ const { servicesAmount } = Astro.props;
 
 <script>
   import { openDialog } from "../../../../components/global/dialog/utils";
+  import { updateRoute } from "../../../../utils/filter";
 
   const addServiceBtn = document.getElementById("add-service-btn");
-  const searchServiceBtn = document.getElementById(
-    "search-service-btn"
-  );
+  const searchServiceBtn = document.getElementById("search-service-btn");
   const searchInput = document.getElementById("search-input");
 
   try {
-    if (!addServiceBtn)
-      throw new Error("Add service button not found");
+    if (!addServiceBtn) throw new Error("Add service button not found");
     if (!(searchServiceBtn instanceof HTMLButtonElement))
       throw new Error("Search service button not found");
     if (!(searchInput instanceof HTMLInputElement))
@@ -43,9 +41,12 @@ const { servicesAmount } = Astro.props;
     });
 
     const handleSearch = () => {
-      const searchTerm = searchInput.value.trim() ?? "";
-      const searchUrl = `?search=${encodeURIComponent(searchTerm)}`;
-      window.location.href = searchUrl;
+      const url = new URL(window.location.href);
+      const newUrl = updateRoute(url, {
+        search: searchInput.value.trim(),
+        page: "1",
+      });
+      window.location.href = newUrl;
     };
 
     searchServiceBtn.addEventListener("click", handleSearch);

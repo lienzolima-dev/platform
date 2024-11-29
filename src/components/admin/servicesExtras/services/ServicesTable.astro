@@ -3,26 +3,86 @@ import TableHead from "../../../global/table/TableHead.astro";
 import TableRow from "../../../global/table/TableRow.astro";
 import ServicesEditButton from "./ServicesEditButton.astro";
 import ServicesDeleteButton from "./ServicesDeleteButton.astro";
-// import Pagination from "../../../global/Pagination.astro";
-//import type { CollaboratorsTableData } from "../../../../pages/admin/_db/types";
-import type { TableLabel } from "../../../global/table/types";
+import type { ServicesTableData } from "../../../../pages/admin/_db/types";
 
-/*type Props = {
-  collaborators: CollaboratorsTableData[];
+type Props = {
+  services: ServicesTableData[];
 };
 
-const { collaborators } = Astro.props;*/
+const { services } = Astro.props;
 
-const columns = ["Nombre", "Precio", "Descripción", "Horas", "Acciones"];
-/*
-const rowData = collaborators.reduce(
-  (acc: Record<string, (string | TableLabel | null)[]>, collaborator) => {
-    const { id, name, email, role, phone } = collaborator;
-    acc[id] = [name, email, role, phone];
-    return acc;
-  },
-  {}
-);
+const columns = [
+  "Nombre",
+  "Precio",
+  "Descripción",
+  "Horas",
+  "Categoría",
+  "Acciones",
+];
 
-const noResults = collaborators.length === 0;*/
+const rowData = (service: ServicesTableData) => [
+  service.name,
+  service.price ? `s/.${service.price.toFixed(2)}` : null,
+  service.description || null,
+  service.formattedDuration || null,
+  service.category,
+];
+
+const noResults = services.length === 0;
 ---
+
+<div class="container">
+  <table>
+    <TableHead columnsNames={columns} />
+    <tbody>
+      {
+        noResults ? (
+          <tr>
+            <td colspan="6" style="text-align: center;">
+              No hay resultados
+            </td>
+          </tr>
+        ) : (
+          services.map((service) => (
+            <TableRow rowData={rowData(service)}>
+              <div class="action-button">
+                <ServicesEditButton {service} />
+                <ServicesDeleteButton {service} />
+              </div>
+            </TableRow>
+          ))
+        )
+      }
+    </tbody>
+  </table>
+  <!-- <Pagination currentPage={1} totalPages={2} /> -->
+</div>
+
+<style>
+  table {
+    --main-color: #2b9398;
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+
+  td {
+    padding: 0.5rem 0;
+  }
+
+  .action-button {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .container {
+      overflow-x: auto;
+    }
+  }
+</style>

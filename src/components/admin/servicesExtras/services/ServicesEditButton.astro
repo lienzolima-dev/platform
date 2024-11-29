@@ -1,0 +1,65 @@
+---
+import EditIcon from "../../../svgs/admin/IndexContent/EditIcon.astro";
+import type { ServicesTableData } from "../../../../pages/admin/_db/types";
+
+type Props = {
+  service: ServicesTableData;
+};
+
+const { service } = Astro.props;
+---
+
+<service-edit-button data-service={JSON.stringify(service)}>
+  <button>
+    <EditIcon color="white" />
+    <span>Editar</span>
+  </button>
+</service-edit-button>
+
+<script>
+  import type { ServicesTableData } from "../../../../pages/admin/_db/types";
+  import { openDialog } from "../../../global/dialog/utils";
+
+  class ServiceEditButton extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector("button");
+      const form = document.getElementById("edit-service-form");
+
+      if (!button) throw "Button not found";
+      if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
+
+      const service: ServicesTableData = JSON.parse(
+        this.dataset.service || "{}"
+      );
+
+      button.addEventListener("click", async () => {
+        /*form.serviceId.value = service.id;
+        form.username.value = service.name;
+        form.email.value = service.description;
+        form.phone.value = service.formattedDuration;*/
+
+        openDialog("editService");
+      });
+    }
+  }
+
+  customElements.define("service-edit-button", ServiceEditButton);
+</script>
+
+<style>
+  button {
+    display: flex;
+    align-items: center;
+    background-color: #169db5;
+    gap: 0.25rem;
+    border-radius: 4px;
+    padding: 4px 8px;
+    color: white;
+    margin-left: 8px;
+  }
+
+  button :global(svg) {
+    width: 1rem;
+    height: 1rem;
+  }
+</style>
