@@ -22,6 +22,10 @@ export function updateRoute(
   const params = new URLSearchParams(url.search);
 
   for (const key in newFilter) {
+    if (newFilter[key] === "") {
+      params.delete(key);
+      continue;
+    }
     params.set(key, newFilter[key]);
   }
 

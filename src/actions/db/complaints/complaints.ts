@@ -34,7 +34,6 @@ export const addComplaint = defineAction({
         const userDate = DateTime.fromISO(date);
 
         if (!userDate.isValid) {
-          console.log(userDate);
           return false;
         }
         return userDate <= todayDate;

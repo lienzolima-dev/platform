@@ -1,27 +1,27 @@
 type GetPaginationButtons = (options: {
   totalPages: number;
-  buttonsAmount: number;
+  maxBtns: number;
   currentPage: number;
 }) => number[];
 
 /**
  *
  * Returns an array of numbers to be used as pagination buttons
- * @param - represents the maximum number of buttons to be displayed
+ * @param maxBtns represents the maximum number of buttons to be displayed
  *
  * @example
- * ```ts
- * getPaginationButtons({ totalPages: 10, maxPaginationButtons: 5, currentPage: 3 }); // Output: [1, 2, 3, 4, 5]
- * getPaginationButtons({ totalPages: 10, maxPaginationButtons: 5, currentPage: 8 }); // Output: [6, 7, 8, 9, 10]
+ * ```js
+ * getPaginationButtons(10, 5, 3); // returns: [1, 2, 3, 4, 5]
+ * getPaginationButtons(10, 5, 8); // returns: [6, 7, 8, 9, 10]
  * ```
  */
 export const getPaginationButtons: GetPaginationButtons = ({
   totalPages,
-  buttonsAmount,
+  maxBtns,
   currentPage,
 }) => {
-  let max = totalPages > buttonsAmount ? buttonsAmount : totalPages;
-  if (totalPages <= buttonsAmount) max = totalPages;
+  let max = maxBtns;
+  if (totalPages <= maxBtns) max = totalPages;
 
   const half = Math.floor(max / 2);
   let to = max;

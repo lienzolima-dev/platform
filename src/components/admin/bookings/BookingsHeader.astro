@@ -1,0 +1,25 @@
+---
+import BookingsDateFilters from "./BookingsDateFilters.svelte";
+
+type Props = {
+  dateParam: string;
+};
+
+const { dateParam } = Astro.props;
+
+const date = dateParam ? new Date(dateParam) : null;
+---
+
+<section>
+  <h1>Reservas</h1>
+  <BookingsDateFilters {date} client:load />
+</section>
+
+<style>
+  section {
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+</style>
