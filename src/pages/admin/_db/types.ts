@@ -65,5 +65,14 @@ export type ServicesTableData = {
   description: string | null;
   durationHours: number;
   category: string;
+  status: "active" | "deleted";
   formattedDuration?: string;
+};
+
+export type ExtrasTableData = {
+  id: string;
+  name: string;
+  price: number;
+  description: string | null;
+  status: "active" | "deleted";
 };

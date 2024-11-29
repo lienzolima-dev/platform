@@ -29,7 +29,7 @@ const { service } = Astro.props;
 
       if (!button) throw "Button not found";
       if (!(form instanceof HTMLFormElement)) throw "Form not found";
-      if (!selectedService) throw "Selected user element not found";
+      if (!selectedService) throw "Selected service element not found";
       if (!errorContent) throw "Error content not found";
 
       button.addEventListener("click", () => {

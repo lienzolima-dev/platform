@@ -1,0 +1,58 @@
+---
+import EditIcon from "../../../svgs/admin/IndexContent/EditIcon.astro";
+import type { ExtrasTableData } from "../../../../pages/admin/_db/types";
+
+type Props = {
+  extra: ExtrasTableData;
+};
+
+const { extra } = Astro.props;
+---
+
+<extra-edit-button>
+  <button>
+    <EditIcon color="white" />
+    <span>Editar</span>
+  </button>
+</extra-edit-button>
+
+<script>
+  import type { ExtrasTableData } from "../../../../pages/admin/_db/types";
+  import { openDialog } from "../../../global/dialog/utils";
+
+  class ExtraEditButton extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector("button");
+      const form = document.getElementById("edit-extra-form");
+
+      if (!button) throw "Button not found";
+      if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
+
+      const extra: ExtrasTableData = JSON.parse(this.dataset.service || "{}");
+
+      button.addEventListener("click", async () => {
+        openDialog("editExtra");
+      });
+    }
+  }
+
+  customElements.define("extra-edit-button", ExtraEditButton);
+</script>
+
+<style>
+  button {
+    display: flex;
+    align-items: center;
+    background-color: #169db5;
+    gap: 0.25rem;
+    border-radius: 4px;
+    padding: 4px 8px;
+    color: white;
+    margin-left: 8px;
+  }
+
+  button :global(svg) {
+    width: 1rem;
+    height: 1rem;
+  }
+</style>

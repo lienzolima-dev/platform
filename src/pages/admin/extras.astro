@@ -1,0 +1,66 @@
+---
+import SideBar from "../../components/admin/SideBar.astro";
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import Header from "../../components/admin/Header.astro";
+import Dialog from "../../components/global/dialog/Dialog.astro";
+import ExtrasHeader from "../../components/admin/servicesExtras/extras/ExtrasHeader.astro";
+import ExtrasTable from "../../components/admin/servicesExtras/extras/ExtrasTable.astro";
+import ExtrasAddForm from "../../components/admin/servicesExtras/extras/ExtrasAddForm.astro";
+import ExtrasEditForm from "../../components/admin/servicesExtras/extras/ExtrasEditForm.astro";
+import ExtrasDeleteForm from "../../components/admin/servicesExtras/extras/ExtrasDeleteForm.astro";
+import { getPaginatedExtras } from "./_db/extras";
+import Pagination from "../../components/global/Pagination.astro";
+
+const user = Astro.locals.user;
+
+// If the user is not an admin or a manicurist, redirect to the home page
+if (!user || (user.role !== "admin" && user.role !== "manicurist"))
+  return Astro.redirect("/home", 302);
+
+const { avatarURL, username, role } = user;
+
+const { searchParams } = new URL(Astro.request.url);
+const searchParam = (searchParams.get("search") || "").toLowerCase();
+const pageParam = Number.parseInt(searchParams.get("page") || "1");
+
+const pageSize = 6;
+
+const {
+  extras: extras,
+  count: totalExtras,
+  totalPages,
+} = await getPaginatedExtras({
+  page: pageParam,
+  pageSize,
+  name: searchParam,
+});
+---
+
+<AdminLayout title="Admin">
+  <SideBar />
+  <div>
+    <Header {avatarURL} {username} {role} />
+    <main>
+      <Dialog id="addExtra"><ExtrasAddForm /></Dialog>
+      <Dialog id="editExtra"><ExtrasEditForm /></Dialog>
+      <Dialog id="deleteExtra"><ExtrasDeleteForm /></Dialog>
+      <ExtrasHeader extrasAmount={totalExtras} />
+      <ExtrasTable {extras} />
+      <Pagination currentPage={pageParam} {totalPages} buttonsAmount={5} />
+    </main>
+  </div>
+</AdminLayout>
+
+<style>
+  main {
+    padding-top: var(--section-spacing);
+    padding-inline: var(--section-spacing);
+    padding-bottom: var(--section-spacing);
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+</style>
