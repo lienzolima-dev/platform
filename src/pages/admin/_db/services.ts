@@ -1,4 +1,4 @@
-import { and, or, like, count } from "drizzle-orm";
+import { and, like, count, not, eq } from "drizzle-orm";
 import { db } from "../../../db/db";
 import { services } from "../../../db/schema";
 import type { ServicesTableData } from "./types";
@@ -8,6 +8,7 @@ function formatDuration(decimalHours: number | null): string {
   if (decimalHours === null) return "---";
   const hours = Math.floor(decimalHours);
   const minutes = Math.round((decimalHours - hours) * 60);
+
   if (hours > 0 && minutes === 0) {
     return `${hours}h`;
   } else if (hours === 0 && minutes > 0) {
@@ -26,10 +27,10 @@ export async function getServices({
   limit?: number;
   name?: string;
 }): Promise<ServicesTableData[]> {
-  const conditions = [];
+  const conditions = [not(eq(services.status, "deleted"))];
   const query = db.select().from(services).$dynamic();
   if (name) {
-    conditions.push(or(like(services.name, `%${name}%`)));
+    conditions.push(like(services.name, `%${name}%`));
   }
 
   if (limit) query.limit(limit);
@@ -49,10 +50,10 @@ export async function getServicesCount({
 }: {
   name?: string;
 }): Promise<number> {
-  const conditions = [];
+  const conditions = [not(eq(services.status, "deleted"))];
   let query = db.select({ count: count() }).from(services).$dynamic();
   if (name) {
-    conditions.push(or(like(services.name, `%${name}%`)));
+    conditions.push(like(services.name, `%${name}%`));
   }
 
   query = query.where(and(...conditions));

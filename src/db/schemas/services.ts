@@ -10,6 +10,9 @@ export const services = sqliteTable("services", {
   description: text("description"),
   durationHours: real("duration_hours").notNull(),
   category: text("category").notNull(),
+  status: text("status", { enum: ["active", "deleted"] })
+    .notNull()
+    .default("active"),
 });
 
 export const servicesRelations = relations(services, ({ many }) => ({

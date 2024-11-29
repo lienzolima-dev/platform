@@ -1,115 +1,104 @@
-<service-edit-form>
-  <section>
-    <div class="form-container">
-      <h2>Editar Servicio</h2>
-      <form id="edit-service-form">
-        <input type="hidden" id="service-id" name="serviceId" />
+<section>
+  <div class="form-container">
+    <h2>Editar Servicio</h2>
+    <form id="edit-service-form">
+      <input type="hidden" id="service-id" name="serviceId" />
 
-        <label>
-          Nombre de servicio <span class="required">*</span>
-        </label>
-        <input
-          type="text"
-          class="name"
-          name="name"
-          placeholder="Ingresa nombre de servicio"
-          required
-        />
+      <label>
+        Nombre de servicio <span class="required">*</span>
+      </label>
+      <input
+        type="text"
+        class="nameService"
+        name="nameService"
+        placeholder="Ingresa nombre de servicio"
+        required
+      />
 
-        <label>Precio <span class="required">*</span> </label>
-        <input
-          type="number"
-          class="price"
-          name="price"
-          placeholder="Ingresa el precio"
-          step="0.01"
-          min="0"
-          required
-        />
+      <label>Precio <span class="required">*</span> </label>
+      <input
+        type="number"
+        class="price"
+        name="price"
+        placeholder="Ingresa el precio"
+        step="0.01"
+        min="0"
+        required
+      />
 
-        <label>Descripción</label>
-        <textarea
-          class="description"
-          name="description"
-          placeholder="Ingresa una descripción"></textarea>
+      <label>Descripción</label>
+      <textarea
+        class="description"
+        name="description"
+        placeholder="Ingresa una descripción"></textarea>
 
-        <label>Horas de duración <span class="required">*</span> </label>
-        <input
-          type="time"
-          class="durationHours"
-          name="durationHours"
-          step="60"
-          required
-        />
+      <label>Horas de duración <span class="required">*</span> </label>
+      <input
+        type="time"
+        class="durationHours"
+        name="durationHours"
+        step="60"
+        required
+      />
 
-        <label>
-          Categoría <span class="required">*</span>
-        </label>
-        <input
-          type="text"
-          class="category"
-          name="category"
-          placeholder="Ingresa categoría"
-          required
-        />
+      <label>
+        Categoría <span class="required">*</span>
+      </label>
+      <input
+        type="text"
+        class="category"
+        name="category"
+        placeholder="Ingresa categoría"
+        required
+      />
 
-        <button class="submit-button" type="submit">Guardar</button>
-      </form>
-      <div class="error-content"></div>
-    </div>
-  </section>
-</service-edit-form>
+      <p id="s-error-content"></p>
+      <button id="s-edit-submit-btn" class="submit-button" type="submit"
+        >Guardar</button
+      >
+    </form>
+  </div>
+</section>
 
 <script>
   import { actions, isInputError } from "astro:actions";
 
-  class CollaboratorAddForm extends HTMLElement {
-    connectedCallback() {
-      const form = this.querySelector("form");
-      const errorContent = this.querySelector(".error-content");
-      const submitButton = this.querySelector(".submit-button");
+  try {
+    const form = document.getElementById("edit-service-form");
+    const errorContent = document.getElementById("s-error-content");
+    const submitButton = document.getElementById("s-edit-submit-btn");
 
-      if (!form) throw new Error("Form not found");
-      if (!errorContent) throw new Error("Error content not found");
-      if (!(submitButton instanceof HTMLButtonElement))
-        throw new Error("Submit button not found");
+    if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
+    if (!errorContent) throw new Error("Error content not found");
+    if (!(submitButton instanceof HTMLButtonElement))
+      throw new Error("Submit button not found");
 
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault();
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
 
-        const formData = new FormData(form);
+      const formData = new FormData(form);
 
-        submitButton.disabled = true;
-        const { error } = await actions.db.users.addCollaborator(formData);
-        submitButton.disabled = false;
+      submitButton.disabled = true;
+      const { error } = await actions.db.servicesExtras.editService(formData);
+      submitButton.disabled = false;
 
-        if (!error) {
-          location.reload();
+      if (!error) {
+        location.reload();
+        return;
+      }
+
+      if (error) {
+        if (isInputError(error)) {
+          errorContent.innerText = error.issues[0].message;
           return;
         }
-
-        if (error && errorContent instanceof HTMLElement) {
-          errorContent.innerHTML = "";
-
-          if (isInputError(error)) {
-            const ul = document.createElement("ul");
-
-            error.issues.forEach((err) => {
-              const li = document.createElement("li");
-              li.innerText = err.message;
-              ul.appendChild(li);
-            });
-
-            errorContent.appendChild(ul);
-            return;
-          }
-          errorContent.innerText = error.message;
-        }
-      });
-    }
+        errorContent.innerText = error.message;
+        return;
+      }
+    });
+  } catch (e) {
+    console.error("Error:", e);
   }
-
-  customElements.define("collaborator-add-form", CollaboratorAddForm);
 </script>
 
 <style>
@@ -156,10 +145,7 @@
     resize: none;
   }
 
-  .error-content {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+  #s-error-content {
     color: #b11313;
   }
 

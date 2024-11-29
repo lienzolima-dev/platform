@@ -20,6 +20,15 @@ const { service } = Astro.props;
   import type { ServicesTableData } from "../../../../pages/admin/_db/types";
   import { openDialog } from "../../../global/dialog/utils";
 
+  function formatHours(decimalHours: number | null): string {
+    if (decimalHours === null) return "00:00";
+
+    const hours = Math.floor(decimalHours);
+    const minutes = Math.round((decimalHours - hours) * 60);
+
+    return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+  }
+
   class ServiceEditButton extends HTMLElement {
     connectedCallback() {
       const button = this.querySelector("button");
@@ -33,10 +42,12 @@ const { service } = Astro.props;
       );
 
       button.addEventListener("click", async () => {
-        /*form.serviceId.value = service.id;
-        form.username.value = service.name;
-        form.email.value = service.description;
-        form.phone.value = service.formattedDuration;*/
+        form.serviceId.value = service.id;
+        form.nameService.value = service.name;
+        form.price.value = service.price;
+        form.description.value = service.description;
+        form.durationHours.value = formatHours(service.durationHours);
+        form.category.value = service.category;
 
         openDialog("editService");
       });

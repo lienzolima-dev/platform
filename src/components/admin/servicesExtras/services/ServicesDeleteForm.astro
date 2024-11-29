@@ -22,7 +22,7 @@ import AlertIcon from "../../../../components/svgs/admin/IndexContent/AlertIcon.
     </form>
     <button class="cancel">Cancelar</button>
   </div>
-  <p id="error-content"></p>
+  <p id="s-delete-error-content"></p>
 </section>
 
 <script>
@@ -30,17 +30,34 @@ import AlertIcon from "../../../../components/svgs/admin/IndexContent/AlertIcon.
   import { closeDialog } from "../../../global/dialog/utils";
 
   try {
-    const form = document.getElementById("delete-user-form");
+    const form = document.getElementById("delete-service-form");
     const submitButton = document.getElementById("s-delete-submit-btn");
     const buttonCancel = document.querySelector("button.cancel");
-    const errorContent = document.getElementById("error-content");
+    const errorContent = document.getElementById("s-delete-error-content");
 
     if (!buttonCancel) throw "Button not found";
     if (!(submitButton instanceof HTMLButtonElement)) throw "Button not found";
     if (!(form instanceof HTMLFormElement)) throw "Form not found";
     if (!errorContent) throw "Error content not found";
 
-    buttonCancel.addEventListener("click", () => closeDialog("deleteUser"));
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      submitButton.disabled = true;
+      const { error } = await actions.db.servicesExtras.deleteService(formData);
+      submitButton.disabled = false;
+
+      if (!error) {
+        location.reload();
+        return;
+      }
+
+      errorContent.innerText = error.message;
+    });
+
+    buttonCancel.addEventListener("click", () => closeDialog("deleteService"));
   } catch (e) {
     console.error("Error:", e);
   }

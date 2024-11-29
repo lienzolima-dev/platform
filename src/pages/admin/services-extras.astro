@@ -10,7 +10,6 @@ import ServicesEditForm from "../../components/admin/servicesExtras/services/Ser
 import ServicesDeleteForm from "../../components/admin/servicesExtras/services/ServicesDeleteForm.astro";
 import { getPaginatedServices } from "./_db/services";
 import Pagination from "../../components/global/Pagination.astro";
-import Services from "../../components/landing/servicesMenu/Services.astro";
 
 const user = Astro.locals.user;
 
@@ -24,7 +23,7 @@ const { searchParams } = new URL(Astro.request.url);
 const searchParam = (searchParams.get("search") || "").toLowerCase();
 const pageParam = Number.parseInt(searchParams.get("page") || "1");
 
-const pageSize = 10;
+const pageSize = 6;
 const {
   services: services,
   count: totalServices,

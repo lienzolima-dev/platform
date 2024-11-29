@@ -51,9 +51,9 @@
           required
         />
 
+        <p id="error-content"></p>
         <button class="submit-button" type="submit">Guardar</button>
       </form>
-      <div class="error-content"></div>
     </div>
   </section>
 </service-add-form>
@@ -61,10 +61,10 @@
 <script>
   import { actions, isInputError } from "astro:actions";
 
-  class CollaboratorAddForm extends HTMLElement {
+  class ServiceAddForm extends HTMLElement {
     connectedCallback() {
       const form = this.querySelector("form");
-      const errorContent = this.querySelector(".error-content");
+      const errorContent = document.getElementById("error-content");
       const submitButton = this.querySelector(".submit-button");
 
       if (!form) throw new Error("Form not found");
@@ -78,7 +78,7 @@
         const formData = new FormData(form);
 
         submitButton.disabled = true;
-        const { error } = await actions.db.users.addCollaborator(formData);
+        const { error } = await actions.db.servicesExtras.addService(formData);
         submitButton.disabled = false;
 
         if (!error) {
@@ -86,28 +86,19 @@
           return;
         }
 
-        if (error && errorContent instanceof HTMLElement) {
-          errorContent.innerHTML = "";
-
+        if (error) {
           if (isInputError(error)) {
-            const ul = document.createElement("ul");
-
-            error.issues.forEach((err) => {
-              const li = document.createElement("li");
-              li.innerText = err.message;
-              ul.appendChild(li);
-            });
-
-            errorContent.appendChild(ul);
+            errorContent.innerText = error.issues[0].message;
             return;
           }
           errorContent.innerText = error.message;
+          return;
         }
       });
     }
   }
 
-  customElements.define("collaborator-add-form", CollaboratorAddForm);
+  customElements.define("service-add-form", ServiceAddForm);
 </script>
 
 <style>
@@ -154,10 +145,7 @@
     resize: none;
   }
 
-  .error-content {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+  #error-content {
     color: #b11313;
   }
 
