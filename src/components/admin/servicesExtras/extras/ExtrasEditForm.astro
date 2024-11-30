@@ -44,7 +44,7 @@
   import { actions, isInputError } from "astro:actions";
 
   try {
-    const form = document.getElementById("edit-service-form");
+    const form = document.getElementById("edit-extra-form");
     const errorContent = document.getElementById("errorContent");
     const submitButton = document.getElementById("e-edit-submit-btn");
 
@@ -52,6 +52,30 @@
     if (!errorContent) throw new Error("Error content not found");
     if (!(submitButton instanceof HTMLButtonElement))
       throw new Error("Submit button not found");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+
+      submitButton.disabled = true;
+      const { error } = await actions.db.servicesExtras.editExtra(formData);
+      submitButton.disabled = false;
+
+      if (!error) {
+        location.reload();
+        return;
+      }
+
+      if (error) {
+        if (isInputError(error)) {
+          errorContent.innerText = error.issues[0].message;
+          return;
+        }
+        errorContent.innerText = error.message;
+        return;
+      }
+    });
   } catch (e) {
     console.error("Error:", e);
   }

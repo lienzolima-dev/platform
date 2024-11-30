@@ -22,7 +22,13 @@ export const editUser = defineAction({
     email: z
       .string({ message: "El email es requerido" })
       .email({ message: "El email no es válido" }),
-    phone: z.string().min(1).nullable(),
+    phone: z
+      .string()
+      .regex(
+        /^\d{1,9}$/,
+        "El número de teléfono debe tener hasta 9 dígitos y solo contener números",
+      )
+      .nullable(),
   }),
   handler: async (input, ctx) => {
     const { userId, username, email, phone } = input;
@@ -37,10 +43,8 @@ export const editUser = defineAction({
     const userToUpdate: typeof users.$inferInsert = {
       email,
       username,
+      phone: phone || null,
     };
-
-    // Add optional fields if they exist
-    if (phone) userToUpdate.phone = phone;
 
     try {
       // Update user in database

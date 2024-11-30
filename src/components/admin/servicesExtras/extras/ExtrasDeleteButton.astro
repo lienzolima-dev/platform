@@ -9,7 +9,7 @@ type Props = {
 const { extra } = Astro.props;
 ---
 
-<extra-delete-button>
+<extra-delete-button data-extra={JSON.stringify(extra)}>
   <button>
     <TrashIcon color={"white"} />
     <span>Eliminar</span>
@@ -24,7 +24,7 @@ const { extra } = Astro.props;
     connectedCallback() {
       const button = this.querySelector("button");
       const form = document.getElementById("delete-extra-form");
-      const errorContent = document.getElementById("e-error-content");
+      const errorContent = document.getElementById("e-delete-error-content");
       const selectedExtra = document.getElementById("selected-extra");
 
       if (!button) throw "Button not found";
@@ -37,9 +37,9 @@ const { extra } = Astro.props;
           this.dataset.extra || "{}"
         );
 
-        /*form.serviceId.value = id;
+        form.extraId.value = id;
         selectedExtra.innerHTML = name;
-        errorContent.innerText = "";*/
+        errorContent.innerText = "";
 
         openDialog("deleteExtra");
       });

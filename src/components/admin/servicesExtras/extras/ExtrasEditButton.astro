@@ -9,7 +9,7 @@ type Props = {
 const { extra } = Astro.props;
 ---
 
-<extra-edit-button>
+<extra-edit-button data-extra={JSON.stringify(extra)}>
   <button>
     <EditIcon color="white" />
     <span>Editar</span>
@@ -28,9 +28,14 @@ const { extra } = Astro.props;
       if (!button) throw "Button not found";
       if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
 
-      const extra: ExtrasTableData = JSON.parse(this.dataset.service || "{}");
+      const extra: ExtrasTableData = JSON.parse(this.dataset.extra || "{}");
 
       button.addEventListener("click", async () => {
+        form.extraId.value = extra.id;
+        form.nameExtra.value = extra.name;
+        form.price.value = extra.price;
+        form.description.value = extra.description;
+
         openDialog("editExtra");
       });
     }

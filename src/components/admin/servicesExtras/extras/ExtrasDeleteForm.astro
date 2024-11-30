@@ -38,6 +38,23 @@ import AlertIcon from "../../../../components/svgs/admin/IndexContent/AlertIcon.
     if (!(form instanceof HTMLFormElement)) throw "Form not found";
     if (!errorContent) throw "Error content not found";
 
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      submitButton.disabled = true;
+      const { error } = await actions.db.servicesExtras.deleteExtra(formData);
+      submitButton.disabled = false;
+
+      if (!error) {
+        location.reload();
+        return;
+      }
+
+      errorContent.innerText = error.message;
+    });
+
     buttonCancel.addEventListener("click", () => closeDialog("deleteExtra"));
   } catch (e) {
     console.error("Error:", e);

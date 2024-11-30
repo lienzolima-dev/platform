@@ -61,7 +61,7 @@ export const addService = defineAction({
 export const editService = defineAction({
   accept: "form",
   input: z.object({
-    serviceId: z.string({ message: "El id del usuario es requerido" }).min(1),
+    serviceId: z.string({ message: "El id del servicio es requerido" }).min(1),
     nameService: z
       .string()
       .min(3, "El nombre debe tener al menos 3 caracteres"),
@@ -98,15 +98,12 @@ export const editService = defineAction({
     const serviceToUpdate: typeof services.$inferInsert = {
       name: nameService,
       price: price,
+      description: description || null,
       durationHours:
         Number(durationHours.split(":")[0]) +
         Number(durationHours.split(":")[1]) / 60,
       category: category,
     };
-
-    if (description) {
-      serviceToUpdate.description = description;
-    }
 
     try {
       await db
@@ -127,7 +124,7 @@ export const editService = defineAction({
 export const deleteService = defineAction({
   accept: "form",
   input: z.object({
-    serviceId: z.string({ message: "El id del usuario es requerido" }).min(1),
+    serviceId: z.string({ message: "El id del servicio es requerido" }).min(1),
   }),
   handler: async (input, _ctx) => {
     const { serviceId } = input;
