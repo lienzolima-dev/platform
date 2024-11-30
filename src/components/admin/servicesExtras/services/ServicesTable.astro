@@ -23,7 +23,9 @@ const columns = [
 const rowData = (service: ServicesTableData) => [
   service.name,
   service.price ? `s/.${service.price.toFixed(2)}` : null,
-  service.description || null,
+  service.description && service.description.length > 30
+    ? `${service.description.slice(0, 30)}...`
+    : service.description || null,
   service.formattedDuration || null,
   service.category,
 ];

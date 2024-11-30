@@ -13,14 +13,12 @@ export const addExtra = defineAction({
   }),
   handler: async (input, _ctx) => {
     const { name, price, description } = input;
+
     const extraToUpdate: typeof extras.$inferInsert = {
       name: name,
       price: price,
+      description: description || null,
     };
-
-    if (description) {
-      extraToUpdate.description = description;
-    }
 
     try {
       await db.insert(extras).values(extraToUpdate);
@@ -46,6 +44,7 @@ export const editExtra = defineAction({
   }),
   handler: async (input, _ctx) => {
     const { extraId, nameExtra, price, description } = input;
+
     const extraToUpdate: typeof extras.$inferInsert = {
       name: nameExtra,
       price: price,

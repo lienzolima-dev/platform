@@ -16,7 +16,9 @@ const columns = ["Nombre", "Precio", "Descripción", "Acciones"];
 const rowData = (extra: ExtrasTableData) => [
   extra.name,
   extra.price ? `s/.${extra.price.toFixed(2)}` : null,
-  extra.description || null,
+  extra.description && extra.description.length > 30
+    ? `${extra.description.slice(0, 30)}...`
+    : extra.description || null,
 ];
 
 const noResults = extras.length === 0;

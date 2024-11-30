@@ -20,8 +20,8 @@ const { service } = Astro.props;
   import type { ServicesTableData } from "../../../../pages/admin/_db/types";
   import { openDialog } from "../../../global/dialog/utils";
 
-  function formatHours(decimalHours: number | null): string {
-    if (decimalHours === null) return "00:00";
+  function formatHours(decimalHours: number): string {
+    if (decimalHours < 0) return "00:00";
 
     const hours = Math.floor(decimalHours);
     const minutes = Math.round((decimalHours - hours) * 60);
