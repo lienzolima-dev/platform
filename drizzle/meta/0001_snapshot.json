@@ -93,12 +93,8 @@
           "name": "bookings_id_manicurist_users_user_id_fk",
           "tableFrom": "bookings",
           "tableTo": "users",
-          "columnsFrom": [
-            "id_manicurist"
-          ],
-          "columnsTo": [
-            "user_id"
-          ],
+          "columnsFrom": ["id_manicurist"],
+          "columnsTo": ["user_id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -130,12 +126,8 @@
           "name": "bookings_extras_details_id_extra_extras_extra_id_fk",
           "tableFrom": "bookings_extras_details",
           "tableTo": "extras",
-          "columnsFrom": [
-            "id_extra"
-          ],
-          "columnsTo": [
-            "extra_id"
-          ],
+          "columnsFrom": ["id_extra"],
+          "columnsTo": ["extra_id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -143,22 +135,15 @@
           "name": "bookings_extras_details_id_booking_bookings_booking_id_fk",
           "tableFrom": "bookings_extras_details",
           "tableTo": "bookings",
-          "columnsFrom": [
-            "id_booking"
-          ],
-          "columnsTo": [
-            "booking_id"
-          ],
+          "columnsFrom": ["id_booking"],
+          "columnsTo": ["booking_id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "bookings_extras_details_id_booking_id_extra_pk": {
-          "columns": [
-            "id_booking",
-            "id_extra"
-          ],
+          "columns": ["id_booking", "id_extra"],
           "name": "bookings_extras_details_id_booking_id_extra_pk"
         }
       },
@@ -188,12 +173,8 @@
           "name": "bookings_services_details_id_service_services_service_id_fk",
           "tableFrom": "bookings_services_details",
           "tableTo": "services",
-          "columnsFrom": [
-            "id_service"
-          ],
-          "columnsTo": [
-            "service_id"
-          ],
+          "columnsFrom": ["id_service"],
+          "columnsTo": ["service_id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -201,22 +182,15 @@
           "name": "bookings_services_details_id_booking_bookings_booking_id_fk",
           "tableFrom": "bookings_services_details",
           "tableTo": "bookings",
-          "columnsFrom": [
-            "id_booking"
-          ],
-          "columnsTo": [
-            "booking_id"
-          ],
+          "columnsFrom": ["id_booking"],
+          "columnsTo": ["booking_id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "bookings_services_details_id_booking_id_service_pk": {
-          "columns": [
-            "id_booking",
-            "id_service"
-          ],
+          "columns": ["id_booking", "id_service"],
           "name": "bookings_services_details_id_booking_id_service_pk"
         }
       },
@@ -444,12 +418,8 @@
           "name": "sessions_user_id_users_user_id_fk",
           "tableFrom": "sessions",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "user_id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["user_id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -599,16 +569,12 @@
       "indexes": {
         "users_google_id_unique": {
           "name": "users_google_id_unique",
-          "columns": [
-            "google_id"
-          ],
+          "columns": ["google_id"],
           "isUnique": true
         },
         "users_email_unique": {
           "name": "users_email_unique",
-          "columns": [
-            "email"
-          ],
+          "columns": ["email"],
           "isUnique": true
         }
       },
