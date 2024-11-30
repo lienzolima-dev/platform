@@ -25,7 +25,7 @@ const pageParam = Number.parseInt(searchParams.get("page") || "1");
 
 const pageSize = 6;
 const {
-  services: services,
+  services,
   count: totalServices,
   totalPages,
 } = await getPaginatedServices({

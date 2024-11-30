@@ -11,11 +11,13 @@ function formatDuration(decimalHours: number | null): string {
 
   if (hours > 0 && minutes === 0) {
     return `${hours}h`;
-  } else if (hours === 0 && minutes > 0) {
-    return `${minutes}m`;
-  } else {
-    return `${hours}h ${minutes}m`;
   }
+
+  if (hours === 0 && minutes > 0) {
+    return `${minutes}m`;
+  }
+
+  return `${hours}h ${minutes}m`;
 }
 
 export async function getServices({
