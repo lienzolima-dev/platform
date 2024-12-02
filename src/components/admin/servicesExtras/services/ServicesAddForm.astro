@@ -33,10 +33,10 @@
 
         <label>Horas de duración <span class="required">*</span> </label>
         <input
-          type="time"
           class="durationHours"
           name="durationHours"
-          step="60"
+          id="add-durationHours"
+          placeholder="00:00"
           required
         />
 
@@ -66,16 +66,45 @@
       const form = this.querySelector("form");
       const errorContent = document.getElementById("error-content");
       const submitButton = this.querySelector(".submit-button");
+      const durationHours = document.getElementById("add-durationHours");
 
       if (!form) throw new Error("Form not found");
       if (!errorContent) throw new Error("Error content not found");
+      if (!(durationHours instanceof HTMLInputElement))
+        throw new Error("Duration hours not found");
       if (!(submitButton instanceof HTMLButtonElement))
         throw new Error("Submit button not found");
+
+      const checkDurationHours = (value: string) => {
+        const [hours, minutes] = value.split(":");
+        if (!hours || !minutes) {
+          errorContent.innerText =
+            "Las horas de duración tienen que tener un formato de HH:MM";
+          return false;
+        }
+        errorContent.innerText = "";
+        return true;
+      };
+
+      durationHours.addEventListener("blur", (event) => {
+        if (!(event.target instanceof HTMLInputElement)) return;
+
+        const value = event.target.value;
+
+        if (!checkDurationHours(value)) return;
+
+        const [hours, minutes] = value.split(":");
+        const formattedHours = hours.padStart(2, "0");
+        const formattedMinutes = minutes.padStart(2, "0");
+        event.target.value = `${formattedHours}:${formattedMinutes}`;
+      });
 
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         const formData = new FormData(form);
+
+        if (!checkDurationHours(durationHours.value)) return;
 
         submitButton.disabled = true;
         const { error } = await actions.db.services.addService(formData);
