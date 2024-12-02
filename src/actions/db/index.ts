@@ -2,12 +2,14 @@ import { bookings } from "./bookings";
 import { tasks } from "./tasks";
 import { users } from "./users";
 import { complaints } from "./complaints";
-import { servicesExtras } from "./servicesExtras";
+import { services } from "./services";
+import { extras } from "./extras";
 
 export const db = {
   tasks,
   users,
   bookings,
   complaints,
-  servicesExtras,
+  services,
+  extras,
 };

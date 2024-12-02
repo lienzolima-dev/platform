@@ -58,7 +58,7 @@
         const formData = new FormData(form);
 
         submitButton.disabled = true;
-        const { error } = await actions.db.servicesExtras.addExtra(formData);
+        const { error } = await actions.db.extras.addExtra(formData);
         submitButton.disabled = false;
 
         if (!error) {

@@ -44,7 +44,7 @@ import AlertIcon from "../../../../components/svgs/admin/IndexContent/AlertIcon.
       const formData = new FormData(form);
 
       submitButton.disabled = true;
-      const { error } = await actions.db.servicesExtras.deleteExtra(formData);
+      const { error } = await actions.db.extras.deleteExtra(formData);
       submitButton.disabled = false;
 
       if (!error) {
