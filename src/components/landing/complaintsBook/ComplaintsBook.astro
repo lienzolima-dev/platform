@@ -2,7 +2,6 @@
 import { serviceOptions } from "../../../db/schemas/complaints";
 // biome-ignore lint/style/useImportType: Bug
 import { complaintOptions } from "../../../db/schemas/complaints";
-import { actions, isInputError } from "astro:actions";
 
 const complaintOptionsMap: Record<
   Exclude<(typeof complaintOptions)[number], "complaints">,
@@ -11,23 +10,6 @@ const complaintOptionsMap: Record<
   claim: "Reclamo",
   complaint: "Queja",
 };
-
-const result = Astro.getActionResult(actions.db.complaints.addComplaint);
-
-let errorMessage = "";
-
-// Check if the result is an error
-if (result?.error && !isInputError(result?.error)) {
-  errorMessage = result.error.message;
-}
-
-// Check if the result is an input error
-if (isInputError(result?.error)) {
-  const firstIssue = result.error.issues[0];
-  if (firstIssue) {
-    errorMessage = firstIssue.message;
-  }
-}
 ---
 
 <section class="container">

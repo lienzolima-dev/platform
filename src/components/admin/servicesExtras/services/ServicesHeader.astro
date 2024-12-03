@@ -1,0 +1,105 @@
+---
+type Props = {
+  servicesAmount: number;
+};
+
+const { servicesAmount } = Astro.props;
+---
+
+<div class="container">
+  <div class="title">
+    <h2>Servicios ({servicesAmount})</h2>
+    <button id="add-service-btn">Añadir</button>
+  </div>
+  <div class="search-input">
+    <input
+      type="text"
+      id="search-input"
+      placeholder="Buscar por nombre de servicio"
+    />
+    <button id="search-service-btn">Buscar</button>
+  </div>
+</div>
+
+<script>
+  import { openDialog } from "../../../../components/global/dialog/utils";
+  import { updateRoute } from "../../../../utils/filter";
+
+  const addServiceBtn = document.getElementById("add-service-btn");
+  const searchServiceBtn = document.getElementById("search-service-btn");
+  const searchInput = document.getElementById("search-input");
+
+  try {
+    if (!addServiceBtn) throw new Error("Add service button not found");
+    if (!(searchServiceBtn instanceof HTMLButtonElement))
+      throw new Error("Search service button not found");
+    if (!(searchInput instanceof HTMLInputElement))
+      throw new Error("Search input not found");
+
+    addServiceBtn.addEventListener("click", () => {
+      openDialog("addService");
+    });
+
+    const handleSearch = () => {
+      const url = new URL(window.location.href);
+      const newUrl = updateRoute(url, {
+        search: searchInput.value.trim(),
+        page: "1",
+      });
+      window.location.href = newUrl;
+    };
+
+    searchServiceBtn.addEventListener("click", handleSearch);
+
+    searchInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        handleSearch();
+      }
+    });
+  } catch (e) {
+    console.error("Error: ", e);
+  }
+</script>
+
+<style>
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .title {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .search-input {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: bold;
+    text-wrap: nowrap;
+  }
+
+  input {
+    width: 100%;
+    padding-inline: 1rem;
+  }
+
+  button {
+    padding: 0.5rem 1rem;
+    background-color: #2b9398;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+</style>

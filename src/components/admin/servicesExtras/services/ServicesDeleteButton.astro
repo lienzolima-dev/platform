@@ -1,0 +1,68 @@
+---
+import type { ServicesTableData } from "../../../../pages/admin/_db/types";
+import TrashIcon from "../../../svgs/admin/IndexContent/TrashIcon.astro";
+
+type Props = {
+  service: ServicesTableData;
+};
+
+const { service } = Astro.props;
+---
+
+<service-delete-button data-service={JSON.stringify(service)}>
+  <button>
+    <TrashIcon color={"white"} />
+    <span>Eliminar</span>
+  </button>
+</service-delete-button>
+
+<script>
+  import type { ServicesTableData } from "../../../../pages/admin/_db/types";
+  import { openDialog } from "../../../global/dialog/utils";
+
+  class ServiceDeleteButton extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector("button");
+      const form = document.getElementById("delete-service-form");
+      const errorContent = document.getElementById("error-content");
+      const selectedService = document.getElementById("selected-service");
+
+      if (!button) throw "Button not found";
+      if (!(form instanceof HTMLFormElement)) throw "Form not found";
+      if (!selectedService) throw "Selected service element not found";
+      if (!errorContent) throw "Error content not found";
+
+      button.addEventListener("click", () => {
+        const { id, name }: ServicesTableData = JSON.parse(
+          this.dataset.service || "{}"
+        );
+
+        form.serviceId.value = id;
+        selectedService.innerHTML = name;
+        errorContent.innerText = "";
+
+        openDialog("deleteService");
+      });
+    }
+  }
+
+  customElements.define("service-delete-button", ServiceDeleteButton);
+</script>
+
+<style>
+  button {
+    display: flex;
+    align-items: center;
+    background-color: #c35162;
+    gap: 0.25rem;
+    border-radius: 4px;
+    padding: 4px 8px;
+    color: white;
+    margin-right: 8px;
+  }
+
+  button :global(svg) {
+    width: 1rem;
+    height: 1rem;
+  }
+</style>

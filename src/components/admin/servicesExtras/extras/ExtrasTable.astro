@@ -1,0 +1,80 @@
+---
+import TableHead from "../../../global/table/TableHead.astro";
+import TableRow from "../../../global/table/TableRow.astro";
+import ExtrasEditButton from "./ExtrasEditButton.astro";
+import ExtrasDeleteButton from "./ExtrasDeleteButton.astro";
+import type { ExtrasTableData } from "../../../../pages/admin/_db/types";
+
+type Props = {
+  extras: ExtrasTableData[];
+};
+
+const { extras } = Astro.props;
+
+const columns = ["Nombre", "Precio", "Descripción", "Acciones"];
+
+const rowData = (extra: ExtrasTableData) => [
+  extra.name,
+  extra.price ? `s/.${extra.price.toFixed(2)}` : null,
+  extra.description && extra.description.length > 30
+    ? `${extra.description.slice(0, 30)}...`
+    : extra.description || null,
+];
+
+const noResults = extras.length === 0;
+---
+
+<div class="container">
+  <table>
+    <TableHead columnsNames={columns} />
+    <tbody>
+      {
+        noResults ? (
+          <tr>
+            <td colspan="4" style="text-align: center;">
+              No hay resultados
+            </td>
+          </tr>
+        ) : (
+          extras.map((extra) => (
+            <TableRow rowData={rowData(extra)}>
+              <div class="action-button">
+                <ExtrasEditButton {extra} />
+                <ExtrasDeleteButton {extra} />
+              </div>
+            </TableRow>
+          ))
+        )
+      }
+    </tbody>
+  </table>
+</div>
+
+<style>
+  table {
+    --main-color: #2b9398;
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+
+  td {
+    padding: 0.5rem 0;
+  }
+
+  .action-button {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .container {
+      overflow-x: auto;
+    }
+  }
+</style>

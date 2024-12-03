@@ -1,0 +1,115 @@
+---
+import DeleteIcon from "../../../../components/svgs/admin/IndexContent/DeleteIcon.astro";
+import AlertIcon from "../../../../components/svgs/admin/IndexContent/AlertIcon.astro";
+---
+
+<section class="container">
+  <AlertIcon />
+  <h3>
+    ¿Está seguro de que quiere eliminar <span id="selected-extra">Extra</span>?
+  </h3>
+  <p>Al eliminar un adicional, no podrá recuperar su información.</p>
+  <div class="buttons">
+    <form id="delete-extra-form">
+      <input type="hidden" name="extraId" />
+
+      <button id="e-delete-submit-btn" type="submit">
+        <DeleteIcon color="#fff" />
+        <span>Sí, eliminar adicional</span>
+      </button>
+    </form>
+    <button class="e-cancel">Cancelar</button>
+  </div>
+  <p id="e-delete-error-content"></p>
+</section>
+
+<script>
+  import { actions } from "astro:actions";
+  import { closeDialog } from "../../../global/dialog/utils";
+
+  try {
+    const form = document.getElementById("delete-extra-form");
+    const submitButton = document.getElementById("e-delete-submit-btn");
+    const buttonCancel = document.querySelector("button.e-cancel");
+    const errorContent = document.getElementById("e-delete-error-content");
+
+    if (!buttonCancel) throw "Button not found";
+    if (!(submitButton instanceof HTMLButtonElement)) throw "Button not found";
+    if (!(form instanceof HTMLFormElement)) throw "Form not found";
+    if (!errorContent) throw "Error content not found";
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      submitButton.disabled = true;
+      const { error } = await actions.db.extras.deleteExtra(formData);
+      submitButton.disabled = false;
+
+      if (!error) {
+        location.reload();
+        return;
+      }
+
+      errorContent.innerText = error.message;
+    });
+
+    buttonCancel.addEventListener("click", () => closeDialog("deleteExtra"));
+  } catch (e) {
+    console.error("Error:", e);
+  }
+</script>
+
+<style>
+  .container {
+    width: 100%;
+    display: flex;
+    gap: 1.25rem;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    align-items: center;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  button {
+    border: none;
+    cursor: pointer;
+    background-color: #c35162;
+    color: white;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  button.e-cancel {
+    background-color: #47a04c;
+  }
+
+  #selected-extra {
+    text-decoration: underline;
+    font-size: 1.75rem;
+  }
+
+  h3 {
+    font-size: 1.75rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.25;
+  }
+</style>

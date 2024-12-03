@@ -1,0 +1,205 @@
+<service-add-form>
+  <section>
+    <div class="form-container">
+      <h2>Añadir Servicio</h2>
+      <form id="add-service-form">
+        <label>
+          Nombre de servicio <span class="required">*</span>
+        </label>
+        <input
+          type="text"
+          class="name"
+          name="name"
+          placeholder="Ingresa nombre de servicio"
+          required
+        />
+
+        <label>Precio <span class="required">*</span> </label>
+        <input
+          type="number"
+          class="price"
+          name="price"
+          placeholder="Ingresa el precio"
+          step="0.01"
+          min="0"
+          required
+        />
+
+        <label>Descripción</label>
+        <textarea
+          class="description"
+          name="description"
+          placeholder="Ingresa una descripción"></textarea>
+
+        <label>Horas de duración <span class="required">*</span> </label>
+        <input
+          class="durationHours"
+          name="durationHours"
+          id="add-durationHours"
+          placeholder="00:00"
+          required
+        />
+
+        <label>
+          Categoría <span class="required">*</span>
+        </label>
+        <input
+          type="text"
+          class="category"
+          name="category"
+          placeholder="Ingresa categoría"
+          required
+        />
+
+        <p id="error-content"></p>
+        <button class="submit-button" type="submit">Guardar</button>
+      </form>
+    </div>
+  </section>
+</service-add-form>
+
+<script>
+  import { actions, isInputError } from "astro:actions";
+
+  class ServiceAddForm extends HTMLElement {
+    connectedCallback() {
+      const form = this.querySelector("form");
+      const errorContent = document.getElementById("error-content");
+      const submitButton = this.querySelector(".submit-button");
+      const durationHours = document.getElementById("add-durationHours");
+
+      if (!form) throw new Error("Form not found");
+      if (!errorContent) throw new Error("Error content not found");
+      if (!(durationHours instanceof HTMLInputElement))
+        throw new Error("Duration hours not found");
+      if (!(submitButton instanceof HTMLButtonElement))
+        throw new Error("Submit button not found");
+
+      const checkDurationHours = (value: string) => {
+        const [hours, minutes] = value.split(":");
+        if (!hours || !minutes) {
+          errorContent.innerText =
+            "Las horas de duración tienen que tener un formato de HH:MM";
+          return false;
+        }
+        errorContent.innerText = "";
+        return true;
+      };
+
+      durationHours.addEventListener("blur", (event) => {
+        if (!(event.target instanceof HTMLInputElement)) return;
+
+        const value = event.target.value;
+
+        if (!checkDurationHours(value)) return;
+
+        const [hours, minutes] = value.split(":");
+        const formattedHours = hours.padStart(2, "0");
+        const formattedMinutes = minutes.padStart(2, "0");
+        event.target.value = `${formattedHours}:${formattedMinutes}`;
+      });
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+
+        if (!checkDurationHours(durationHours.value)) return;
+
+        submitButton.disabled = true;
+        const { error } = await actions.db.services.addService(formData);
+        submitButton.disabled = false;
+
+        if (!error) {
+          location.reload();
+          return;
+        }
+
+        if (error) {
+          if (isInputError(error)) {
+            errorContent.innerText = error.issues[0].message;
+            return;
+          }
+          errorContent.innerText = error.message;
+          return;
+        }
+      });
+    }
+  }
+
+  customElements.define("service-add-form", ServiceAddForm);
+</script>
+
+<style>
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+
+  input,
+  select {
+    border: 1px solid #ccc;
+    outline: none;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-container h3 {
+    margin-bottom: 2rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  textarea {
+    border: 1px solid #ccc;
+    outline: none;
+    padding: 0.5rem;
+    height: 70px;
+    margin-bottom: 0.5rem;
+    resize: none;
+  }
+
+  #error-content {
+    color: #b11313;
+  }
+
+  .required {
+    color: #b11313;
+  }
+
+  .optional {
+    font-style: italic;
+  }
+
+  button {
+    background-color: #47a04c;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+  }
+
+  button:disabled {
+    background-color: #ccc;
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>

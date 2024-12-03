@@ -8,9 +8,9 @@
  * @params
  * @example
  * ```ts
- * const url = new URL('https://example.com/repos?page=2&sort=name');
+ * const url = new URL('https://example.com/route?page=2&sort=name');
  * updateRoute(url, { sort: 'createdAt', favorites: 'true' });
- * // Output: '/repos?sort=createdAt&favorites=true&page=1'
+ * // Output: '/route?sort=createdAt&favorites=true&page=1'
  * ```
  *
  * @returns A string representing the updated URL with the new filter applied.

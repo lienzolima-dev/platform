@@ -1,39 +1,41 @@
 <section>
   <div class="form-container">
-    <h2>Editar Usuario</h2>
-    <form id="edit-user-form">
-      <input id="edit-user-id" name="userId" hidden />
+    <h2>Editar Adicional</h2>
+    <form id="edit-extra-form">
+      <input type="hidden" id="extra-id" name="extraId" />
 
-      <label for="username">
-        Nombre: <span class="required">*</span>
+      <label>
+        Nombre de adicional <span class="required">*</span>
       </label>
       <input
         type="text"
-        id="username"
-        name="username"
-        placeholder="Ingresa nombre completo"
+        class="nameExtra"
+        name="nameExtra"
+        placeholder="Ingrese nombre de adicional"
         required
       />
 
-      <label for="user-email">Email <span class="required">*</span> </label>
+      <label>Precio <span class="required">*</span> </label>
       <input
-        type="email"
-        id="user-email"
-        name="email"
-        placeholder="Ingresa un email"
+        type="number"
+        class="price"
+        name="price"
+        placeholder="Ingrese el precio"
+        step="0.01"
+        min="0"
         required
       />
 
-      <label for="user-phone">Teléfono</label>
-      <input
-        type="text"
-        id="user-phone"
-        name="phone"
-        placeholder="Ingresa un teléfono"
-      />
+      <label>Descripción</label>
+      <textarea
+        class="description"
+        name="description"
+        placeholder="Ingrese una descripción"></textarea>
 
-      <p id="u-edit-error-content"></p>
-      <button id="u-edit-submit-btn" type="submit">Guardar</button>
+      <p id="errorContent"></p>
+      <button id="e-edit-submit-btn" class="submit-button" type="submit"
+        >Guardar</button
+      >
     </form>
   </div>
 </section>
@@ -42,25 +44,28 @@
   import { actions, isInputError } from "astro:actions";
 
   try {
-    const form = document.getElementById("edit-user-form");
-    const errorContent = document.getElementById("u-edit-error-content");
-    const submitButton = document.getElementById("u-edit-submit-btn");
+    const form = document.getElementById("edit-extra-form");
+    const errorContent = document.getElementById("errorContent");
+    const submitButton = document.getElementById("e-edit-submit-btn");
 
     if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
     if (!errorContent) throw new Error("Error content not found");
-    if (!(submitButton instanceof HTMLButtonElement)) {
+    if (!(submitButton instanceof HTMLButtonElement))
       throw new Error("Submit button not found");
-    }
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
 
       const formData = new FormData(form);
 
       submitButton.disabled = true;
-      const { error } = await actions.db.users.editUser(formData);
+      const { error } = await actions.db.extras.editExtra(formData);
       submitButton.disabled = false;
-      if (!error) location.reload();
+
+      if (!error) {
+        location.reload();
+        return;
+      }
 
       if (error) {
         if (isInputError(error)) {
@@ -72,7 +77,7 @@
       }
     });
   } catch (e) {
-    console.error(e);
+    console.error("Error:", e);
   }
 </script>
 
@@ -111,7 +116,16 @@
     margin-bottom: 0.5rem;
   }
 
-  #u-edit-error-content {
+  textarea {
+    border: 1px solid #ccc;
+    outline: none;
+    padding: 0.5rem;
+    height: 70px;
+    margin-bottom: 0.5rem;
+    resize: none;
+  }
+
+  #errorContent {
     color: #b11313;
   }
 
@@ -132,13 +146,11 @@
     padding: 0.5rem 1rem;
   }
 
-  .hidden {
-    display: none;
+  button:disabled {
+    background-color: #ccc;
   }
 
-  #user-password-fields:not(.hidden) {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  .hidden {
+    display: none;
   }
 </style>

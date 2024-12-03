@@ -1,0 +1,105 @@
+---
+type Props = {
+  extrasAmount: number;
+};
+
+const { extrasAmount } = Astro.props;
+---
+
+<div class="container">
+  <div class="title">
+    <h2>Adicionales ({extrasAmount})</h2>
+    <button id="add-extra-btn">Añadir</button>
+  </div>
+  <div class="search-input">
+    <input
+      type="text"
+      id="e-search-input"
+      placeholder="Buscar por nombre de adicional"
+    />
+    <button id="search-extra-btn">Buscar</button>
+  </div>
+</div>
+
+<script>
+  import { openDialog } from "../../../../components/global/dialog/utils";
+  import { updateRoute } from "../../../../utils/filter";
+
+  const addExtraBtn = document.getElementById("add-extra-btn");
+  const searchExtraBtn = document.getElementById("search-extra-btn");
+  const extraSearchInput = document.getElementById("e-search-input");
+
+  try {
+    if (!addExtraBtn) throw new Error("Add extra button not found");
+    if (!(searchExtraBtn instanceof HTMLButtonElement))
+      throw new Error("Search extra button not found");
+    if (!(extraSearchInput instanceof HTMLInputElement))
+      throw new Error("Search input not found");
+
+    addExtraBtn.addEventListener("click", () => {
+      openDialog("addExtra");
+    });
+
+    const handleSearch = () => {
+      const url = new URL(window.location.href);
+      const newUrl = updateRoute(url, {
+        search: extraSearchInput.value.trim(),
+        page: "1",
+      });
+      window.location.href = newUrl;
+    };
+
+    searchExtraBtn.addEventListener("click", handleSearch);
+
+    extraSearchInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        handleSearch();
+      }
+    });
+  } catch (e) {
+    console.error("Error: ", e);
+  }
+</script>
+
+<style>
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .title {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .search-input {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: bold;
+    text-wrap: nowrap;
+  }
+
+  input {
+    width: 100%;
+    padding-inline: 1rem;
+  }
+
+  button {
+    padding: 0.5rem 1rem;
+    background-color: #2b9398;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+</style>
