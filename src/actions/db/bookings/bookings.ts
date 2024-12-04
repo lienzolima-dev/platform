@@ -74,8 +74,12 @@ export const get = defineAction({
 export const add = defineAction({
   input: z.object({
     name: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
-    email: z.string().email("El email no es válido"),
-    phone: z.string().min(9, "El teléfono debe tener al menos 9 caracteres"),
+    email: z.string().email("El email no es válido").nullable().optional(),
+    phone: z
+      .string()
+      .min(9, "El teléfono debe tener al menos 9 caracteres")
+      .nullable()
+      .optional(),
     manicuristId: z.string().min(1, "El id del manicurista no es válido"),
     paymentStatus: z.enum(paymentStatuses, {
       message: "El estado de pago no es válido",
@@ -184,15 +188,17 @@ export const add = defineAction({
       }
 
       // TODO: Improve email template
-      resend.emails.send({
-        from: "noreply@lienzolima.com",
-        to: [input.email],
-        subject: "Lienzo Lima - Reserva registrada",
-        html: `<p>Hola ${input.name}, Se ha registrado tu reserva en Lienzo Lima</p>
+      if (input.email) {
+        resend.emails.send({
+          from: "noreply@lienzolima.com",
+          to: [input.email],
+          subject: "Lienzo Lima - Reserva registrada",
+          html: `<p>Hola ${input.name}, Se ha registrado tu reserva en Lienzo Lima</p>
                <p>Fecha: ${date.toLocaleDateString("es-PE")}</p>
                <p>Hora: ${startTime.toLocaleTimeString("es-PE", { hour: "2-digit", minute: "2-digit" })} - ${endTime.toLocaleTimeString("es-PE", { hour: "2-digit", minute: "2-digit" })}</p>
                <p>Precio total: S/. ${totalPrice}</p>`,
-      });
+        });
+      }
     } catch (e) {
       console.error("[ERROR]: ", e);
       if (e instanceof ActionError) {

@@ -22,12 +22,12 @@
 
     <div class="input-container">
       <label for="email">Email:</label>
-      <input type="email" id="email" name="email" bind:value={email} required />
+      <input type="email" id="email" name="email" bind:value={email} />
     </div>
 
     <div class="input-container">
       <label for="phone">Teléfono:</label>
-      <input type="tel" id="phone" name="phone" bind:value={phone} required />
+      <input type="tel" id="phone" name="phone" bind:value={phone} />
     </div>
   </div>
 </section>
