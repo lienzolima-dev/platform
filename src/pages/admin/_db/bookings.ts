@@ -82,6 +82,49 @@ export async function getBookings({
   return formattedBookings;
 }
 
+export async function getBookingById(id: string): Promise<Booking | null> {
+  const bookings = await db.query.bookings.findMany({
+    orderBy: (bookings, { desc }) => [desc(bookings.startTime)],
+    where: (bookings, { eq }) => eq(bookings.id, id),
+    with: {
+      bookingsExtrasDetails: {
+        with: {
+          extras: true,
+        },
+      },
+      bookingsServicesDetails: {
+        with: {
+          services: true,
+        },
+      },
+      manicurist: true,
+    },
+    limit: 1,
+  });
+
+  const booking = bookings[0];
+
+  if (!booking) {
+    return null;
+  }
+
+  return {
+    id: booking.id,
+    startTime: formatDateString(booking.startTime),
+    endTime: formatDateString(booking.endTime),
+    date: new Date(booking.startTime),
+    username: booking.name,
+    email: booking.email,
+    phone: booking.phone,
+    paymentStatus: formatPaymentStatus(booking.paymentStatus),
+    services: booking.bookingsServicesDetails.map((detail) => detail.services),
+    totalPrice: booking.totalPrice,
+    advanceAmount: booking.advanceAmount,
+    extras: booking.bookingsExtrasDetails.map((detail) => detail.extras),
+    manicurist: booking.manicurist.username,
+  };
+}
+
 export async function getAllBookings(): Promise<Booking[]> {
   const bookings = await getBookings({});
   return bookings;
