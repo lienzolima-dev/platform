@@ -3,7 +3,6 @@ import TableHead from "../../../global/table/TableHead.astro";
 import TableRow from "../../../global/table/TableRow.astro";
 import UserEditButton from "./UserEditButton.astro";
 import UserDeleteButton from "./UserDeleteButton.astro";
-// import Pagination from "../../../global/Pagination.astro";
 import type { UsersTableData } from "../../../../pages/admin/_db/types";
 import type { TableLabel } from "../../../global/table/types";
 
@@ -50,7 +49,6 @@ const noResults = users.length === 0;
       }
     </tbody>
   </table>
-  <!-- <Pagination currentPage={1} totalPages={2} /> -->
 </div>
 
 <style>

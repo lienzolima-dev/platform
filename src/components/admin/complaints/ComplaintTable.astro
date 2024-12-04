@@ -1,7 +1,6 @@
 ---
 import TableHead from "../../global/table/TableHead.astro";
 import TableRow from "../../global/table/TableRow.astro";
-// import Pagination from "../../global/Pagination.astro";
 import ComplaintViewButton from "./ComplaintViewButton.astro";
 import type { ComplaintsTableData } from "../../../pages/admin/_db/types";
 
@@ -28,6 +27,8 @@ const rowData = complaints.reduce(
   },
   {}
 );
+
+const noResults = complaints.length === 0;
 ---
 
 <div class="container">
@@ -35,13 +36,21 @@ const rowData = complaints.reduce(
     <TableHead columnsNames={columns} />
     <tbody>
       {
-        complaints.map((complaint) => (
-          <TableRow rowData={rowData[complaint.id]}>
-            <div class="action-button">
-              <ComplaintViewButton {complaint} />
-            </div>
-          </TableRow>
-        ))
+        noResults ? (
+          <tr>
+            <td colspan="6" style="text-align: center;">
+              No hay reclamos
+            </td>
+          </tr>
+        ) : (
+          complaints.map((complaint) => (
+            <TableRow rowData={rowData[complaint.id]}>
+              <div class="action-button">
+                <ComplaintViewButton {complaint} />
+              </div>
+            </TableRow>
+          ))
+        )
       }
     </tbody>
   </table>
