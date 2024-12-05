@@ -247,7 +247,6 @@ export const edit = defineAction({
     const endTimeObj = getTimeObjet(endTime);
 
     const date = DateTime.fromISO(input.date, { zone: "America/Lima" });
-    console.log("Fecha original (America/Lima):", date.toString());
 
     const newStartTime = date
       .set({ hour: startTimeObj.hours, minute: startTimeObj.minutes })
