@@ -15,6 +15,13 @@
       "when": 1732999227798,
       "tag": "0001_lush_bucky",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1733410579339,
+      "tag": "0002_petite_captain_flint",
+      "breakpoints": true
     }
   ]
 }

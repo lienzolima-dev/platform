@@ -6,6 +6,7 @@ import { bookingsServicesDetails } from "./bookingsServicesDetails";
 import { bookingsExtrasDetails } from "./bookingsExtrasDetails";
 
 export const paymentStatuses = ["advance", "full", "partial", "none"] as const;
+export const bookingStatuses = ["pending", "finished", "cancelled"] as const;
 
 export const bookings = sqliteTable("bookings", {
   id: text("booking_id").primaryKey().$defaultFn(ulid).notNull(),
@@ -19,10 +20,15 @@ export const bookings = sqliteTable("bookings", {
   startTime: text("start_time").notNull(),
   endTime: text("end_time").notNull(),
   paymentStatus: text("payment_status", {
-    enum: ["advance", "full", "partial", "none"],
+    enum: paymentStatuses,
   }).notNull(),
   createdAt: text("created_at").notNull().default(new Date().toISOString()),
   advanceAmount: real("advance_amount").default(0).notNull(),
+  status: text("status", {
+    enum: bookingStatuses,
+  })
+    .default("pending")
+    .notNull(),
 });
 
 export const bookingsRelations = relations(bookings, ({ many, one }) => ({
