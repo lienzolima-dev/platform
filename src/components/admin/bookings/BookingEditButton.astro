@@ -1,0 +1,98 @@
+---
+import EditIcon from "../../svgs/admin/IndexContent/EditIcon.astro";
+import type { Booking } from "../../../pages/admin/_db/types";
+
+type Props = {
+  booking: Booking;
+};
+
+const { booking } = Astro.props;
+---
+
+<booking-edit-button data-booking={JSON.stringify(booking)}>
+  <button>
+    <span class="icon-bg"></span>
+    <EditIcon color="white" />
+  </button>
+</booking-edit-button>
+
+<script>
+  import type { Booking } from "../../../pages/admin/_db/types";
+  import { openDialog } from "../../global/dialog/utils";
+  import { DateTime } from "luxon";
+
+  function convertDateFormat(dateInput: string | Date): string {
+    const dateObj =
+      typeof dateInput === "string" ? new Date(dateInput) : dateInput;
+    return DateTime.fromJSDate(dateObj, { zone: "America/Lima" }).toFormat(
+      "yyyy-MM-dd"
+    );
+  }
+
+  function convertTimeFormat(time: string): string {
+    const cleanTime = time.replace(/\s*\.\s*/g, "").toLowerCase();
+    const [timeFormat, modifier] = cleanTime.split(" ");
+    let [hours, minutes] = timeFormat.split(":").map(Number);
+
+    if (modifier.toLowerCase() === "pm" && hours !== 12) {
+      hours += 12;
+    } else if (modifier.toLowerCase() === "am" && hours === 12) {
+      hours = 0;
+    }
+
+    return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+  }
+
+  class BookingEditButton extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector("button");
+      const form = document.getElementById("edit-booking-form");
+
+      if (!button) throw "Button not found";
+      if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
+
+      const booking: Booking = JSON.parse(this.dataset.booking || "{}");
+
+      button.addEventListener("click", async () => {
+        form.bookingId.value = booking.id;
+        form.username.value = booking.username;
+        form.date.value = convertDateFormat(booking.date);
+        form.startTime.value = convertTimeFormat(booking.startTime);
+        form.endTime.value = convertTimeFormat(booking.endTime);
+
+        openDialog("editBooking");
+      });
+    }
+  }
+
+  customElements.define("booking-edit-button", BookingEditButton);
+</script>
+
+<style>
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    gap: 0.25rem;
+    padding: 4px 8px;
+    color: white;
+    margin-left: 8px;
+    position: relative;
+  }
+
+  .icon-bg {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    background-color: #000;
+    border-radius: 50%;
+    z-index: 0;
+  }
+
+  button :global(svg) {
+    width: 1rem;
+    height: 1rem;
+    z-index: 1;
+  }
+</style>
