@@ -1,0 +1,49 @@
+---
+type Props = {
+  bookingId: string;
+};
+
+const { bookingId } = Astro.props;
+---
+
+<next-bookings-finish-button data-booking-id={JSON.stringify({ bookingId })}>
+  <button>Finalizar</button>
+</next-bookings-finish-button>
+
+<script>
+  import { actions } from "astro:actions";
+
+  class NextBookingFinishButton extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector("button");
+      if (!button) throw "Button not found";
+
+      button.addEventListener("click", async () => {
+        const bookingId = JSON.parse(this.dataset.bookingId ?? "").bookingId;
+        if (!bookingId) throw "Booking ID not found";
+
+        const { error } = await actions.db.bookings.markAsFinished({
+          bookingId,
+        });
+
+        if (!error) {
+          location.reload();
+          return;
+        }
+      });
+    }
+  }
+
+  customElements.define("next-bookings-finish-button", NextBookingFinishButton);
+</script>
+
+<style>
+  button {
+    background-color: #e15a85;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+</style>

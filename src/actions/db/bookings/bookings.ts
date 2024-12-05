@@ -118,10 +118,11 @@ export const add = defineAction({
       services,
       extras,
       totalPrice,
-      advanceAmount,
       startTime: startTimeString,
       endTime: endTimeString,
     } = input;
+
+    let advanceAmount = input.advanceAmount;
 
     if (paymentStatus === "advance" || paymentStatus === "partial") {
       if (!advanceAmount) {
@@ -149,6 +150,9 @@ export const add = defineAction({
     startTime.setHours(startTimeObj.hours, startTimeObj.minutes);
     const endTime = new Date(date);
     endTime.setHours(endTimeObj.hours, endTimeObj.minutes);
+
+    if (paymentStatus === "full") advanceAmount = totalPrice;
+    if (paymentStatus === "none") advanceAmount = 0;
 
     try {
       const newId = ulid();
@@ -281,6 +285,25 @@ export const edit = defineAction({
       throw new ActionError({
         code: "CONFLICT",
         message: "Error al editar reserva",
+      });
+    }
+  },
+});
+
+export const markAsFinished = defineAction({
+  input: z.object({
+    bookingId: z.string(),
+  }),
+  handler: async (input, _ctx) => {
+    try {
+      await db
+        .update(bookingsTable)
+        .set({ status: "finished" })
+        .where(eq(bookingsTable.id, input.bookingId));
+    } catch (_e) {
+      throw new ActionError({
+        code: "CONFLICT",
+        message: "Error al marcar reserva como finalizada",
       });
     }
   },
