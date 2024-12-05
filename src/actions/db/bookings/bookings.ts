@@ -11,6 +11,7 @@ import {
 import { paymentStatuses } from "../../../db/schemas/bookings";
 import { ulid } from "ulid";
 import { resend } from "../../../resend/client";
+import { getBookingById } from "../../../pages/admin/_db/bookings";
 
 function isSameDay(dateString1: string, dateString2: string) {
   const date1 = new Date(dateString1);
@@ -187,8 +188,10 @@ export const add = defineAction({
         }
       }
 
+      const addedBooking = await getBookingById(newId);
+
       // TODO: Improve email template
-      if (input.email) {
+      if (input.email && addedBooking) {
         resend.emails.send({
           from: "noreply@lienzolima.com",
           to: [input.email],
@@ -196,6 +199,10 @@ export const add = defineAction({
           html: `<p>Hola ${input.name}, Se ha registrado tu reserva en Lienzo Lima</p>
                <p>Fecha: ${date.toLocaleDateString("es-PE")}</p>
                <p>Hora: ${startTime.toLocaleTimeString("es-PE", { hour: "2-digit", minute: "2-digit" })} - ${endTime.toLocaleTimeString("es-PE", { hour: "2-digit", minute: "2-digit" })}</p>
+               <p>Manicurista: ${addedBooking.manicurist}</p>
+               <p>Servicios: ${addedBooking.services.map((service) => service.name).join(", ")}</p>
+               <p>Extras: ${addedBooking.extras.map((extra) => extra.name).join(", ")}</p>
+               <p>Adelanto: S/. ${addedBooking.advanceAmount}</p>
                <p>Precio total: S/. ${totalPrice}</p>`,
         });
       }
