@@ -31,8 +31,8 @@
   }));
 
   let name: string = $state("");
-  let email: string = $state("");
-  let phone: string = $state("");
+  let email: string | null = $state(null);
+  let phone: string | null = $state(null);
 
   let selectedManicurist = $state("");
   let selectedPayingState: (typeof paymentStatuses)[number] | "" = $state("");
