@@ -1,0 +1,146 @@
+<section>
+  <div class="form-container">
+    <h2>Editar Reserva</h2>
+    <form id="edit-booking-form">
+      <input type="hidden" id="booking-id" name="bookingId" />
+
+      <label> Nombre de cliente </label>
+      <input type="text" class="username" name="username" disabled />
+
+      <label>Fecha <span class="required">*</span> </label>
+      <input type="date" id="date" name="date" required />
+
+      <label>Hora de inicio <span class="required">*</span> </label>
+      <input
+        type="time"
+        class="startTime"
+        name="startTime"
+        step="60"
+        required
+      />
+
+      <label>Hora de finalización <span class="required">*</span> </label>
+      <input type="time" class="endTime" name="endTime" step="60" required />
+
+      <p id="b-error-content"></p>
+      <button id="b-edit-submit-btn" class="submit-button" type="submit"
+        >Guardar</button
+      >
+    </form>
+  </div>
+</section>
+
+<script>
+  import { actions, isInputError } from "astro:actions";
+
+  try {
+    const form = document.getElementById("edit-booking-form");
+    const errorContent = document.getElementById("b-error-content");
+    const submitButton = document.getElementById("b-edit-submit-btn");
+
+    if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
+    if (!errorContent) throw new Error("Error content not found");
+    if (!(submitButton instanceof HTMLButtonElement))
+      throw new Error("Submit button not found");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+
+      submitButton.disabled = true;
+      const { error } = await actions.db.services.editService(formData);
+      submitButton.disabled = false;
+
+      if (!error) {
+        location.reload();
+        return;
+      }
+
+      if (error) {
+        if (isInputError(error)) {
+          errorContent.innerText = error.issues[0].message;
+          return;
+        }
+        errorContent.innerText = error.message;
+        return;
+      }
+    });
+  } catch (e) {
+    console.error("Error:", e);
+  }
+</script>
+
+<style>
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+
+  input,
+  select {
+    border: 1px solid #ccc;
+    outline: none;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-container h3 {
+    margin-bottom: 2rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  textarea {
+    border: 1px solid #ccc;
+    outline: none;
+    padding: 0.5rem;
+    height: 70px;
+    margin-bottom: 0.5rem;
+    resize: none;
+  }
+
+  #s-error-content {
+    color: #b11313;
+  }
+
+  .required {
+    color: #b11313;
+  }
+
+  .optional {
+    font-style: italic;
+  }
+
+  button {
+    background-color: #47a04c;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+  }
+
+  button:disabled {
+    background-color: #ccc;
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>
