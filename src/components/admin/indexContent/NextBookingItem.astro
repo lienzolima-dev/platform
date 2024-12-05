@@ -9,11 +9,32 @@ type Props = {
 };
 
 const { booking } = Astro.props;
+
+const paymentCompleted =
+  booking.paymentStatus === "full" || booking.status === "finished";
+
+const isPendingPayment =
+  booking.status === "pending" && booking.totalPrice > booking.advanceAmount;
+
+function getPaymentStatusLabel(paymentStatus: string): string {
+  if (paymentStatus === "advance") return "Adelanto";
+  if (paymentStatus === "full") return "Pago completo";
+  if (paymentStatus === "partial") return "Pago Parcial";
+  if (paymentStatus === "none") return "Sin Adelanto";
+  return paymentStatus;
+}
 ---
 
-<div class="item">
+<div class="item" class:list={[{ finished: booking.status === "finished" }]}>
   <div class="info">
-    <span class="item-rectangle"></span>
+    <span
+      class="item-rectangle"
+      class:list={[
+        {
+          pending: booking.status === "pending",
+          finished: booking.status === "finished",
+        },
+      ]}></span>
     <div class="item-inner">
       <div class="item-top">
         <span>
@@ -24,16 +45,20 @@ const { booking } = Astro.props;
           <span>{booking.username.toUpperCase()}</span>
         </div>
         <div class="item-user">
-          <span>
-            (<MoneyIcon />
-            Por pagar: S/{" "}
-            {booking.totalPrice - booking.advanceAmount})
-          </span>
+          {
+            isPendingPayment && (
+              <span>
+                (<MoneyIcon />
+                Por pagar: S/ {booking.totalPrice - booking.advanceAmount})
+              </span>
+            )
+          }
+          {paymentCompleted && <span>(PAGO COMPLETO)</span>}
         </div>
       </div>
       <div class="item-bottom">
         <span class="item-payment-label">
-          {booking.paymentStatus}
+          {getPaymentStatusLabel(booking.paymentStatus)}
         </span>
         <span class="item-date-label">
           {
@@ -49,7 +74,18 @@ const { booking } = Astro.props;
       </div>
     </div>
   </div>
-  <NextBookingFinishButton bookingId={booking.id} />
+  {
+    booking.status === "pending" && (
+      <NextBookingFinishButton bookingId={booking.id} />
+    )
+  }
+  {
+    booking.status === "finished" && (
+      <button class="finished-button" disabled>
+        Atendida
+      </button>
+    )
+  }
 </div>
 
 <style>
@@ -62,11 +98,22 @@ const { booking } = Astro.props;
     border-bottom: 1px solid #aeaeae;
   }
 
+  .item.finished {
+    opacity: 0.5;
+  }
+
   .item-rectangle {
     width: 1rem;
     height: 1rem;
-    background-color: #e15a85;
     border-radius: 0.25rem;
+  }
+
+  .item-rectangle.pending {
+    background-color: #e15a85;
+  }
+
+  .item-rectangle.finished {
+    background-color: #7b7b7b;
   }
 
   .info {
@@ -119,5 +166,14 @@ const { booking } = Astro.props;
 
   .item-date-label {
     background-color: #d0e6ad;
+  }
+
+  .finished-button {
+    background-color: #7b7b7b;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    cursor: not-allowed;
   }
 </style>
