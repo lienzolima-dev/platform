@@ -2,6 +2,7 @@
 import type { Booking } from "../../../pages/admin/_db/types";
 import CalendarIcon from "../../svgs/admin/IndexContent/CalendarIcon.astro";
 import UserIcon from "../../svgs/admin/IndexContent/UserIcon.astro";
+import MoneyIcon from "../../svgs/admin/IndexContent/MoneyIcon.astro";
 
 type Props = {
   bookings: Booking[];
@@ -32,6 +33,13 @@ const { bookings } = Astro.props;
                   <div class="item-user">
                     <UserIcon />
                     <span>{bookingItem.username.toUpperCase()}</span>
+                  </div>
+                  <div class="item-user">
+                    <span>
+                      (<MoneyIcon />
+                      Por pagar: S/{" "}
+                      {bookingItem.totalPrice - bookingItem.advanceAmount})
+                    </span>
                   </div>
                 </div>
                 <div class="item-bottom">
