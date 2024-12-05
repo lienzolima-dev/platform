@@ -1,4 +1,5 @@
 import type { extras, services } from "../../../db/schema";
+import type { paymentStatuses } from "../../../db/schemas/bookings";
 import type {
   complaintOptions,
   serviceOptions,
@@ -20,12 +21,13 @@ export type Booking = {
   username: string;
   email: string | null;
   phone: string | null;
-  paymentStatus: string;
+  paymentStatus: (typeof paymentStatuses)[number];
   advanceAmount: number;
   totalPrice: number;
   services: (typeof services.$inferSelect)[];
   extras: (typeof extras.$inferSelect)[];
   manicurist: string;
+  status: string;
 };
 
 export type CollaboratorsTableData = {

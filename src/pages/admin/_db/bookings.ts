@@ -11,14 +11,6 @@ function formatDateString(dateString: string): string {
   });
 }
 
-function formatPaymentStatus(paymentStatus: string): string {
-  if (paymentStatus === "advance") return "Adelanto";
-  if (paymentStatus === "full") return "Pago completo";
-  if (paymentStatus === "partial") return "Pago Parcial";
-  if (paymentStatus === "none") return "Sin Adelanto";
-  return paymentStatus;
-}
-
 export async function getBookings({
   offset,
   limit,
@@ -68,7 +60,7 @@ export async function getBookings({
       username: booking.name,
       email: booking.email,
       phone: booking.phone,
-      paymentStatus: formatPaymentStatus(booking.paymentStatus),
+      paymentStatus: booking.paymentStatus,
       services: booking.bookingsServicesDetails.map(
         (detail) => detail.services,
       ),
@@ -76,6 +68,7 @@ export async function getBookings({
       advanceAmount: booking.advanceAmount,
       extras: booking.bookingsExtrasDetails.map((detail) => detail.extras),
       manicurist: booking.manicurist.username,
+      status: booking.status,
     };
   });
 
@@ -116,12 +109,13 @@ export async function getBookingById(id: string): Promise<Booking | null> {
     username: booking.name,
     email: booking.email,
     phone: booking.phone,
-    paymentStatus: formatPaymentStatus(booking.paymentStatus),
+    paymentStatus: booking.paymentStatus,
     services: booking.bookingsServicesDetails.map((detail) => detail.services),
     totalPrice: booking.totalPrice,
     advanceAmount: booking.advanceAmount,
     extras: booking.bookingsExtrasDetails.map((detail) => detail.extras),
     manicurist: booking.manicurist.username,
+    status: booking.status,
   };
 }
 
