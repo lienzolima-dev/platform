@@ -5,7 +5,7 @@ import IconBooking from "../svgs/IconBooking.astro";
 import IconServices from "../svgs/IconServices.astro";
 // import IconPromo from "../svgs/IconPromo.astro";
 // import IconData from "../svgs/IconData.astro";
-// import IconComplaint from "../svgs/IconComplaint.astro";
+import IconComplaint from "../svgs/IconComplaint.astro";
 import IconHome from "../svgs/IconHome.astro";
 
 const links = [
@@ -57,12 +57,12 @@ const links = [
   //   href: "/admin/manage/users", //Change paths
   //   iconColor: "#8db15a",
   // },
-  // {
-  //   label: "Reclamos",
-  //   icon: IconComplaint,
-  //   href: "/admin/complaints", //Change paths
-  //   iconColor: "#e4b68d",
-  // },
+  {
+    label: "Reclamos",
+    icon: IconComplaint,
+    href: "/admin/complaints", //Change paths
+    iconColor: "#e4b68d",
+  },
 ];
 
 const url = Astro.url;
