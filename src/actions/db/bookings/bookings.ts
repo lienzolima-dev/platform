@@ -75,8 +75,12 @@ export const get = defineAction({
 export const add = defineAction({
   input: z.object({
     name: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
-    email: z.string().email("El email no es válido"),
-    phone: z.string().min(9, "El teléfono debe tener al menos 9 caracteres"),
+    email: z.string().email("El email no es válido").nullable().optional(),
+    phone: z
+      .string()
+      .min(9, "El teléfono debe tener al menos 9 caracteres")
+      .nullable()
+      .optional(),
     manicuristId: z.string().min(1, "El id del manicurista no es válido"),
     paymentStatus: z.enum(paymentStatuses, {
       message: "El estado de pago no es válido",
@@ -186,7 +190,8 @@ export const add = defineAction({
 
       const addedBooking = await getBookingById(newId);
 
-      if (addedBooking) {
+      // TODO: Improve email template
+      if (input.email && addedBooking) {
         resend.emails.send({
           from: "noreply@lienzolima.com",
           to: [input.email],
