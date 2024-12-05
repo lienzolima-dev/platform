@@ -22,9 +22,14 @@ const { bookingId } = Astro.props;
         const bookingId = JSON.parse(this.dataset.bookingId ?? "").bookingId;
         if (!bookingId) throw "Booking ID not found";
 
-        await actions.db.bookings.markAsFinished({
+        const { error } = await actions.db.bookings.markAsFinished({
           bookingId,
         });
+
+        if (!error) {
+          location.reload();
+          return;
+        }
       });
     }
   }
