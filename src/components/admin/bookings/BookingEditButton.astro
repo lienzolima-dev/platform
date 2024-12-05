@@ -19,10 +19,14 @@ const { booking } = Astro.props;
 <script>
   import type { Booking } from "../../../pages/admin/_db/types";
   import { openDialog } from "../../global/dialog/utils";
+  import { DateTime } from "luxon";
 
-  function convertDateFormat(isoDate: Date) {
-    const date = new Date(isoDate);
-    return date.toISOString().split("T")[0];
+  function convertDateFormat(dateInput: string | Date): string {
+    const dateObj =
+      typeof dateInput === "string" ? new Date(dateInput) : dateInput;
+    return DateTime.fromJSDate(dateObj, { zone: "America/Lima" }).toFormat(
+      "yyyy-MM-dd"
+    );
   }
 
   function convertTimeFormat(time: string): string {

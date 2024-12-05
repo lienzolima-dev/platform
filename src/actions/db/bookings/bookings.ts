@@ -12,6 +12,7 @@ import { paymentStatuses } from "../../../db/schemas/bookings";
 import { ulid } from "ulid";
 import { resend } from "../../../resend/client";
 import { getBookingById } from "../../../pages/admin/_db/bookings";
+import { DateTime } from "luxon";
 
 function isSameDay(dateString1: string, dateString2: string) {
   const date1 = new Date(dateString1);
@@ -245,20 +246,31 @@ export const edit = defineAction({
     const startTimeObj = getTimeObjet(startTime);
     const endTimeObj = getTimeObjet(endTime);
 
-    const date = new Date(input.date + "T00:00:00Z");
-    console.log(date);
+    const date = DateTime.fromISO(input.date, { zone: "America/Lima" });
+    console.log("Fecha original (America/Lima):", date.toString());
 
-    const newStartTime = new Date(date);
-    newStartTime.setHours(startTimeObj.hours, startTimeObj.minutes);
-    const newEndTime = new Date(date);
-    newEndTime.setHours(endTimeObj.hours, endTimeObj.minutes);
+    const newStartTime = date
+      .set({ hour: startTimeObj.hours, minute: startTimeObj.minutes })
+      .toUTC()
+      .toISO();
+    const newEndTime = date
+      .set({ hour: endTimeObj.hours, minute: endTimeObj.minutes })
+      .toUTC()
+      .toISO();
+
+    if (!newStartTime || !newEndTime) {
+      throw new ActionError({
+        code: "CONFLICT",
+        message: "Las fechas de inicio o fin no son válidas",
+      });
+    }
 
     try {
       await db
         .update(bookingsTable)
         .set({
-          startTime: newStartTime.toISOString(),
-          endTime: newEndTime.toISOString(),
+          startTime: newStartTime,
+          endTime: newEndTime,
         })
         .where(eq(bookingsTable.id, bookingId));
     } catch (e) {
