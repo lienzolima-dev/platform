@@ -1,0 +1,123 @@
+---
+import type { Booking } from "../../../pages/admin/_db/types";
+import MoneyIcon from "../../svgs/admin/IndexContent/MoneyIcon.astro";
+import UserIcon from "../../svgs/admin/IndexContent/UserIcon.astro";
+import NextBookingFinishButton from "./NextBookingFinishButton.astro";
+
+type Props = {
+  booking: Booking;
+};
+
+const { booking } = Astro.props;
+---
+
+<div class="item">
+  <div class="info">
+    <span class="item-rectangle"></span>
+    <div class="item-inner">
+      <div class="item-top">
+        <span>
+          {booking.startTime} - {booking.endTime}
+        </span>
+        <div class="item-user">
+          <UserIcon />
+          <span>{booking.username.toUpperCase()}</span>
+        </div>
+        <div class="item-user">
+          <span>
+            (<MoneyIcon />
+            Por pagar: S/{" "}
+            {booking.totalPrice - booking.advanceAmount})
+          </span>
+        </div>
+      </div>
+      <div class="item-bottom">
+        <span class="item-payment-label">
+          {booking.paymentStatus}
+        </span>
+        <span class="item-date-label">
+          {
+            booking.date.toLocaleDateString("es-PE", {
+              day: "numeric",
+              month: "long",
+            })
+          }
+        </span>
+        <span class="item-manicurist-label">
+          {booking.manicurist}
+        </span>
+      </div>
+    </div>
+  </div>
+  <NextBookingFinishButton bookingId={booking.id} />
+</div>
+
+<style>
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #aeaeae;
+  }
+
+  .item-rectangle {
+    width: 1rem;
+    height: 1rem;
+    background-color: #e15a85;
+    border-radius: 0.25rem;
+  }
+
+  .info {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .item-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .item-top {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .item-user {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .item-user :global(svg) {
+    width: 1rem;
+    height: 1rem;
+    fill: #7b7b7b;
+  }
+
+  .item-bottom {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .item-payment-label,
+  .item-date-label,
+  .item-manicurist-label {
+    padding: 2px 12px;
+    background-color: #f0c9a4;
+    border-radius: 100px;
+    text-wrap: nowrap;
+  }
+
+  .item-manicurist-label {
+    background-color: #a4c4f0;
+  }
+
+  .item-date-label {
+    background-color: #d0e6ad;
+  }
+</style>
