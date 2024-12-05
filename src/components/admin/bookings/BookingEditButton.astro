@@ -9,7 +9,7 @@ type Props = {
 const { booking } = Astro.props;
 ---
 
-<booking-edit-button>
+<booking-edit-button data-booking={JSON.stringify(booking)}>
   <button>
     <span class="icon-bg"></span>
     <EditIcon color="white" />
@@ -17,7 +17,27 @@ const { booking } = Astro.props;
 </booking-edit-button>
 
 <script>
+  import type { Booking } from "../../../pages/admin/_db/types";
   import { openDialog } from "../../global/dialog/utils";
+
+  function convertDateFormat(isoDate: Date) {
+    const date = new Date(isoDate);
+    return date.toISOString().split("T")[0];
+  }
+
+  function convertTimeFormat(time: string): string {
+    const cleanTime = time.replace(/\s*\.\s*/g, "").toLowerCase();
+    const [timeFormat, modifier] = cleanTime.split(" ");
+    let [hours, minutes] = timeFormat.split(":").map(Number);
+
+    if (modifier.toLowerCase() === "pm" && hours !== 12) {
+      hours += 12;
+    } else if (modifier.toLowerCase() === "am" && hours === 12) {
+      hours = 0;
+    }
+
+    return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+  }
 
   class BookingEditButton extends HTMLElement {
     connectedCallback() {
@@ -27,7 +47,15 @@ const { booking } = Astro.props;
       if (!button) throw "Button not found";
       if (!(form instanceof HTMLFormElement)) throw new Error("Form not found");
 
+      const booking: Booking = JSON.parse(this.dataset.booking || "{}");
+
       button.addEventListener("click", async () => {
+        form.bookingId.value = booking.id;
+        form.username.value = booking.username;
+        form.date.value = convertDateFormat(booking.date);
+        form.startTime.value = convertTimeFormat(booking.startTime);
+        form.endTime.value = convertTimeFormat(booking.endTime);
+
         openDialog("editBooking");
       });
     }

@@ -48,8 +48,15 @@
 
       const formData = new FormData(form);
 
+      const bookingData = {
+        bookingId: (formData.get("bookingId") as string) ?? "",
+        date: (formData.get("date") as string) ?? "",
+        startTime: (formData.get("startTime") as string) ?? "",
+        endTime: (formData.get("endTime") as string) ?? "",
+      };
+
       submitButton.disabled = true;
-      const { error } = await actions.db.services.editService(formData);
+      const { error } = await actions.db.bookings.edit(bookingData);
       submitButton.disabled = false;
 
       if (!error) {

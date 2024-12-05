@@ -219,3 +219,58 @@ export const add = defineAction({
     }
   },
 });
+
+export const edit = defineAction({
+  input: z.object({
+    bookingId: z.string().min(1, "El id de la reserva es necesario"),
+    date: z.string().refine((dateString) => {
+      return !Number.isNaN(Date.parse(dateString));
+    }, "La fecha no es válida"),
+    startTime: z.string().refine((startTime) => {
+      const time = startTime.split(":");
+      if (time.length !== 2) return false;
+      if (time[0].length !== 2 || time[1].length !== 2) return false;
+      return true;
+    }),
+    endTime: z.string().refine((endTime) => {
+      const time = endTime.split(":");
+      if (time.length !== 2) return false;
+      if (time[0].length !== 2 || time[1].length !== 2) return false;
+      return true;
+    }),
+  }),
+  handler: async (input, _ctx) => {
+    const { bookingId, startTime, endTime } = input;
+
+    const startTimeObj = getTimeObjet(startTime);
+    const endTimeObj = getTimeObjet(endTime);
+
+    const date = new Date(input.date + "T00:00:00Z");
+    console.log(date);
+
+    const newStartTime = new Date(date);
+    newStartTime.setHours(startTimeObj.hours, startTimeObj.minutes);
+    const newEndTime = new Date(date);
+    newEndTime.setHours(endTimeObj.hours, endTimeObj.minutes);
+
+    try {
+      await db
+        .update(bookingsTable)
+        .set({
+          startTime: newStartTime.toISOString(),
+          endTime: newEndTime.toISOString(),
+        })
+        .where(eq(bookingsTable.id, bookingId));
+    } catch (e) {
+      console.error("[ERROR]: ", e);
+      if (e instanceof ActionError) {
+        throw e;
+      }
+
+      throw new ActionError({
+        code: "CONFLICT",
+        message: "Error al editar reserva",
+      });
+    }
+  },
+});
