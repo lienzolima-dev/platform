@@ -52,7 +52,7 @@ const { booking } = Astro.props;
     <span class="separator">Total</span>
     <span>S/ {booking.totalPrice}</span>
   </div>
-  <div class="flex-end">
+  <div class="flex-end edit-button">
     <BookingEditButton {booking} />
   </div>
 </div>
@@ -115,5 +115,9 @@ const { booking } = Astro.props;
   .flex-end {
     display: flex;
     justify-content: flex-end;
+  }
+
+  .edit-button {
+    margin-top: auto;
   }
 </style>
