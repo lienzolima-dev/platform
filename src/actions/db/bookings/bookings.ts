@@ -12,6 +12,7 @@ import { paymentStatuses } from "../../../db/schemas/bookings";
 import { ulid } from "ulid";
 import { resend } from "../../../resend/client";
 import { getBookingById } from "../../../pages/admin/_db/bookings";
+import { DateTime } from "luxon";
 
 function isSameDay(dateString1: string, dateString2: string) {
   const date1 = new Date(dateString1);
@@ -219,6 +220,71 @@ export const add = defineAction({
       throw new ActionError({
         code: "CONFLICT",
         message: "Error al añadir reserva",
+      });
+    }
+  },
+});
+
+export const edit = defineAction({
+  input: z.object({
+    bookingId: z.string().min(1, "El id de la reserva es necesario"),
+    date: z.string().refine((dateString) => {
+      return !Number.isNaN(Date.parse(dateString));
+    }, "La fecha no es válida"),
+    startTime: z.string().refine((startTime) => {
+      const time = startTime.split(":");
+      if (time.length !== 2) return false;
+      if (time[0].length !== 2 || time[1].length !== 2) return false;
+      return true;
+    }),
+    endTime: z.string().refine((endTime) => {
+      const time = endTime.split(":");
+      if (time.length !== 2) return false;
+      if (time[0].length !== 2 || time[1].length !== 2) return false;
+      return true;
+    }),
+  }),
+  handler: async (input, _ctx) => {
+    const { bookingId, startTime, endTime } = input;
+
+    const startTimeObj = getTimeObjet(startTime);
+    const endTimeObj = getTimeObjet(endTime);
+
+    const date = DateTime.fromISO(input.date, { zone: "America/Lima" });
+
+    const newStartTime = date
+      .set({ hour: startTimeObj.hours, minute: startTimeObj.minutes })
+      .toUTC()
+      .toISO();
+    const newEndTime = date
+      .set({ hour: endTimeObj.hours, minute: endTimeObj.minutes })
+      .toUTC()
+      .toISO();
+
+    if (!newStartTime || !newEndTime) {
+      throw new ActionError({
+        code: "CONFLICT",
+        message: "Las fechas de inicio o fin no son válidas",
+      });
+    }
+
+    try {
+      await db
+        .update(bookingsTable)
+        .set({
+          startTime: newStartTime,
+          endTime: newEndTime,
+        })
+        .where(eq(bookingsTable.id, bookingId));
+    } catch (e) {
+      console.error("[ERROR]: ", e);
+      if (e instanceof ActionError) {
+        throw e;
+      }
+
+      throw new ActionError({
+        code: "CONFLICT",
+        message: "Error al editar reserva",
       });
     }
   },

@@ -1,5 +1,6 @@
 ---
 import type { Booking } from "../../../pages/admin/_db/types";
+import BookingEditButton from "./BookingEditButton.astro";
 
 type Props = {
   booking: Booking;
@@ -50,6 +51,9 @@ const { booking } = Astro.props;
   <div class="flex">
     <span class="separator">Total</span>
     <span>S/ {booking.totalPrice}</span>
+  </div>
+  <div class="flex-end edit-button">
+    <BookingEditButton {booking} />
   </div>
 </div>
 
@@ -106,5 +110,14 @@ const { booking } = Astro.props;
     display: flex;
     justify-content: space-between;
     gap: 1rem;
+  }
+
+  .flex-end {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .edit-button {
+    margin-top: auto;
   }
 </style>

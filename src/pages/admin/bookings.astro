@@ -6,6 +6,8 @@ import BookingsList from "../../components/admin/bookings/BookingsList.astro";
 import BookingsHeader from "../../components/admin/bookings/BookingsHeader.astro";
 import { getPaginatedBookings } from "./_db/bookings";
 import Pagination from "../../components/global/Pagination.astro";
+import Dialog from "../../components/global/dialog/Dialog.astro";
+import BookingEditForm from "../../components/admin/bookings/BookingEditForm.astro";
 
 const user = Astro.locals.user;
 
@@ -40,6 +42,7 @@ const { data: bookings, totalPages } = await getPaginatedBookings({
   <div>
     <Header {avatarURL} {username} {role} />
     <main>
+      <Dialog id="editBooking"><BookingEditForm /></Dialog>
       <BookingsHeader {dateParam} searchParam={searchParam || ""} />
       <BookingsList {bookings} />
       <Pagination currentPage={pageParam} {totalPages} buttonsAmount={5} />
