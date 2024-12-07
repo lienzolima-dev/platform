@@ -1,0 +1,36 @@
+<div>
+  <select class="form-select" id="BookingStatus" name="status">
+    <option value="all">Todos</option>
+    <option value="pending">Pendiente</option>
+    <option value="finished">Finalizado</option>
+    <option value="cancelled">Cancelado</option>
+  </select>
+</div>
+
+<script>
+  import { updateRoute } from "../../../utils/filter";
+
+  const url = new URL(window.location.href);
+  const searchParam = url.searchParams.get("search") || "";
+
+  const statusSelect = document.getElementById("BookingStatus");
+
+  try {
+    if (!(statusSelect instanceof HTMLSelectElement))
+      throw new Error("Status select not found");
+
+    statusSelect.value = searchParam === "" ? "all" : searchParam;
+
+    const handleSearch = () => {
+      const newUrl = updateRoute(url, {
+        search: statusSelect.value === "all" ? "" : statusSelect.value,
+        page: "1",
+      });
+      window.location.href = newUrl;
+    };
+
+    statusSelect.addEventListener("change", handleSearch);
+  } catch (e) {
+    console.error("Error: ", e);
+  }
+</script>

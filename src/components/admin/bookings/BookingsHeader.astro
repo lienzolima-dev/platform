@@ -1,17 +1,22 @@
 ---
 import BookingsDateFilters from "./BookingsDateFilters.svelte";
+import BookingsStatusFilter from "./BookingsStatusFilter.astro";
 
 type Props = {
   dateParam: string;
+  searchParam: string;
 };
 
 const { dateParam } = Astro.props;
+const { searchParam } = Astro.props;
 
 const date = dateParam ? new Date(dateParam) : null;
+const status = searchParam || null;
 ---
 
 <section>
   <h1>Reservas</h1>
+  <BookingsStatusFilter {status} />
   <BookingsDateFilters {date} client:load />
 </section>
 

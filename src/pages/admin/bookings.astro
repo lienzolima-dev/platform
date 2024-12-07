@@ -16,14 +16,22 @@ if (!user || (user.role !== "admin" && user.role !== "manicurist"))
 const { avatarURL, username, role } = user;
 
 const { searchParams } = new URL(Astro.request.url);
+const allowedStatuses = ["pending", "finished", "cancelled"];
 const pageParam = Number.parseInt(searchParams.get("page") || "1");
 const dateParam = searchParams.get("date") || "";
+const searchParam = (() => {
+  const value = (searchParams.get("search") || "").toLowerCase();
+  return allowedStatuses.includes(value)
+    ? (value as "pending" | "finished" | "cancelled")
+    : null;
+})();
 
 const pageSize = 8;
 const { data: bookings, totalPages } = await getPaginatedBookings({
   page: pageParam,
   pageSize,
   day: dateParam ? new Date(dateParam) : undefined,
+  status: searchParam || undefined,
 });
 ---
 
@@ -32,7 +40,7 @@ const { data: bookings, totalPages } = await getPaginatedBookings({
   <div>
     <Header {avatarURL} {username} {role} />
     <main>
-      <BookingsHeader {dateParam} />
+      <BookingsHeader {dateParam} searchParam={searchParam || ""} />
       <BookingsList {bookings} />
       <Pagination currentPage={pageParam} {totalPages} buttonsAmount={5} />
     </main>
