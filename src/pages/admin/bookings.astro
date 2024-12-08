@@ -8,6 +8,8 @@ import { getPaginatedBookings } from "./_db/bookings";
 import Pagination from "../../components/global/Pagination.astro";
 import Dialog from "../../components/global/dialog/Dialog.astro";
 import BookingEditForm from "../../components/admin/bookings/BookingEditForm.astro";
+import { isBookingStatus, type BookingStatus } from "./_db/types";
+import { DateTime } from "luxon";
 
 const user = Astro.locals.user;
 
@@ -18,14 +20,23 @@ if (!user || (user.role !== "admin" && user.role !== "manicurist"))
 const { avatarURL, username, role } = user;
 
 const { searchParams } = new URL(Astro.request.url);
+
 const pageParam = Number.parseInt(searchParams.get("page") || "1");
 const dateParam = searchParams.get("date") || "";
+const statusParam = searchParams.get("status") || "";
+
+const status: BookingStatus | undefined = !isBookingStatus(statusParam)
+  ? undefined
+  : statusParam;
 
 const pageSize = 8;
 const { data: bookings, totalPages } = await getPaginatedBookings({
   page: pageParam,
   pageSize,
-  day: dateParam ? new Date(dateParam) : undefined,
+  day: dateParam
+    ? DateTime.fromISO(dateParam, { zone: "America/Lima" }).toJSDate()
+    : undefined,
+  status,
 });
 ---
 
@@ -35,7 +46,7 @@ const { data: bookings, totalPages } = await getPaginatedBookings({
     <Header {avatarURL} {username} {role} />
     <main>
       <Dialog id="editBooking"><BookingEditForm /></Dialog>
-      <BookingsHeader {dateParam} />
+      <BookingsHeader {dateParam} statusParam={statusParam || ""} />
       <BookingsList {bookings} />
       <Pagination currentPage={pageParam} {totalPages} buttonsAmount={5} />
     </main>

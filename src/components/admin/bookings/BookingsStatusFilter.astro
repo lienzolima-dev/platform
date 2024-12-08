@@ -1,0 +1,62 @@
+---
+type Props = {
+  status: string;
+};
+
+const { status } = Astro.props;
+---
+
+<div>
+  <select
+    class="form-select"
+    id="booking-status-select"
+    name="status"
+    data-status={status}
+  >
+    <option value="all">Todos</option>
+    <option value="pending">Pendiente</option>
+    <option value="finished">Finalizado</option>
+    <option value="cancelled">Cancelado</option>
+  </select>
+</div>
+
+<script>
+  import { updateRoute } from "../../../utils/filter";
+
+  const statusSelect = document.getElementById("booking-status-select");
+
+  if (!(statusSelect instanceof HTMLSelectElement))
+    throw new Error("Status select not found");
+
+  const url = new URL(window.location.href);
+  const statusParam = statusSelect.dataset.status;
+
+  if (statusParam === undefined) throw new Error("Status param not found");
+
+  try {
+    statusSelect.value = statusParam === "" ? "all" : statusParam;
+
+    const handleChange = () => {
+      const newUrl = updateRoute(url, {
+        status: statusSelect.value === "all" ? "" : statusSelect.value,
+        page: "1",
+      });
+      window.location.href = newUrl;
+    };
+
+    statusSelect.addEventListener("change", handleChange);
+  } catch (e) {
+    console.error("Error: ", e);
+  }
+</script>
+
+<style>
+  div {
+    width: 20%;
+  }
+
+  select {
+    width: 100%;
+    padding: 0.5rem 1rem;
+  }
+</style>

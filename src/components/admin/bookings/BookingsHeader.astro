@@ -1,17 +1,25 @@
 ---
+import { DateTime } from "luxon";
 import BookingsDateFilters from "./BookingsDateFilters.svelte";
+import BookingsStatusFilter from "./BookingsStatusFilter.astro";
 
 type Props = {
   dateParam: string;
+  statusParam: string;
 };
 
 const { dateParam } = Astro.props;
+const { statusParam } = Astro.props;
 
-const date = dateParam ? new Date(dateParam) : null;
+const date = dateParam
+  ? DateTime.fromISO(dateParam, { zone: "America/Lima" }).toJSDate()
+  : null;
+const status = statusParam || null;
 ---
 
 <section>
   <h1>Reservas</h1>
+  <BookingsStatusFilter status={status || ""} />
   <BookingsDateFilters {date} client:load />
 </section>
 

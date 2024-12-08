@@ -1,10 +1,20 @@
 import type { extras, services } from "../../../db/schema";
-import type { paymentStatuses } from "../../../db/schemas/bookings";
+import {
+  bookingStatuses,
+  type paymentStatuses,
+} from "../../../db/schemas/bookings";
 import type {
   complaintOptions,
   serviceOptions,
 } from "../../../db/schemas/complaints";
 import type { userRoles } from "../../../db/schemas/users";
+
+export type BookingStatus = (typeof bookingStatuses)[number];
+
+// This function checks if a given string is a valid booking status.
+export function isBookingStatus(status: string): status is BookingStatus {
+  return (bookingStatuses as readonly string[]).includes(status);
+}
 
 export type Task = {
   id: string;
