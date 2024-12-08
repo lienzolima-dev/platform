@@ -46,7 +46,7 @@ const { data: bookings, totalPages } = await getPaginatedBookings({
     <Header {avatarURL} {username} {role} />
     <main>
       <Dialog id="editBooking"><BookingEditForm /></Dialog>
-      <BookingsHeader {dateParam} searchParam={statusParam || ""} />
+      <BookingsHeader {dateParam} statusParam={statusParam || ""} />
       <BookingsList {bookings} />
       <Pagination currentPage={pageParam} {totalPages} buttonsAmount={5} />
     </main>

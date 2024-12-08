@@ -5,16 +5,16 @@ import BookingsStatusFilter from "./BookingsStatusFilter.astro";
 
 type Props = {
   dateParam: string;
-  searchParam: string;
+  statusParam: string;
 };
 
 const { dateParam } = Astro.props;
-const { searchParam } = Astro.props;
+const { statusParam } = Astro.props;
 
 const date = dateParam
   ? DateTime.fromISO(dateParam, { zone: "America/Lima" }).toJSDate()
   : null;
-const status = searchParam || null;
+const status = statusParam || null;
 ---
 
 <section>
