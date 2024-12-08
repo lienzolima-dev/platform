@@ -1,4 +1,4 @@
-import { and, count, gte, lte, eq } from "drizzle-orm";
+import { and, count, gte, lte, eq, type SQL } from "drizzle-orm";
 import { db } from "../../../db/db";
 import type { Booking } from "./types";
 import { bookings } from "../../../db/schema";
@@ -27,19 +27,24 @@ export async function getBookings({
     offset: offset ?? 0,
     limit: limit ?? 10,
     where: (bookings, { gte, lte, eq, and }) => {
+      const conditions: (SQL<unknown> | undefined)[] = [];
       if (day) {
         const start = new Date(day);
         start.setHours(0, 0, 0, 0);
         const end = new Date(day);
         end.setHours(23, 59, 59, 999);
-        return and(
-          gte(bookings.startTime, start.toISOString()),
-          lte(bookings.startTime, end.toISOString()),
+        conditions.push(
+          and(
+            gte(bookings.startTime, start.toISOString()),
+            lte(bookings.startTime, end.toISOString()),
+          ),
         );
       }
       if (status) {
-        return eq(bookings.status, status);
+        conditions.push(eq(bookings.status, status));
       }
+
+      return and(...conditions);
     },
     with: {
       bookingsExtrasDetails: {

@@ -1,5 +1,18 @@
+---
+type Props = {
+  status: string;
+};
+
+const { status } = Astro.props;
+---
+
 <div>
-  <select class="form-select" id="BookingStatus" name="status">
+  <select
+    class="form-select"
+    id="booking-status-select"
+    name="status"
+    data-status={status}
+  >
     <option value="all">Todos</option>
     <option value="pending">Pendiente</option>
     <option value="finished">Finalizado</option>
@@ -10,26 +23,28 @@
 <script>
   import { updateRoute } from "../../../utils/filter";
 
-  const url = new URL(window.location.href);
-  const searchParam = url.searchParams.get("search") || "";
+  const statusSelect = document.getElementById("booking-status-select");
 
-  const statusSelect = document.getElementById("BookingStatus");
+  if (!(statusSelect instanceof HTMLSelectElement))
+    throw new Error("Status select not found");
+
+  const url = new URL(window.location.href);
+  const statusParam = statusSelect.dataset.status;
+
+  if (statusParam === undefined) throw new Error("Status param not found");
 
   try {
-    if (!(statusSelect instanceof HTMLSelectElement))
-      throw new Error("Status select not found");
+    statusSelect.value = statusParam === "" ? "all" : statusParam;
 
-    statusSelect.value = searchParam === "" ? "all" : searchParam;
-
-    const handleSearch = () => {
+    const handleChange = () => {
       const newUrl = updateRoute(url, {
-        search: statusSelect.value === "all" ? "" : statusSelect.value,
+        status: statusSelect.value === "all" ? "" : statusSelect.value,
         page: "1",
       });
       window.location.href = newUrl;
     };
 
-    statusSelect.addEventListener("change", handleSearch);
+    statusSelect.addEventListener("change", handleChange);
   } catch (e) {
     console.error("Error: ", e);
   }

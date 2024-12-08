@@ -16,6 +16,7 @@
     const newUrl = updateRoute(url, {
       date: "",
       page: "1",
+      status: "",
     });
 
     window.location.href = newUrl;
@@ -25,6 +26,7 @@
     if (!date) return;
 
     const url = new URL(window.location.href);
+    console.log("Selected date: ", date.toISOString().split("T")[0]);
     const newUrl = updateRoute(url, {
       date: date.toISOString().split("T")[0],
       page: "1",
