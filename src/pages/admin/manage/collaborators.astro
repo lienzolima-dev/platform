@@ -39,10 +39,10 @@ const {
   <SideBar />
   <div>
     <Header {avatarURL} {username} {role} />
-    <main>
-      <Dialog id="editCollaborator"><CollaboratorEditForm /></Dialog>
-      <Dialog id="deleteCollaborator"><CollaboratorDeleteForm /></Dialog>
-      <Dialog id="addCollaborator"><CollaboratorAddForm /></Dialog>
+    <Dialog id="editCollaborator"><CollaboratorEditForm /></Dialog>
+    <Dialog id="deleteCollaborator"><CollaboratorDeleteForm /></Dialog>
+    <Dialog id="addCollaborator"><CollaboratorAddForm /></Dialog>
+    <main class="wrapper">
       <CollaboratorsHeader collabsAmount={totalCollaborators} />
       <CollaboratorTable {collaborators} />
       <Pagination currentPage={pageParam} {totalPages} buttonsAmount={5} />
@@ -53,11 +53,7 @@ const {
 <style>
   main {
     padding-top: var(--section-spacing);
-    padding-inline: var(--section-spacing);
     padding-bottom: var(--section-spacing);
-    width: 100%;
-    max-width: 1440px;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 2rem;

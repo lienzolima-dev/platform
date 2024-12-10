@@ -102,4 +102,16 @@ const { extrasAmount } = Astro.props;
     border-radius: 0.25rem;
     cursor: pointer;
   }
+
+  @media only screen and (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      align-items: start;
+    }
+
+    .title {
+      flex-direction: column;
+      align-items: start;
+    }
+  }
 </style>

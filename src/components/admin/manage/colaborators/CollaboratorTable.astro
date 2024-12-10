@@ -26,7 +26,7 @@ const rowData = collaborators.reduce(
 const noResults = collaborators.length === 0;
 ---
 
-<div class="container">
+<div class="table-container">
   <table>
     <TableHead columnsNames={columns} />
     <tbody>
@@ -53,6 +53,13 @@ const noResults = collaborators.length === 0;
 </div>
 
 <style>
+  .container {
+    width: 85vw;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow-x: scroll;
+  }
+
   table {
     --main-color: #2b9398;
     width: 100%;
