@@ -8,7 +8,7 @@ import {
   bookings as bookingsTable,
   users,
 } from "../../../db/schema";
-import { paymentStatuses } from "../../../db/schemas/bookings";
+import { paymentStatuses, bookingStatuses } from "../../../db/schemas/bookings";
 import { ulid } from "ulid";
 import { resend } from "../../../resend/client";
 import { getBookingById } from "../../../pages/admin/_db/bookings";
@@ -243,9 +243,10 @@ export const edit = defineAction({
       if (time[0].length !== 2 || time[1].length !== 2) return false;
       return true;
     }),
+    status: z.enum(bookingStatuses),
   }),
   handler: async (input, _ctx) => {
-    const { bookingId, startTime, endTime } = input;
+    const { bookingId, startTime, endTime, status } = input;
 
     const startTimeObj = getTimeObjet(startTime);
     const endTimeObj = getTimeObjet(endTime);
@@ -274,6 +275,7 @@ export const edit = defineAction({
         .set({
           startTime: newStartTime,
           endTime: newEndTime,
+          status,
         })
         .where(eq(bookingsTable.id, bookingId));
     } catch (e) {
