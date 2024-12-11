@@ -25,7 +25,7 @@ export async function getBookings({
   const bookings = await db.query.bookings.findMany({
     orderBy: (bookings, { desc }) => [desc(bookings.startTime)],
     offset: offset ?? 0,
-    limit: limit ?? 10,
+    limit,
     where: (bookings, { gte, lte, eq, and }) => {
       const conditions: (SQL<unknown> | undefined)[] = [];
       if (day) {

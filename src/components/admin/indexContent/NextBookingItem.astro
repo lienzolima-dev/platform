@@ -1,4 +1,5 @@
 ---
+import { getPaymentStatusLabel } from "../../../db/schemas/bookings";
 import type { Booking } from "../../../pages/admin/_db/types";
 import MoneyIcon from "../../svgs/admin/IndexContent/MoneyIcon.astro";
 import UserIcon from "../../svgs/admin/IndexContent/UserIcon.astro";
@@ -15,14 +16,6 @@ const paymentCompleted =
 
 const isPendingPayment =
   booking.status === "pending" && booking.totalPrice > booking.advanceAmount;
-
-function getPaymentStatusLabel(paymentStatus: string): string {
-  if (paymentStatus === "advance") return "Adelanto";
-  if (paymentStatus === "full") return "Pago completo";
-  if (paymentStatus === "partial") return "Pago Parcial";
-  if (paymentStatus === "none") return "Sin Adelanto";
-  return paymentStatus;
-}
 ---
 
 <div class="item" class:list={[{ finished: booking.status === "finished" }]}>

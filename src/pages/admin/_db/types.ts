@@ -37,7 +37,7 @@ export type Booking = {
   services: (typeof services.$inferSelect)[];
   extras: (typeof extras.$inferSelect)[];
   manicurist: string;
-  status: string;
+  status: (typeof bookingStatuses)[number];
 };
 
 export type CollaboratorsTableData = {

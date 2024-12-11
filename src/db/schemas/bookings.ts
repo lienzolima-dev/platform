@@ -8,6 +8,25 @@ import { bookingsExtrasDetails } from "./bookingsExtrasDetails";
 export const paymentStatuses = ["advance", "full", "partial", "none"] as const;
 export const bookingStatuses = ["pending", "finished", "cancelled"] as const;
 
+export function getPaymentStatusLabel(
+  paymentStatus: (typeof paymentStatuses)[number],
+): string {
+  if (paymentStatus === "advance") return "Adelanto";
+  if (paymentStatus === "full") return "Pago completo";
+  if (paymentStatus === "partial") return "Pago Parcial";
+  if (paymentStatus === "none") return "Sin Adelanto";
+  return paymentStatus;
+}
+
+export function getBookingStatusLabel(
+  bookingStatus: (typeof bookingStatuses)[number],
+): string {
+  if (bookingStatus === "pending") return "Pendiente";
+  if (bookingStatus === "finished") return "Finalizado";
+  if (bookingStatus === "cancelled") return "Cancelado";
+  return bookingStatus;
+}
+
 export const bookings = sqliteTable("bookings", {
   id: text("booking_id").primaryKey().$defaultFn(ulid).notNull(),
   name: text("name").notNull(),
