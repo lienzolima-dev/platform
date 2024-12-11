@@ -49,6 +49,7 @@
 
   .user-data {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
   }
 
@@ -56,6 +57,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+    flex: 1;
   }
 
   input {

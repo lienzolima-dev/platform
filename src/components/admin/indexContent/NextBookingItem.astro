@@ -74,18 +74,20 @@ function getPaymentStatusLabel(paymentStatus: string): string {
       </div>
     </div>
   </div>
-  {
-    booking.status === "pending" && (
-      <NextBookingFinishButton bookingId={booking.id} />
-    )
-  }
-  {
-    booking.status === "finished" && (
-      <button class="finished-button" disabled>
-        Atendida
-      </button>
-    )
-  }
+  <div class="button-container">
+    {
+      booking.status === "pending" && (
+        <NextBookingFinishButton bookingId={booking.id} />
+      )
+    }
+    {
+      booking.status === "finished" && (
+        <button class="finished-button" disabled>
+          Atendida
+        </button>
+      )
+    }
+  </div>
 </div>
 
 <style>
@@ -130,7 +132,12 @@ function getPaymentStatusLabel(paymentStatus: string): string {
   .item-top {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 0.5rem;
+  }
+
+  .item-top span {
+    text-wrap: nowrap;
   }
 
   .item-user {
@@ -175,5 +182,21 @@ function getPaymentStatusLabel(paymentStatus: string): string {
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
     cursor: not-allowed;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .item-top,
+    .item {
+      flex-direction: column;
+      align-items: start;
+    }
+
+    .item {
+      gap: 1rem;
+    }
+
+    .button-container {
+      margin-left: 1.25rem;
+    }
   }
 </style>

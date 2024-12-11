@@ -41,4 +41,16 @@
   .date-picker :global(.tab-container > div) {
     height: 100%;
   }
+
+  @media only screen and (max-width: 768px) {
+    .date-picker :global(.date-time-picker) {
+      --date-picker-width: 16rem;
+      --date-picker-height: 16rem;
+      --date-picker-font-size: 1rem;
+
+      width: var(--date-picker-width);
+      height: var(--date-picker-height);
+      font-size: var(--date-picker-font-size);
+    }
+  }
 </style>
