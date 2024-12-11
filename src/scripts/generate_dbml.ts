@@ -1,7 +1,7 @@
 import * as schema from "../db/schema";
-import { pgGenerate } from "drizzle-dbml-generator"; // Using Postgres for this example
+import { sqliteGenerate } from "drizzle-dbml-generator"; // Using Postgres for this example
 
 const out = "./schema.dbml";
 const relational = true;
 
-pgGenerate({ schema, out, relational });
+sqliteGenerate({ schema, out, relational });
