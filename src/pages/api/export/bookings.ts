@@ -102,12 +102,19 @@ export async function GET(_context: APIContext): Promise<Response> {
     type: "buffer",
   });
 
+  const date = new Date();
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = String(date.getFullYear()).slice(-2);
+
+  const dateString = `${day}-${month}-${year}`; // "dd-mm-yy"
+
   return new Response(buffer, {
     status: 200,
     headers: {
       "Content-Type":
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      "Content-Disposition": 'attachment; filename="mock_data.xlsx"',
+      "Content-Disposition": `attachment; filename="reservas-${dateString}.xlsx"`,
       "Content-Length": buffer.byteLength.toString(),
     },
   });
