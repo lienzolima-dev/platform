@@ -27,9 +27,9 @@ const [manicuristsOptions, services, extras] = await Promise.all([
   <SideBar />
   <div>
     <Header {avatarURL} {username} {role} />
-    <main>
+    <SuccessfulBookingPopup />
+    <main class="wrapper">
       <AddBookingContent {manicuristsOptions} {services} {extras} />
-      <SuccessfulBookingPopup />
     </main>
   </div>
 </AdminLayout>
@@ -42,11 +42,7 @@ const [manicuristsOptions, services, extras] = await Promise.all([
 
   main {
     padding-top: var(--section-spacing);
-    padding-inline: var(--section-spacing);
     padding-bottom: var(--section-spacing);
-    margin: 0 auto;
-    width: 100%;
-    max-width: 1440px;
     display: flex;
     flex-direction: column;
     gap: 2rem;

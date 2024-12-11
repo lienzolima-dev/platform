@@ -134,6 +134,7 @@
 <style>
   .current-times-container {
     display: flex;
+    flex-wrap: wrap;
     gap: 1.5rem;
   }
 
@@ -150,7 +151,7 @@
   }
 
   .current-bookings {
-    width: 100%;
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -158,6 +159,7 @@
 
   .current-bookings-list {
     width: 100%;
+    background-color: #ffffff;
     border-radius: 8px;
     overflow: hidden;
   }
@@ -223,5 +225,32 @@
 
   input {
     padding: 0.5rem 1rem;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .current-bookings-list {
+      width: 80vw;
+      max-width: 100%;
+      margin: 0 auto;
+      overflow-x: scroll;
+    }
+  }
+
+  @media only screen and (max-width: 495px) {
+    .table-head {
+      width: min-content;
+    }
+
+    .table-body {
+      width: min-content;
+    }
+
+    .void-table-row {
+      width: 100%;
+    }
+
+    .table-row {
+      width: 100%;
+    }
   }
 </style>
