@@ -113,23 +113,27 @@ export const addComplaint = defineAction({
       resend.emails.send({
         from: "noreply@lienzolima.com",
         to: [input.email],
-        subject: "Lienzo Lima - Confirmación de registro de reclamo",
+        subject: "Confirmación de registro de reclamo en Lienzo Lima",
         html: `<p>Estimad@ ${input.fullName},</p>
                <p>Gracias por comunicarte con Lienzo Lima.</p>
                <p>Lamentamos el inconveniente. Valoramos tus comentarios, ya que nos ayudan a mejorar continuamente nuestros servicios.</p>
                <p>Hemos recibido tu reclamo con el número de seguimiento ${id} y ya se encuentra en proceso de revisión por nuestro equipo</p> `,
       });
 
+      const formattedDate = DateTime.fromISO(date)
+        .setLocale("es")
+        .toFormat("d 'de' LLLL 'de' yyyy");
+
       resend.emails.send({
         from: "noreply@lienzolima.com",
-        to: "", // Add the admin email here
+        to: "Lienzolima01@gmail.com",
         subject: "Lienzo Lima - Nuevo reclamo recibido",
         html: `<p>Se ha registrado un nuevo reclamo:</p>
                <ul>
                 <li><strong>Código:</strong> ${id}</li>
                 <li><strong>Nombre completo:</strong> ${input.fullName}</li>
                 <li><strong>DNI:</strong> ${input.dni}</li>
-                <li><strong>Fecha:</strong> ${date}</li>
+                <li><p><strong>Fecha:</strong> ${formattedDate}</p></li>
                 <li><strong>Servicio:</strong> ${service}</li>
                 <li><strong>Descripción del servicio:</strong> ${serviceDescription}</li>
                 <li><strong>Opción de reclamo:</strong> ${complaintOptionName}</li>

@@ -200,15 +200,17 @@ export const add = defineAction({
         resend.emails.send({
           from: "noreply@lienzolima.com",
           to: [input.email],
-          subject: "Lienzo Lima - Reserva registrada",
-          html: `<p>Hola ${input.name}, Se ha registrado tu reserva en Lienzo Lima</p>
-               <p>Fecha: ${date.toLocaleDateString("es-PE")}</p>
+          subject: "Confirmación de tu reserva en Lienzo Lima",
+          html: `<p>Hola ${input.name},</p></br>
+               <p>Gracias por elegir Lienzo Lima. Nos complace informarte que tu cita ha sido reservada con éxito. Aquí tienes los detalles de tu reserva:</p></br>
+               <p>Servicio(s): ${addedBooking.services.map((service) => service.name).join(", ")}</p>
+               <p>Fecha: ${date.toLocaleDateString("es-PE", { day: "numeric", month: "long" })}</p>
                <p>Hora: ${startTime.toLocaleTimeString("es-PE", { hour: "2-digit", minute: "2-digit" })} - ${endTime.toLocaleTimeString("es-PE", { hour: "2-digit", minute: "2-digit" })}</p>
-               <p>Manicurista: ${addedBooking.manicurist}</p>
-               <p>Servicios: ${addedBooking.services.map((service) => service.name).join(", ")}</p>
-               <p>Extras: ${addedBooking.extras.map((extra) => extra.name).join(", ")}</p>
-               <p>Adelanto: S/. ${addedBooking.advanceAmount}</p>
-               <p>Precio total: S/. ${totalPrice}</p>`,
+               <p>Ubicación: Av. Ernesto Diez Canseco 490, Miraflores 15074, Lima</p>
+               <p>Por favor, asegúrate de llegar con 10 minutos de anticipación para garantizarte la mejor experiencia.</p></br>
+               <p>La tolerancia es de 10 minutos como máximo, de lo contrario solo realizaremos un esmaltado en gel o rubber tradicional. Si la clienta no desea el servicio de las opciones alternativas, perderá el abono.</p></br>
+               <p>Si tienes alguna consulta o necesitas asistencia adicional, estamos disponibles en <a href="https://www.instagram.com/lienzo.lima/" target="_blank" rel="noopener noreferrer">Lienzo Lima</a>.</p></br>
+               <p>Saludos cordiales.</p>`,
         });
       }
     } catch (e) {
