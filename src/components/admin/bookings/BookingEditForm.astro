@@ -1,5 +1,5 @@
 ---
-import { bookingStatuses } from "../../../db/schemas/bookings";
+import type { bookingStatuses } from "../../../db/schemas/bookings";
 
 const bookingStatusesMap: Record<(typeof bookingStatuses)[number], string> = {
   pending: "Pendiente",
