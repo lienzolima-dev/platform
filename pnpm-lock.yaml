@@ -84,7 +84,7 @@ importers:
         specifier: 2.3.0
         version: 2.3.0
       xlsx:
-        specifier: ^0.18.5
+        specifier: 0.18.5
         version: 0.18.5
     devDependencies:
       '@biomejs/biome':
