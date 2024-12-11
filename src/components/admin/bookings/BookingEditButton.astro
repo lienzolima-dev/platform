@@ -59,6 +59,7 @@ const { booking } = Astro.props;
         form.date.value = convertDateFormat(booking.date);
         form.startTime.value = convertTimeFormat(booking.startTime);
         form.endTime.value = convertTimeFormat(booking.endTime);
+        form.bookingStatus.value = booking.status;
 
         openDialog("editBooking");
       });
