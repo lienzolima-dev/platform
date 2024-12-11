@@ -17,7 +17,7 @@ const nextPage = currentPage < totalPages ? currentPage + 1 : totalPages;
 
 const paginationButtons = getPaginationButtons({
   totalPages,
-  maxBtns: buttonsAmount || 5,
+  maxBtns: buttonsAmount || 3,
   currentPage,
 });
 
@@ -100,6 +100,7 @@ const nextLink =
 
   .pag-buttons {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
   }
 

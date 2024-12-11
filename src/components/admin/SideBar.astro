@@ -7,6 +7,7 @@ import IconServices from "../svgs/IconServices.astro";
 // import IconData from "../svgs/IconData.astro";
 import IconComplaint from "../svgs/IconComplaint.astro";
 import IconHome from "../svgs/IconHome.astro";
+import CloseMenuButton from "./CloseMenuButton.astro";
 
 const links = [
   {
@@ -70,11 +71,10 @@ const url = Astro.url;
 const activeLink = links.find((link) => url.pathname.includes(link.href));
 ---
 
-<aside>
+<aside id="admin-side-bar" class="closed">
   <header>
-    <a href="/">
-      <Logo color="#000" />
-    </a>
+    <Logo color="#3d3d3d" />
+    <CloseMenuButton />
   </header>
   <nav>
     <ul>
@@ -97,11 +97,11 @@ const activeLink = links.find((link) => url.pathname.includes(link.href));
 
 <style>
   aside {
+    padding-inline: 0.875rem;
     display: flex;
     flex-direction: column;
     background-color: #f1f1f1;
     border-right: var(--scroll-border);
-    gap: 1.5rem;
   }
 
   ul :global(svg) {
@@ -110,7 +110,10 @@ const activeLink = links.find((link) => url.pathname.includes(link.href));
   }
 
   header {
-    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 1.5rem;
   }
 
   hr {
@@ -157,5 +160,37 @@ const activeLink = links.find((link) => url.pathname.includes(link.href));
   .active {
     background-color: var(--primary-300);
     border-radius: 0.5rem;
+  }
+
+  @media only screen and (max-width: 768px) {
+    aside {
+      height: 10000px;
+      width: 310px;
+      z-index: 999;
+      position: fixed;
+      padding-inline: 1rem;
+      transform: translateX(0);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    aside.closed {
+      transform: translateX(-100%);
+    }
+
+    nav a {
+      flex-direction: row;
+      gap: 1rem;
+    }
+
+    ul {
+      align-items: start;
+      gap: 0;
+    }
+
+    li {
+      width: 100%;
+      padding-block: 0.75rem;
+      border-bottom: 1px solid #c2c2c2;
+    }
   }
 </style>

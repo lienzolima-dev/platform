@@ -1,0 +1,49 @@
+---
+import RightArrowBox from "../svgs/admin/IndexContent/RightArrowBox.astro";
+---
+
+<open-menu-button>
+  <button>
+    <RightArrowBox />
+  </button>
+</open-menu-button>
+
+<script>
+  class OpenMenuButton extends HTMLElement {
+    connectedCallback() {
+      this.querySelector("button")?.addEventListener("click", () => {
+        const sideBar = document.getElementById("admin-side-bar");
+        if (!sideBar) throw new Error("Side bar not found");
+
+        sideBar.classList.toggle("closed");
+      });
+    }
+  }
+
+  customElements.define("open-menu-button", OpenMenuButton);
+</script>
+
+<style>
+  button {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7rem;
+    border-radius: 8px;
+    background: none;
+  }
+
+  button:hover {
+    background-color: #e6e6e6;
+  }
+
+  button :global(svg) {
+    width: 1.5rem;
+  }
+
+  @media only screen and (max-width: 768px) {
+    button {
+      display: flex;
+    }
+  }
+</style>
