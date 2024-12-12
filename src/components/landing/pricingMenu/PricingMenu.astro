@@ -1,13 +1,23 @@
 ---
 import MenuBackground from "../../svgs/MenuBackground.astro";
 import PricingMenuContent from "./PricingMenuContent.astro";
+import type { ServicesTableData } from "../../../pages/admin/_db/types";
+import type { ExtrasTableData } from "../../../pages/admin/_db/types";
+
+type Props = {
+  systemsServices: ServicesTableData[];
+  removalServices: ServicesTableData[];
+  extraServices: ExtrasTableData[];
+};
+
+const { systemsServices, removalServices, extraServices } = Astro.props;
 ---
 
 <div class="menu-container" data-aos="fade-up" data-aos-duration="700">
   <div class="menu-bg">
     <MenuBackground />
   </div>
-  <PricingMenuContent />
+  <PricingMenuContent {systemsServices} {removalServices} {extraServices} />
 </div>
 
 <style>
