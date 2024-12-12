@@ -26,7 +26,7 @@
     "check:format:biome": "pnpm biome format .",
     "check:format": "pnpm check:format:biome && pnpm check:format:prettier",
     "check": "pnpm check:format && astro check",
-    "test:webkit": "pnpm playwright test ./tests/webkit.spec.ts --headed --browser=webkit"
+    "test:webkit:headed": "pnpm playwright test ./tests/webkit.spec.ts --project=webkit --headed"
   },
   "dependencies": {
     "@astrojs/check": "0.9.3",
