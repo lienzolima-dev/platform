@@ -8,6 +8,15 @@ import PricingMenu from "../components/landing/pricingMenu/PricingMenu.astro";
 import Footer from "../components/landing/Footer.astro";
 import Ubication from "../components/landing/Ubication.astro";
 import Services from "../components/landing/servicesMenu/Services.astro";
+import { getServicesByCategory } from "./admin/_db/services";
+import { getExtras } from "./admin/_db/extras";
+
+const systemsServices = await getServicesByCategory([
+  "Sistemas",
+  "Uña natural",
+]);
+const removalServices = await getServicesByCategory(["Retiros", "Retoques"]);
+const extraServices = await getExtras({});
 ---
 
 <BaseLayout title="Lienzo Lima">
@@ -16,7 +25,7 @@ import Services from "../components/landing/servicesMenu/Services.astro";
     <Hero />
     <WhyUs />
     <Services />
-    <PricingMenu />
+    <PricingMenu {systemsServices} {removalServices} {extraServices} />
     <Ubication />
   </main>
   <Footer />
