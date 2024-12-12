@@ -2,6 +2,7 @@
 import { DateTime } from "luxon";
 import BookingsDateFilters from "./BookingsDateFilters.svelte";
 import BookingsStatusFilter from "./BookingsStatusFilter.astro";
+import BookingsExportButton from "./BookingsExportButton.astro";
 
 type Props = {
   dateParam: string;
@@ -18,8 +19,11 @@ const status = statusParam || null;
 ---
 
 <section>
-  <h1>Reservas</h1>
-  <div>
+  <div class="flex">
+    <h1>Reservas</h1>
+    <BookingsExportButton />
+  </div>
+  <div class="filters">
     <BookingsStatusFilter status={status || ""} />
     <BookingsDateFilters {date} client:load />
   </div>
@@ -32,15 +36,22 @@ const status = statusParam || null;
     gap: 1rem;
   }
 
-  div {
+  .filters {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
   }
 
+  .flex {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
   @media only screen and (max-width: 768px) {
-    div {
+    .filters {
       flex-direction: column;
       align-items: start;
     }
