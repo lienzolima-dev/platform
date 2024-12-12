@@ -145,9 +145,13 @@
   }
 
   .time-inputs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
+  }
+
+  .time-inputs > .input-container {
+    flex: 1;
   }
 
   .current-bookings {
