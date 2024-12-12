@@ -2,6 +2,16 @@
 import Blob2 from "../../svgs/Blob2.astro";
 import Blob3 from "../../svgs/Blob3.astro";
 import { instagramDirectMessageUrl } from "../../../utils/global";
+import type { ServicesTableData } from "../../../pages/admin/_db/types";
+import type { ExtrasTableData } from "../../../pages/admin/_db/types";
+
+type Props = {
+  systemsServices: ServicesTableData[];
+  removalServices: ServicesTableData[];
+  extraServices: ExtrasTableData[];
+};
+
+const { systemsServices, removalServices, extraServices } = Astro.props;
 ---
 
 <section class="menu wrapper" id="precios">
@@ -14,22 +24,14 @@ import { instagramDirectMessageUrl } from "../../../utils/global";
       <div class="content-container">
         <h2>Sistemas y Uña natural</h2>
         <ul class="pricing-list">
-          <li class="pricing-item">
-            <span>Sistema acrílico con tips</span>
-            <span class="price">s/75.90</span>
-          </li>
-          <li class="pricing-item">
-            <span>Sistema softgel</span>
-            <span class="price">s/69.90</span>
-          </li>
-          <li class="pricing-item">
-            <span>Esmaltado gel</span>
-            <span class="price">s/44.90</span>
-          </li>
-          <li class="pricing-item">
-            <span>Esmaltado Rubber</span>
-            <span class="price">s/64.90</span>
-          </li>
+          {
+            systemsServices.map((service) => (
+              <li class="pricing-item">
+                <span>{service.name}</span>
+                <span class="price">{`s/${service.price.toFixed(2)}`}</span>
+              </li>
+            ))
+          }
         </ul>
         <a class="cta-button btn" href={instagramDirectMessageUrl}>
           Reserva ahora
@@ -45,26 +47,14 @@ import { instagramDirectMessageUrl } from "../../../utils/global";
       <div class="content-container">
         <h2>Retiros y Retoques</h2>
         <ul class="pricing-list">
-          <li class="pricing-item">
-            <span>Retiro de sistema acrílico o softgel</span>
-            <span class="price">s/39.90</span>
-          </li>
-          <li class="pricing-item">
-            <span>Retiro de esmaltado gel</span>
-            <span class="price">s/19.90</span>
-          </li>
-          <li class="pricing-item">
-            <span>Retiro de esmaltado Rubber</span>
-            <span class="price">s/25.90</span>
-          </li>
-          <li class="pricing-item">
-            <span>Retoque de sistema acrílico o softgel</span>
-            <span class="price">s/64.90</span>
-          </li>
-          <li class="pricing-item">
-            <span>Retoque de esmaltado Rubber</span>
-            <span class="price">s/59.90</span>
-          </li>
+          {
+            removalServices.map((service) => (
+              <li class="pricing-item">
+                <span>{service.name}</span>
+                <span class="price">{`s/${service.price.toFixed(2)}`}</span>
+              </li>
+            ))
+          }
         </ul>
         <a class="btn cta-button" href={instagramDirectMessageUrl}>
           Reserva ahora
@@ -80,46 +70,14 @@ import { instagramDirectMessageUrl } from "../../../utils/global";
       <div class="content-container">
         <h2>Adicionales</h2>
         <ul class="pricing-list">
-          <li class="pricing-item">
-            <span>Relieve / Cat eye</span>
-            <span class="price">s/9.90 - 14.90</span>
-          </li>
-          <li class="pricing-item">
-            <span>Pan de oro</span>
-            <span class="price">s/2.90 - 14.90</span>
-          </li>
-          <li class="pricing-item">
-            <span>Pedrería</span>
-            <span class="price">s/2.50 - 9.00</span>
-          </li>
-          <li class="pricing-item">
-            <span>Perlas</span>
-            <span class="price">s/2.50 - 9.90</span>
-          </li>
-          <li class="pricing-item">
-            <span>Mano alzada básica</span>
-            <span class="price">s/12.90</span>
-          </li>
-          <li class="pricing-item">
-            <span>Mano alzada compleja</span>
-            <span class="price">s/15.90 - 19.90</span>
-          </li>
-          <li class="pricing-item">
-            <span>Mano alzada nail art</span>
-            <span class="price">s/24.90 - 34.90</span>
-          </li>
-          <li class="pricing-item">
-            <span>Aurora / Espejo / Unicornio</span>
-            <span class="price">s/8.90</span>
-          </li>
-          <li class="pricing-item">
-            <span>Efecto aura</span>
-            <span class="price">s/14.90</span>
-          </li>
-          <li class="pricing-item">
-            <span>Difuminado con gel / blooming</span>
-            <span class="price">s/12.90</span>
-          </li>
+          {
+            extraServices.map((service) => (
+              <li class="pricing-item">
+                <span>{service.name}</span>
+                <span class="price">{`s/${service.price.toFixed(2)}`}</span>
+              </li>
+            ))
+          }
         </ul>
         <a class="cta-button btn" href={instagramDirectMessageUrl}>
           Reserva ahora
