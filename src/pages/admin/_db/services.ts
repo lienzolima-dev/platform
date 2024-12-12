@@ -1,4 +1,4 @@
-import { and, like, count, not, eq } from "drizzle-orm";
+import { and, like, count, not, eq, inArray } from "drizzle-orm";
 import { db } from "../../../db/db";
 import { services } from "../../../db/schema";
 import type { ServicesTableData } from "./types";
@@ -95,4 +95,15 @@ export async function getPaginatedServices({
     count: servicesCount,
     totalPages: Math.ceil(servicesCount / pageSize),
   };
+}
+
+export async function getServicesByCategory(category: string[]): Promise<ServicesTableData[]> {
+  const servicesData = await db
+    .select()
+    .from(services)
+    .where(and(not(eq(services.status, "deleted")), inArray(services.category, category)));
+  return servicesData.map((service) => ({
+    ...service,
+    formattedDuration: formatDuration(service.durationHours),
+  }));
 }
