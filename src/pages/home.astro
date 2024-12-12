@@ -11,12 +11,11 @@ import Services from "../components/landing/servicesMenu/Services.astro";
 import { getServicesByCategory } from "./admin/_db/services";
 import { getExtras } from "./admin/_db/extras";
 
-const systemsServices = await getServicesByCategory([
-  "Sistemas",
-  "Uña natural",
+const [systemsServices, removalServices, extraServices] = await Promise.all([
+  getServicesByCategory(["Sistemas", "Uña natural"]),
+  getServicesByCategory(["Retiros", "Retoques"]),
+  getExtras({}),
 ]);
-const removalServices = await getServicesByCategory(["Retiros", "Retoques"]);
-const extraServices = await getExtras({});
 ---
 
 <BaseLayout title="Lienzo Lima">
