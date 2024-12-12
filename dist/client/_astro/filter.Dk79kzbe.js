@@ -1,0 +1,1 @@
+function s(n,e){const t=new URLSearchParams(n.search);for(const a in e){if(e[a]===""){t.delete(a);continue}t.set(a,e[a])}return"page"in e||t.set("page","1"),`${n.pathname}?${t.toString()}`}export{s as u};
