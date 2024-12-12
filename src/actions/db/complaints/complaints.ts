@@ -11,6 +11,11 @@ import { ulid } from "ulid";
 
 const ipBucket = createRefillingTokenBucket(3, 5 * 60);
 
+const complaintOptionMap: Record<(typeof complaintOptions)[number], string> = {
+  claim: "Reclamo",
+  complaint: "Queja",
+};
+
 export const addComplaint = defineAction({
   accept: "form",
   input: z.object({
@@ -18,10 +23,14 @@ export const addComplaint = defineAction({
     fullName: z
       .string()
       .min(3, "El nombre debe tener al menos 3 caracteres")
-      .refine((fullName) => /^[a-zA-Z]+( [a-zA-Z]+)*$/.test(fullName), {
-        message:
-          "Los nombres y apellidos solo pueden contener letras mayúsculas, minúsculas y espacios, y no puede comenzar ni terminar con un espacio.",
-      }),
+      .refine(
+        (fullName) =>
+          /^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/.test(fullName),
+        {
+          message:
+            "Los nombres y apellidos solo pueden contener letras mayúsculas, minúsculas y espacios, y no puede comenzar ni terminar con un espacio.",
+        },
+      ),
     email: z
       .string({ message: "El email es requerido" })
       .email("El email no es válido"),
@@ -81,6 +90,7 @@ export const addComplaint = defineAction({
     } = input;
 
     const id = ulid();
+    const complaintOptionName = complaintOptionMap[complaintOption] || "";
 
     const complaintToUpdate: typeof complaints.$inferInsert = {
       id,
@@ -103,11 +113,32 @@ export const addComplaint = defineAction({
       resend.emails.send({
         from: "noreply@lienzolima.com",
         to: [input.email],
-        subject: "Lienzo Lima - Confirmación de registro de reclamo",
+        subject: "Confirmación de registro de reclamo en Lienzo Lima",
         html: `<p>Estimad@ ${input.fullName},</p>
                <p>Gracias por comunicarte con Lienzo Lima.</p>
                <p>Lamentamos el inconveniente. Valoramos tus comentarios, ya que nos ayudan a mejorar continuamente nuestros servicios.</p>
                <p>Hemos recibido tu reclamo con el número de seguimiento ${id} y ya se encuentra en proceso de revisión por nuestro equipo</p> `,
+      });
+
+      const formattedDate = DateTime.fromISO(date)
+        .setLocale("es")
+        .toFormat("d 'de' LLLL 'de' yyyy");
+
+      resend.emails.send({
+        from: "noreply@lienzolima.com",
+        to: "Lienzolima01@gmail.com",
+        subject: "Lienzo Lima - Nuevo reclamo recibido",
+        html: `<p>Se ha registrado un nuevo reclamo:</p>
+               <ul>
+                <li><strong>Código:</strong> ${id}</li>
+                <li><strong>Nombre completo:</strong> ${input.fullName}</li>
+                <li><strong>DNI:</strong> ${input.dni}</li>
+                <li><p><strong>Fecha:</strong> ${formattedDate}</p></li>
+                <li><strong>Servicio:</strong> ${service}</li>
+                <li><strong>Descripción del servicio:</strong> ${serviceDescription}</li>
+                <li><strong>Opción de reclamo:</strong> ${complaintOptionName}</li>
+               </ul>
+               <p>Para más detalles, revise en la sección de Reclamos en el panel de administrador.</p>`,
       });
     } catch (e) {
       console.error("[ERROR]: ", e);
