@@ -97,11 +97,18 @@ export async function getPaginatedServices({
   };
 }
 
-export async function getServicesByCategory(category: string[]): Promise<ServicesTableData[]> {
+export async function getServicesByCategory(
+  category: string[],
+): Promise<ServicesTableData[]> {
   const servicesData = await db
     .select()
     .from(services)
-    .where(and(not(eq(services.status, "deleted")), inArray(services.category, category)));
+    .where(
+      and(
+        not(eq(services.status, "deleted")),
+        inArray(services.category, category),
+      ),
+    );
   return servicesData.map((service) => ({
     ...service,
     formattedDuration: formatDuration(service.durationHours),
