@@ -36,7 +36,7 @@
   }
 </script>
 
-<div>
+<div class="container">
   <div class="date-input">
     <DateInput bind:value={date} format={"dd-MM-yyyy"} {locale} />
     <button onclick={handleApply}>Aplicar</button>
@@ -66,5 +66,21 @@
   .reset-button {
     margin-left: auto;
     text-wrap: nowrap;
+  }
+
+  .container {
+    display: flex;
+    flex: 1;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      align-items: start;
+    }
+
+    .reset-button {
+      margin-left: 0;
+    }
   }
 </style>

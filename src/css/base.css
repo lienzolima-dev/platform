@@ -260,3 +260,10 @@ input:focus {
   min-height: 240px;
   padding-bottom: 3rem;
 }
+
+.table-container {
+  width: 85vw;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow-x: scroll;
+}

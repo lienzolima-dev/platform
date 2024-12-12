@@ -40,13 +40,13 @@ const {
   <SideBar />
   <div>
     <Header {avatarURL} {username} {role} />
-    <main>
-      <Dialog id="addExtra"><ExtrasAddForm /></Dialog>
-      <Dialog id="editExtra"><ExtrasEditForm /></Dialog>
-      <Dialog id="deleteExtra"><ExtrasDeleteForm /></Dialog>
+    <Dialog id="addExtra"><ExtrasAddForm /></Dialog>
+    <Dialog id="editExtra"><ExtrasEditForm /></Dialog>
+    <Dialog id="deleteExtra"><ExtrasDeleteForm /></Dialog>
+    <main class="wrapper">
       <ExtrasHeader extrasAmount={totalExtras} />
       <ExtrasTable {extras} />
-      <Pagination currentPage={pageParam} {totalPages} buttonsAmount={5} />
+      <Pagination currentPage={pageParam} {totalPages} />
     </main>
   </div>
 </AdminLayout>
@@ -54,11 +54,7 @@ const {
 <style>
   main {
     padding-top: var(--section-spacing);
-    padding-inline: var(--section-spacing);
     padding-bottom: var(--section-spacing);
-    width: 100%;
-    max-width: 1440px;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 2rem;

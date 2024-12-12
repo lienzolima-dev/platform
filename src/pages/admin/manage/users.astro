@@ -38,12 +38,12 @@ const {
   <SideBar />
   <div>
     <Header {avatarURL} {username} {role} />
-    <main>
-      <Dialog id="editUser"><UserEditForm /></Dialog>
-      <Dialog id="deleteUser"><UserDeleteForm /></Dialog>
+    <Dialog id="editUser"><UserEditForm /></Dialog>
+    <Dialog id="deleteUser"><UserDeleteForm /></Dialog>
+    <main class="wrapper">
       <UsersHeader usersAmount={totalUsers} />
       <UsersTable {users} />
-      <Pagination currentPage={pageParam} {totalPages} buttonsAmount={5} />
+      <Pagination currentPage={pageParam} {totalPages} />
     </main>
   </div>
 </AdminLayout>
@@ -51,11 +51,7 @@ const {
 <style>
   main {
     padding-top: var(--section-spacing);
-    padding-inline: var(--section-spacing);
     padding-bottom: var(--section-spacing);
-    width: 100%;
-    max-width: 1440px;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 2rem;

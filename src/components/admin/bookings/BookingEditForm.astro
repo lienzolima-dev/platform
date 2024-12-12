@@ -1,3 +1,13 @@
+---
+import type { bookingStatuses } from "../../../db/schemas/bookings";
+
+const bookingStatusesMap: Record<(typeof bookingStatuses)[number], string> = {
+  pending: "Pendiente",
+  finished: "Finalizada",
+  cancelled: "Cancelada",
+};
+---
+
 <section>
   <div class="form-container">
     <h2>Editar Reserva</h2>
@@ -22,6 +32,15 @@
       <label>Hora de finalización <span class="required">*</span> </label>
       <input type="time" class="endTime" name="endTime" step="60" required />
 
+      <label>Estado <span class="required">*</span> </label>
+      <select id="bookingStatus" name="bookingStatus" required>
+        {
+          Object.entries(bookingStatusesMap).map(([status, label]) => (
+            <option value={status}>{label}</option>
+          ))
+        }
+      </select>
+
       <p id="b-error-content"></p>
       <button id="b-edit-submit-btn" class="submit-button" type="submit"
         >Guardar</button
@@ -32,6 +51,7 @@
 
 <script>
   import { actions, isInputError } from "astro:actions";
+  import { bookingStatuses } from "../../../db/schemas/bookings";
 
   try {
     const form = document.getElementById("edit-booking-form");
@@ -53,6 +73,9 @@
         date: (formData.get("date") as string) ?? "",
         startTime: (formData.get("startTime") as string) ?? "",
         endTime: (formData.get("endTime") as string) ?? "",
+        status:
+          (formData.get("bookingStatus") as (typeof bookingStatuses)[number]) ??
+          "",
       };
 
       submitButton.disabled = true;

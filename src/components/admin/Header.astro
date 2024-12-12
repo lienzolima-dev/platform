@@ -1,4 +1,6 @@
 ---
+import OpenMenuButton from "./OpenMenuButton.astro";
+
 type Props = {
   avatarURL: string | null;
   username: string;
@@ -9,7 +11,8 @@ const { avatarURL, username, role } = Astro.props;
 const isAdmin = role === "admin";
 ---
 
-<header>
+<header class="wrapper">
+  <OpenMenuButton />
   <div class="dashboard-header">
     <div class="user-dropdown">
       <div class="user">
@@ -33,8 +36,12 @@ const isAdmin = role === "admin";
 
 <style>
   header {
-    padding: 1rem 6rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     border-bottom: var(--scroll-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .dashboard-header {

@@ -24,8 +24,8 @@ const complaints = await getComplaintsTableData();
   <SideBar />
   <div>
     <Header {avatarURL} {username} {role} />
-    <main>
-      <Dialog id="viewComplaint"><ComplaintViewDialog /></Dialog>
+    <Dialog id="viewComplaint"><ComplaintViewDialog /></Dialog>
+    <main class="wrapper">
       <ComplaintHeader complaintsAmount={complaints.length} />
       <ComplaintTable {complaints} />
     </main>
@@ -35,11 +35,7 @@ const complaints = await getComplaintsTableData();
 <style>
   main {
     padding-top: var(--section-spacing);
-    padding-inline: var(--section-spacing);
     padding-bottom: var(--section-spacing);
-    width: 100%;
-    max-width: 1440px;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 2rem;

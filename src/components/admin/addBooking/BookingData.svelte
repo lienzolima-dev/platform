@@ -122,13 +122,18 @@
     gap: 1rem;
   }
 
+  input {
+    min-width: auto;
+    width: 100%;
+  }
+
   h2 {
     font-size: 1.5rem;
   }
 
   .booking-data {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
     gap: 1rem;
   }
 
@@ -141,5 +146,11 @@
   .flex {
     display: flex;
     gap: 0.5rem;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .booking-data {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
